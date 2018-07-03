@@ -22,8 +22,7 @@ namespace DataCollector.ViewModels.GRN
                 OnPropertyChanged("GrnDataList");
             }
         }
-
-
+        
         private List<StockTake> _StockTakeList;
         public List<StockTake> StockTakeList
         {
@@ -41,19 +40,19 @@ namespace DataCollector.ViewModels.GRN
             get { return _SelectedGrnData; }
             set
             {
-                //_SelectedGrnDataList = value;
+                _SelectedGrnData = value;
                 if (value != null && !string.IsNullOrEmpty(value.barcode))
                 {
-                    DataDeletion(SelectedGrnData);
-                    _SelectedGrnData = new GrnEntry();
+                    DataDeletion(value);
                 }
-                OnPropertyChanged("SelectedGrnDataList");
+                OnPropertyChanged("SelectedGrnData");
             }
         }
 
         public GRNListPageVM()
         {
             GrnDataList = new List<GrnEntry>();
+            SelectedGrnData = new GrnEntry();
             //SelectedGrnDataList = new GrnEntry();
             RefreshItem();
         }
@@ -68,22 +67,26 @@ namespace DataCollector.ViewModels.GRN
 
         public async void DataDeletion(GrnEntry Selected)
         {
-            var res = await App.Current.MainPage.DisplayAlert("Choose", "Do you want to Delete?", "Yes", "No");
-            if (res)
+            try
             {
-                var result = ClearFromDB.DeleteGrnData(App.DatabaseLocation, Selected);
-                if (result)
+                var res = await App.Current.MainPage.DisplayAlert("Choose", "Do you want to Delete?", "Yes", "No");
+                if (res)
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(" Item Deleted Successfully");
-                    Helpers.Data.GrnDataList.Remove(Selected);
-                    GrnDataList = Helpers.Data.GrnDataList;
-                    SelectedGrnData = new GrnEntry();
-                }
-                else
-                {
-                    DependencyService.Get<IMessage>().ShortAlert("Error while Deleting");
+                    var result = ClearFromDB.DeleteGrnData(App.DatabaseLocation, Selected);
+                    if (result)
+                    {
+                        DependencyService.Get<IMessage>().ShortAlert(" Item Deleted Successfully");
+                        Helpers.Data.GrnDataList.Remove(Selected);
+                        GrnDataList = Helpers.Data.GrnDataList;
+                        SelectedGrnData = new GrnEntry();
+                    }
+                    else
+                    {
+                        DependencyService.Get<IMessage>().ShortAlert("Error while Deleting");
+                    }
                 }
             }
+            catch { }
         }
     }
 }

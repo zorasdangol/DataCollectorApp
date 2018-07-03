@@ -33,6 +33,8 @@ namespace DataCollector.Views.Stock
         {
             var listView = sender as ListView;
             listView.SelectedItem = null;
+            viewModel.RefreshItem();
+            InitializeComponent();
         }
     }
 }

@@ -37,7 +37,7 @@ namespace DataCollector.ViewModels.Stock
                          DataDeletion(value);
                         //_SelectedStockTake = new StockTake();
                     }
-                    OnPropertyChanged("SelectedGrnDataList");
+                    OnPropertyChanged("SelectedStockTake");
                 }
                 catch { }                
             }

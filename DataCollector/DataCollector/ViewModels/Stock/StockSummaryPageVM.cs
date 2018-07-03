@@ -28,8 +28,9 @@ namespace DataCollector.ViewModels.Stock
         {
             try
             {
-                RefreshStockSummaryList();
-            }catch(Exception e)
+                StockTakeList = Helpers.Data.StockTakeList;
+            }
+            catch(Exception e)
             { }           
             
         }
@@ -39,8 +40,11 @@ namespace DataCollector.ViewModels.Stock
             try
             {
                 StockSummaryList = new List<StockSummary>();
-                StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
+                StockTakeList = Helpers.Data.StockTakeList;
                 StockSummaryList = StockValidator.StockTakeToStockSummary(StockTakeList);
+
+
+                //StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
 
                 //if (StockTakeList != null)
                 //{
@@ -61,7 +65,8 @@ namespace DataCollector.ViewModels.Stock
                 //        }
                 //    }
                 //}
-            }catch(Exception e) { }
+            }
+            catch(Exception e) { }
             
         }
 

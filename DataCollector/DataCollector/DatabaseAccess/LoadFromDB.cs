@@ -145,7 +145,7 @@ namespace DataCollector.DatabaseAccess
                         {
                             Helpers.Data.StockTakeList = list.OrderByDescending(x => x.ind).ToList(); ;
                         }
-                        return list;                     
+                        return Helpers.Data.StockTakeList;                     
                     }
                     else if(rows == null)
                     {

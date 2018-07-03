@@ -76,7 +76,10 @@ namespace DataCollector.ViewModels.Stock
             IsButtonVisible = !Helpers.Data.AutoModeEnabled;
             _MainData = new LoadDataCollect();
 
-            LoadFromDB.LoadStockTake(App.DatabaseLocation);
+
+
+            var StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
+            var list = LoadFromDB.LoadStockTake(App.DatabaseLocation);
 
         }
 
