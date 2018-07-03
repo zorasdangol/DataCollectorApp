@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             xmlns:con="clr-namespace:DataCollector.Converters"
+             x:Class="DataCollector.Views.GRN.GoodsReceivePage"
+             Title="GRN Main">
+    <ContentPage.Resources>        
+        <ResourceDictionary>
+            <con:BooleanConverter x:Key="bc"/>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Padding="15,5,15,30">
+            <StackLayout >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0"
+                           Grid.Row="0" 
+                           Text="Store" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Title="Store Name"
+                            x:Name="StorePicker"
+                            Unfocused="StorePicker_Unfocused"
+                            Grid.Column="1"
+                            ItemsSource="{Binding DivisionList}"
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedStore}"
+                            Grid.Row="0"  />
+
+                    <Label Grid.Column="0"
+                           Grid.Row="1" 
+                           Text="Entry No"                            
+                           TextColor="Black"
+                           FontAttributes="Bold"/>     
+                    
+                    
+                    <Picker Title="Entry No"
+                            x:Name="EntryNoPicker"                            
+                            Grid.Column="1"                        
+                            Grid.Row="1"
+                            ItemsSource="{Binding GrnMainList}"
+                            ItemDisplayBinding="{Binding vchrNo}"
+                            SelectedItem="{Binding SelectedGrn}"
+                            TextColor="Black"
+                            IsEnabled="False"
+                            
+                            HorizontalOptions="Start"/>
+                   
+                    <Label Grid.Column="0"
+                           Grid.Row="2" 
+                           Text="Po NO" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>                 
+                    <Picker Title="Po No" 
+                            Grid.Column="1"
+                            Grid.Row="2"
+                            Margin="0"
+                            ItemsSource="{Binding OrderProdList}"
+                            ItemDisplayBinding="{Binding VCHRNO}"
+                            SelectedItem="{Binding SelectedOrderProd,Mode=TwoWay}"
+                            WidthRequest="80"
+                            IsEnabled="{Binding IsUsePoNo}"
+                            HorizontalOptions="Start"/>      
+                    
+                    <controls:CheckBox Grid.Column="1"
+                                       Grid.Row="2"
+                                       HorizontalOptions="End"
+                                       Checked="{Binding IsUsePoNo}" 
+                                       DefaultText="Use Po No"/>
+                                      
+                    <Label Grid.Column="0"
+                           Grid.Row="3"
+                           Text="Supplier" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Column="1"
+                            Grid.Row="3"
+                            ItemsSource="{Binding AcList}"
+                            ItemDisplayBinding="{Binding ACNAME}"
+                            SelectedItem="{Binding SelectedAcList, Mode=TwoWay}"
+                            IsEnabled="{Binding IsUsePoNo,Converter={StaticResource bc}}"
+                            Title ="Supplier"/>
+
+                    <Label Grid.Column="0"
+                           Grid.Row="4"
+                           Text="Date" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <DatePicker Grid.Column="1"
+                                Grid.Row="4"
+                                HorizontalOptions="Start"
+                                MaximumDate="2050-12-12"
+                                MinimumDate="1990-1-1"/>
+
+                    <controls:CheckBox Grid.Column="1"
+                                       HorizontalOptions="End"                                 
+                                       VerticalOptions="CenterAndExpand"
+                                       Grid.Row="4" 
+                                       DefaultText="Tax Invoice"
+                                       Checked="{Binding IsTaxInvoice}"/>
+
+                    <Label Grid.Column="0"
+                           Grid.Row="5" 
+                           Text="Supplier Bill" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Entry Grid.Column="1"
+                           Grid.Row="5" 
+                           Placeholder="Supplier Bill"
+                           Text="{Binding GrnMain.chalanNo}"/>
+
+                    <Label Grid.Column="0"
+                           Grid.Row="6" 
+                           Text="Warehouse" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>                    
+                    <Picker Grid.Column="1"
+                            Grid.Row="6" 
+                            ItemsSource="{Binding WarehouseList}"                            
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedWarehouse}"
+                            Title="Warehouse"/>
+
+                    <Label Grid.Column="0"
+                           Grid.Row="7" 
+                           Text="Remarks" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Entry Grid.Column="1"
+                           Grid.Row="7" 
+                           Placeholder="Remarks"
+                           Text="{Binding GrnMain.remarks}"/>
+                </Grid>
+
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" Margin="10">
+                        <Switch IsToggled="{Binding IsCash }"/>
+                        <Label Text="Cash"
+                           TextColor="Black"
+                           FontSize="Medium"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal" Margin="10">
+                        <Switch IsToggled="{Binding IsCredit }"/>
+                        <Label Text="Credit"
+                           TextColor="Black"
+                           FontSize="Medium"/>
+                    </StackLayout>
+                </StackLayout>               
+
+                <Button x:Name="btn" 
+                        Text="Next" 
+                        Command="{Binding GrnSetCommand}"
+                        HorizontalOptions="Start"
+                        BackgroundColor="Black"
+                        TextColor="White" />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

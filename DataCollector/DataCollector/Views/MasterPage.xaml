@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.MasterPage">
+
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu"     
+                     NavigationPage.HasNavigationBar="True">
+            <ContentPage.Content>
+                <StackLayout HorizontalOptions="CenterAndExpand">
+                    <Image Source="DataCollection.jpg"
+                           Aspect="AspectFit"/>              
+
+                    <ListView x:Name="listView"
+                                  ItemSelected="MenuItemSelected"
+                                  ItemsSource="{Binding MasterMenuList}"
+                                  SeparatorColor="Black"
+                                  SeparatorVisibility="Default"
+                              HasUnevenRows="True"
+                                  SelectedItem="{Binding SelectedMenuItem,Mode=TwoWay}"
+                                  >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout VerticalOptions="CenterAndExpand" Orientation="Horizontal"
+                                                 Padding="10,5">
+                                        <Image Source="{Binding ImageSource}"
+                                               Margin="10,5"/>
+                                        <Label Text="{Binding Name}"
+                                                   TextColor="Black"
+                                                   Margin="5"
+                                                   FontSize="Medium"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackLayout>
+
+            </ContentPage.Content>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <ContentPage Padding="5" 
+                             Title="Data Collector">
+                    <ContentPage.Content >
+                        <StackLayout>
+                            <Label Text="This is home Page"/>
+                        </StackLayout>
+
+                    </ContentPage.Content>
+                </ContentPage>
+            </x:Arguments>
+        </NavigationPage>
+
+
+    </MasterDetailPage.Detail>
+
+</MasterDetailPage>

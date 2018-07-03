@@ -4,7 +4,17 @@
              x:Class="DataCollector.App">
 	<Application.Resources>
 
-		<!-- Application resource dictionary -->
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
 
-	</Application.Resources>
+
+    </Application.Resources>
 </Application>

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.BatchEntryPage"
+             Title="Batch Entry">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand"
+                     VerticalOptions="FillAndExpand"
+                     Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" 
+                       Grid.Column="0"
+                       Text="LocationID:"
+                       TextColor="Black"/>
+                <Picker Grid.Row="0" 
+                        Grid.Column="1"
+                        Title="Select LocationID"
+                        ItemsSource="{Binding LocationList}"
+                        SelectedItem="{Binding SelectedLocation}" 
+                        ItemDisplayBinding="{Binding LOCATIONNAME}"></Picker>
+
+                <Label Grid.Row="1" 
+                       Grid.Column="0" 
+                       Text="Batch No:"
+                       TextColor="Black"/>
+                <Entry Grid.Row="1" 
+                       Grid.Column="1"
+                       Text="{Binding SelectedBatch.BATCHNO}"
+                       Placeholder="Enter Batch No"/>
+
+                <Label Grid.Row="2" 
+                       Grid.Column="0"
+                       Text="UserName"
+                       TextColor="Black"/>
+                <Entry Grid.Row="2" 
+                       Grid.Column="1"
+                       Text="{Binding SelectedBatch.USERNAME}"
+                       Placeholder="Enter UserName"/>
+            </Grid>
+
+            <Button Text="SET" 
+                    TextColor="White" 
+                    BackgroundColor="Black"
+                    HorizontalOptions="StartAndExpand"
+                    Command="{Binding SetCommand}"
+                    />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

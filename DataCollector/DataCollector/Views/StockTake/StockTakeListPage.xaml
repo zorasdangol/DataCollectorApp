@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.Stock.StockTakeListPage"
+             Title="StockTake List">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            <ListView x:Name="listView"
+                      ItemsSource="{Binding StockTakeList}"
+                      SelectedItem="{Binding SelectedStockTake}"                      
+                      ItemSelected="MenuItemSelected"
+                      HasUnevenRows="True"
+                      Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame OutlineColor="Black">
+                                <StackLayout Margin="10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <!--<RowDefinition/>
+                                            <RowDefinition/>-->
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <!--<ColumnDefinition/>
+                                            <ColumnDefinition/>-->
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="0"
+                                               Text="BarCode:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="1"
+                                               Text="{Binding BCODE}"/>
+                                        
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="0"
+                                               Text="Description:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="1"
+                                               Text="{Binding DESCA}"/>
+                                        
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="0"
+                                               Text="Quantity:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="1"
+                                               Text="{Binding QUANTITY}"/>
+
+                                        <Label Grid.Row="3" 
+                                               Grid.Column="0"
+                                               Text="Index:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="3" 
+                                               Grid.Column="1"
+                                               Text="{Binding ind}"/>
+
+                                        <!--<Label Grid.Row="0" 
+                                               Grid.Column="2"
+                                               Text="Batch NO:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="3"
+                                               Text="{Binding BATCHNO}"/>
+
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="2"
+                                               Text="Location:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="3"
+                                               Text="{Binding LOCATIONNAME}"/>
+
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="2"
+                                               Text="Session ID:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="3"
+                                               Text="{Binding SESSIONID}"/>-->
+
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

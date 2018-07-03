@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.MainSettingsPage"
+             Title="Main">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackLayout Orientation="Vertical"
+                             HorizontalOptions="StartAndExpand"
+                             VerticalOptions="FillAndExpand"
+                             
+                             Grid.Row="0"
+                             Grid.Column="0">
+                    <Label Text="Use Auto mode"
+                           TextColor="Black"
+                           FontSize="Medium"/>
+                    <Label Text="Select to use default Auto Mode"
+                           FontSize="Small"/>                    
+                </StackLayout>
+
+                <Switch HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Grid.Row="0"
+                        IsToggled="{Binding AutoModeEnabled}"
+                        Grid.Column="1"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

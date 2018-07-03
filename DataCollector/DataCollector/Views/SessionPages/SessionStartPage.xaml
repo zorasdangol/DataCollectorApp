@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.SessionPages.SessionStartPage"
+             Title="Session Start">
+    <ContentPage.Content>
+        <StackLayout Margin="15"
+                     IsEnabled="{Binding IsButtonEnabled}">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Session ID:"
+                       Grid.Row="0"
+                       Grid.Column="0"/>
+                    <Entry Text="{Binding Session.SESSIONID}"
+                       Placeholder="Session ID"
+                       Grid.Row="0"
+                           IsEnabled="False"
+                       Grid.Column="1"/>
+
+                    <Label Text="User Name:"
+                       Grid.Row="1"
+                       Grid.Column="0"/>
+                    <Entry Text="{Binding Session.USERNAME}"
+                       Placeholder="UserName"
+                       Grid.Row="1"
+                       Grid.Column="1"/>
+
+                    <Label Text="Date:"
+                       Grid.Row="2"
+                       Grid.Column="0"/>
+                    <DatePicker Date="{Binding Session.DATE}"
+                       Grid.Row="2"
+                       Grid.Column="1"/>
+                </Grid>
+
+            <Button Text="Start"
+                    HorizontalOptions="Start"
+                    Command="{Binding StartCommand}"/>
+        </StackLayout>
+            
+    </ContentPage.Content>
+</ContentPage>

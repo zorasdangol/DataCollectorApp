@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.LocationChangePage"
+             Title="Location Change">
+    <ContentPage.Content>
+        <StackLayout Margin="15" 
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="StartAndExpand">            
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="FillAndExpand">
+                <Label Text="Location:" HorizontalOptions="FillAndExpand"/>
+                <Picker Title="Select LocationID"
+                        ItemsSource="{Binding LocationList}"
+                        SelectedItem="{Binding SelectedLocation}" 
+                        HorizontalOptions="FillAndExpand"
+                        ItemDisplayBinding="{Binding LOCATIONNAME}"></Picker>
+            </StackLayout>
+            
+            <Button Text="Set"
+                    Command="{Binding SetCommand}"
+                    HorizontalOptions="Start"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

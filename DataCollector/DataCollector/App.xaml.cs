@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataCollector.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,22 @@ namespace DataCollector
 {
     public partial class App : Application
     {
+        public static string DatabaseLocation = string.Empty;
+
         public App()
         {
             InitializeComponent();
 
-            MainPage = new DataCollector.MainPage();
+            MainPage = new DataCollector.Views.MasterPage();
+        }
+
+        public App(string databaseLocation)
+        {
+            InitializeComponent();
+
+            MainPage = (new MasterPage());
+
+            DatabaseLocation = databaseLocation;
         }
 
         protected override void OnStart()

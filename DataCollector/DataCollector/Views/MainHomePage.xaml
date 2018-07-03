@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.MainHomePage"
+             Title="Data Collector">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand"
+                     Margin="10">
+            <Image Source="dataCollectorImage.png"
+                   HorizontalOptions="CenterAndExpand"
+                   HeightRequest="50"/>
+            <Label Text="This is Home Page"
+                   HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

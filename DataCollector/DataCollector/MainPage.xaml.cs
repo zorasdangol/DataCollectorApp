@@ -12,6 +12,7 @@ namespace DataCollector
         public MainPage()
         {
             InitializeComponent();
+
         }
     }
 }

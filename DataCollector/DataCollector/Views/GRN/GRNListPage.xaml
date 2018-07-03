@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.GRN.GRNListPage"
+             Title="GRN List">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand">
+            <ListView x:Name="listView"
+                      ItemTapped="MenuItemSelected"
+                      ItemsSource="{Binding GrnDataList}"    
+                      SelectedItem="{Binding SelectedGrnData}"
+                      HasUnevenRows="True"
+                      Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame OutlineColor="Black">
+                                <StackLayout Margin="10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <!--<RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>-->
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="0"
+                                               Text="BarCode:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="1"
+                                               Text="{Binding barcode}"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="0"
+                                               Text="Description:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="1"
+                                               Text="{Binding desca}"/>
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="0"
+                                               Text="Quantity:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="2" 
+                                               Grid.Column="1"
+                                               Text="{Binding quantity}"/>
+                                        <!--<Label Grid.Row="3" 
+                                               Grid.Column="0"
+                                               Text="Batch NO:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="3" 
+                                               Grid.Column="1"
+                                               Text="{Binding batchNo}"/>
+
+                                        <Label Grid.Row="4" 
+                                               Grid.Column="0"
+                                               Text="Location:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="4" 
+                                               Grid.Column="1"
+                                               Text="{Binding locationName}"/>
+
+                                        <Label Grid.Row="5" 
+                                               Grid.Column="0"
+                                               Text="Session ID:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="5" 
+                                               Grid.Column="1"
+                                               Text="{Binding sessionId}"/>-->
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

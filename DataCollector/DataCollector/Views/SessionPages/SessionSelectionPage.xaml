@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.SessionPages.SessionSelectionPage"
+             xmlns:con="clr-namespace:DataCollector.Converters"
+             Title="Select Session">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <con:SessionStatusConverter x:Key="SessionStatusConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+            <ListView x:Name="listView"
+                      ItemSelected="MenuItemSelected"
+                      ItemsSource="{Binding SessionList}"
+                      HasUnevenRows="True"
+                      SelectedItem="{Binding SelectedSession}"
+                      >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Session ID:"
+                                           TextColor="Black"
+                                           FontSize="Medium"/>
+                                    <Label Text="{Binding SESSIONID}"
+                                           FontSize="Medium"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="User Name:"
+                                           TextColor="Black"
+                                           FontSize="Medium"/>
+                                    <Label Text="{Binding USERNAME}"
+                                           FontSize="Medium"/>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Status:"
+                                           TextColor="Black"
+                                           FontSize="Medium"/>
+                                    <Label Text="{Binding STATUS, Converter={StaticResource SessionStatusConverter}}"
+                                           FontSize="Medium"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
