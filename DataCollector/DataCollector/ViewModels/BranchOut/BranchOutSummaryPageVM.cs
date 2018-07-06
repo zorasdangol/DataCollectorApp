@@ -1,14 +1,13 @@
-﻿using DataCollector.DatabaseAccess;
-using DataCollectorStandardLibrary.Models;
+﻿using DataCollectorStandardLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCollector.ViewModels.GRN
+namespace DataCollector.ViewModels.BranchOut
 {
-    public class GRNSummaryPageVM:BaseViewModel
+    public class BranchOutSummaryPageVM:BaseViewModel
     {
         private List<StockSummary> _StockSummaryList;
         public List<StockSummary> StockSummaryList
@@ -21,17 +20,11 @@ namespace DataCollector.ViewModels.GRN
             }
         }
 
-        public List<GrnEntry> GrnDataList { get; set; }
+        public List<BranchOutItem> BranchOutItemList { get; set; }
 
-        public GRNSummaryPageVM()
+        public BranchOutSummaryPageVM()
         {
-            try
-            {
-                RefreshStockSummaryList();
-            }
-            catch (Exception e)
-            { }
-
+            RefreshStockSummaryList();
         }
 
         public void RefreshStockSummaryList()
@@ -40,10 +33,10 @@ namespace DataCollector.ViewModels.GRN
             {
                 StockSummaryList = new List<StockSummary>();
                 //GrnDataList = LoadFromDB.LoadGrnDataList(App.DatabaseLocation, Helpers.Data.GrnMain);
-                GrnDataList = Helpers.Data.GrnEntryList;
-                if (GrnDataList != null)
+                BranchOutItemList = Helpers.Data.BranchOutItemList;
+                if (BranchOutItemList != null)
                 {
-                    var filterStock = GrnDataList.GroupBy(x => x.desca).Select(y => y.FirstOrDefault()).ToList();
+                    var filterStock = BranchOutItemList.GroupBy(x => x.desca).Select(y => y.FirstOrDefault()).ToList();
 
                     foreach (var st in filterStock)
                     {
@@ -51,7 +44,7 @@ namespace DataCollector.ViewModels.GRN
                     }
                     foreach (var stockSummary in StockSummaryList)
                     {
-                        foreach (var stock in GrnDataList)
+                        foreach (var stock in BranchOutItemList)
                         {
                             if (stock.desca == stockSummary.DESCA)
                             {

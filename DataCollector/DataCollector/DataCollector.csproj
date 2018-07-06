@@ -54,6 +54,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BatchEntryPageVM.cs" />
+    <Compile Include="ViewModels\BranchOut\BranchOutDetailPageVM.cs" />
+    <Compile Include="ViewModels\BranchOut\BranchOutItemListPageVM.cs" />
+    <Compile Include="ViewModels\BranchOut\BranchOutItemPageVM.cs" />
+    <Compile Include="ViewModels\BranchOut\BranchOutSummaryPageVM.cs" />
+    <Compile Include="ViewModels\BranchOut\BranchOutTabbedPageVM.cs" />
     <Compile Include="ViewModels\GRN\GoodsReceivePageVM.cs" />
     <Compile Include="ViewModels\GRN\GRNEntryPageVM.cs" />
     <Compile Include="ViewModels\GRN\GRNListPageVM.cs" />
@@ -71,6 +76,21 @@
     <Compile Include="ViewModels\Stock\TabbedStockPageVM.cs" />
     <Compile Include="Views\BatchEntryPage.xaml.cs">
       <DependentUpon>BatchEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchOut\BranchOutDetailPage.xaml.cs">
+      <DependentUpon>BranchOutDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchOut\BranchOutItemListPage.xaml.cs">
+      <DependentUpon>BranchOutItemListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchOut\BranchOutItemPage.xaml.cs">
+      <DependentUpon>BranchOutItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchOut\BranchOutSummaryPage.xaml.cs">
+      <DependentUpon>BranchOutSummaryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchOut\BranchOutTabbedPage.xaml.cs">
+      <DependentUpon>BranchOutTabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GRN\GoodsReceivePage.xaml.cs">
       <DependentUpon>GoodsReceivePage.xaml</DependentUpon>
@@ -274,6 +294,36 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\SessionPages\SessionSelectionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BranchOut\BranchOutDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BranchOut\BranchOutTabbedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BranchOut\BranchOutItemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BranchOut\BranchOutItemListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BranchOut\BranchOutSummaryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

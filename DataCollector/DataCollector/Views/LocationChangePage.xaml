@@ -4,12 +4,16 @@
              x:Class="DataCollector.Views.LocationChangePage"
              Title="Location Change">
     <ContentPage.Content>
-        <StackLayout Margin="15" 
+        <StackLayout Margin="20" 
                      HorizontalOptions="FillAndExpand"
                      VerticalOptions="StartAndExpand">            
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="FillAndExpand">
-                <Label Text="Location:" HorizontalOptions="FillAndExpand"/>
+                <Label Text="Location:"
+                       HorizontalOptions="FillAndExpand"
+                       TextColor="Black"
+                       FontSize="Medium"
+                       />
                 <Picker Title="Select LocationID"
                         ItemsSource="{Binding LocationList}"
                         SelectedItem="{Binding SelectedLocation}" 
@@ -19,6 +23,8 @@
             
             <Button Text="Set"
                     Command="{Binding SetCommand}"
+                    BackgroundColor="Black"
+                    TextColor="White"
                     HorizontalOptions="Start"/>
         </StackLayout>
     </ContentPage.Content>

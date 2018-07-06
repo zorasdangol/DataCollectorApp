@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using DataCollector.DatabaseAccess;
 using DataCollector.Views.Stock;
 using DataCollector.Views.SessionPages;
+using DataCollector.Views.BranchOut;
 
 namespace DataCollector.ViewModels
 {
@@ -57,7 +58,7 @@ namespace DataCollector.ViewModels
             MasterMenuList = Helpers.Data.MasterMenuList;
         }
 
-        public  void NavigateToPage()
+        public async void NavigateToPage()
         {
             (App.Current.MainPage as MasterDetailPage).IsPresented = false;
             if (SelectedMenuItem.Index == 1)
@@ -77,12 +78,27 @@ namespace DataCollector.ViewModels
             else if (SelectedMenuItem.Index == 4)
             {
                 Helpers.Data.SelectedMenuType = "4";
-                (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new LocationChangePage());
+                if (Helpers.Data.SelectedBatch != null && !string.IsNullOrEmpty(Helpers.Data.SelectedBatch.BATCHNO))
+                {
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new LocationChangePage());
+                }
+                else
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("First Set Batch ");
+                }
             }
             else if (SelectedMenuItem.Index == 5)
             {
                 Helpers.Data.SelectedMenuType = "5";
-                (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionStartPage());
+                LoadFromDB.LoadBatch(App.DatabaseLocation);
+                if(Helpers.Data.SelectedBatch != null && !string.IsNullOrEmpty(Helpers.Data.SelectedBatch.BATCHNO))
+                {
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionStartPage());
+                }
+                else
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("First Set Batch ");
+                }
             }
             else if (SelectedMenuItem.Index == 6)
             {
@@ -92,48 +108,69 @@ namespace DataCollector.ViewModels
             else if (SelectedMenuItem.Index == 7)
             {
                 Helpers.Data.SelectedMenuType = "7";
-                Helpers.Data.SelectedBatch = null;
-                ClearFromDB.ClearBatchAll(App.DatabaseLocation);
-                DependencyService.Get<IMessage>().LongAlert("Batch and Session Cleared Successfully");
-                (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                if (result)
+                {
+                    Helpers.Data.SelectedBatch = null;
+                    ClearFromDB.ClearBatchAll(App.DatabaseLocation);
+                    DependencyService.Get<IMessage>().LongAlert("Batch and Session Cleared Successfully");
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                }
             }
             else if (SelectedMenuItem.Index == 8)
             {
                 Helpers.Data.SelectedMenuType = "8";
-                Helpers.Data.Session = null;
-                ClearFromDB.ClearSessionAll(App.DatabaseLocation);
-                DependencyService.Get<IMessage>().LongAlert("Session Cleared Successfully");
-                (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                if (result)
+                {
+                    Helpers.Data.Session = null;
+                    ClearFromDB.ClearSessionAll(App.DatabaseLocation);
+                    DependencyService.Get<IMessage>().LongAlert("Session Cleared Successfully");
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                }
             }
             else if (SelectedMenuItem.Index == 9)
             {
                 Helpers.Data.SelectedMenuType = "9";
-                Helpers.Data.Session = null;
-                ClearFromDB.ClearStockTakeAll(App.DatabaseLocation);
-                DependencyService.Get<IMessage>().LongAlert("All StockTake Cleared Successfully");
-                (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                if (result)
+                {
+                    Helpers.Data.Session = null;
+                    ClearFromDB.ClearStockTakeAll(App.DatabaseLocation);
+                    DependencyService.Get<IMessage>().LongAlert("All StockTake Cleared Successfully");
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                }
             }
             else if (SelectedMenuItem.Index == 10)
             {
-                CheckBatchAndSession("10", new GoodsReceivePage());
+                await CheckEditOrNew("10", new GoodsReceivePage());
+            }
+
+            else if (SelectedMenuItem.Index == 13)
+            {
+                await CheckEditOrNew("13", new BranchOutDetailPage());               
             }
             else if(SelectedMenuItem.Index == 11)
             {
                 Helpers.Data.SelectedMenuType = "11";
-                Helpers.Data.GrnDataList = null;
-                ClearFromDB.ClearGrnDataList(App.DatabaseLocation);
-                DependencyService.Get<IMessage>().LongAlert("All GrnData Cleared Successfully");
-                (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                var result = await App.Current.MainPage.DisplayAlert("Choose","Are you sure to delete? ","Yes","No");
+                if (result)
+                {
+                    Helpers.Data.GrnEntryList = null;
+                    ClearFromDB.ClearGrnDataList(App.DatabaseLocation);
+                    DependencyService.Get<IMessage>().LongAlert("All GrnData Cleared Successfully");
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                }
             }
             else if(SelectedMenuItem.Index == 12)
             {
                 Helpers.Data.SelectedMenuType = "12";
                 (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionSelectionPage());
             }
+           
         }
-
-
-        public async  void CheckBatchAndSession(string selectedIndex, Page page)
+        
+        public void CheckBatchAndSession(string selectedIndex, Page page)
         {
             Helpers.Data.SelectedMenuType = selectedIndex;
             LoadFromDB.LoadBatch(App.DatabaseLocation);
@@ -149,32 +186,32 @@ namespace DataCollector.ViewModels
                 (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionStartPage());
             }
             else
-            {                
-                if(SelectedMenuItem.Index == 2)
-                {
-                    Helpers.Data.EntryMode = "";
-                    (App.Current.MainPage ) = (page);
-                    return;
-                }
+            {     
+                Helpers.Data.EntryMode = "";
+                (App.Current.MainPage ) = (page);                        
+            }
+        }
 
-                var actionSheet = await App.Current.MainPage.DisplayActionSheet("Select New or Edit", "Cancel", null, "Edit", "New");
-                switch (actionSheet)
-                {
-                    case "Cancel":
-                        Helpers.Data.EntryMode = "";
-                        break;
-                    case "Edit":
-                        Helpers.Data.EntryMode = "Edit";
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(page);
-                        break;
-                    case "New":
-                        Helpers.Data.EntryMode = "New";
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(page);
-                        break;       
-                }
+        public async Task CheckEditOrNew(string selectedIndex, Page page)
+        {
+            var actionSheet = await App.Current.MainPage.DisplayActionSheet("Select New or Edit", "Cancel", null, "Edit", "New");
+            switch (actionSheet)
+            {
+                case "Cancel":
+                    Helpers.Data.EntryMode = "";
+                    break;
+                case "Edit":
+                    Helpers.Data.EntryMode = "Edit";
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(page);
+                    break;
+                case "New":
+                    Helpers.Data.EntryMode = "New";
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(page);
+                    break;
             }
 
         }
+        
 
     }
 }

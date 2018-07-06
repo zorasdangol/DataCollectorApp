@@ -23,16 +23,16 @@ namespace DataCollector.ViewModels.GRN
             }
         }
         
-        private List<StockTake> _StockTakeList;
-        public List<StockTake> StockTakeList
-        {
-            get { return _StockTakeList; }
-            set
-            {
-                _StockTakeList = value;
-                OnPropertyChanged("StockTakeList");
-            }
-        }
+        //private List<StockTake> _StockTakeList;
+        //public List<StockTake> StockTakeList
+        //{
+        //    get { return _StockTakeList; }
+        //    set
+        //    {
+        //        _StockTakeList = value;
+        //        OnPropertyChanged("StockTakeList");
+        //    }
+        //}
 
         private GrnEntry _SelectedGrnData;
         public GrnEntry SelectedGrnData
@@ -61,7 +61,7 @@ namespace DataCollector.ViewModels.GRN
         {
             //GrnDataList = LoadFromDB.LoadGrnDataList(App.DatabaseLocation,Helpers.Data.GrnMain);
 
-            GrnDataList = Helpers.Data.GrnDataList;
+            GrnDataList = Helpers.Data.GrnEntryList;
            
         }
 
@@ -76,8 +76,9 @@ namespace DataCollector.ViewModels.GRN
                     if (result)
                     {
                         DependencyService.Get<IMessage>().ShortAlert(" Item Deleted Successfully");
-                        Helpers.Data.GrnDataList.Remove(Selected);
-                        GrnDataList = Helpers.Data.GrnDataList;
+                        //Helpers.Data.GrnEntryList.Remove(Selected);
+                        //GrnDataList = Helpers.Data.GrnDataList;
+                        GrnDataList = LoadFromDB.LoadGrnEntryList(App.DatabaseLocation,Helpers.Data.GrnMain);
                         SelectedGrnData = new GrnEntry();
                     }
                     else

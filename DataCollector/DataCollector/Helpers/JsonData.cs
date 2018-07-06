@@ -73,7 +73,8 @@ namespace DataCollector.Helpers
             new Warehouse(){ NAME = "Chabahil"},
             new Warehouse(){ NAME = "LaganKhel"},
 
-        };      
+        };
+
 
         public static List<AcList> AcList = new List<AcList>()
         {
@@ -96,5 +97,37 @@ namespace DataCollector.Helpers
             new OrderProd(){ VCHRNO = "PO8" , SUPPLIERCODE = "LBG9142V" },
             new OrderProd(){ VCHRNO = "PO9" , SUPPLIERCODE = "LBG9144V" },
         };
-    }   
+
+        public static List<PickingDetail> PickingDetailList = new List<PickingDetail>()
+        {
+            new PickingDetail(){ pickNo = "PI1", division = "Bhaisepati", wareHouse = "Bouddha" },
+            new PickingDetail(){ pickNo = "PI2", division = "LaganKhel", wareHouse = "Main Store" },
+            new PickingDetail(){ pickNo = "PI3", division = "New Baneshwor", wareHouse = "Baneswor" },
+            new PickingDetail(){ pickNo = "PI4", division = "Bhaisepati", wareHouse = "Kapan" },
+        };
+        
+        //public static List<StockTakeMax> StockTakeMaxList = new List<StockTakeMax>()
+        //{
+        //    new StockTakeMax{ pickNo="PI1", QUANTITY = 4, BCODE = "1234", MCODE = "M0123", DESCA="boots", RATE=123.123, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI1", QUANTITY = 6, BCODE = "12333", MCODE = "M0124", DESCA="Bagss", RATE=12.123 , UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI1", QUANTITY = 3, BCODE = "OSM60108", MCODE = "M0125", DESCA="TEstd", RATE=1232.4 , UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI1", QUANTITY = 6, BCODE = "134535", MCODE = "M0126", DESCA="Shirt", RATE=124.123, UNIT = "PC" },
+
+        //    new StockTakeMax{ pickNo="PI2", QUANTITY = 2, BCODE = "#A76EE", MCODE = "M0127", DESCA="coats", RATE=9125.13, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI2", QUANTITY = 6, BCODE = "25123", MCODE = "M0128", DESCA="pants", RATE=1375.12, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI2", QUANTITY = 4, BCODE = "2365123", MCODE = "M0129", DESCA="wersd", RATE=3232.00, UNIT = "PC" },
+
+        //    new StockTakeMax{ pickNo="PI3", QUANTITY = 4, BCODE = "129873486513", MCODE = "M0130", DESCA="hatsd", RATE=923.123, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI3", QUANTITY = 4, BCODE = "123344865123", MCODE = "M0131", DESCA="belts", RATE=573.123, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI3", QUANTITY = 3, BCODE = "25123", MCODE = "M0128", DESCA="pants", RATE=1375.12, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI3", QUANTITY = 4, BCODE = "2365123", MCODE = "M0129", DESCA="wersd", RATE=3232.00, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI3", QUANTITY = 6, BCODE = "129873486513", MCODE = "M0130", DESCA="hatsd", RATE=923.123, UNIT = "PC" },
+
+        //    new StockTakeMax{ pickNo="PI4", QUANTITY = 4, BCODE = "123344865123", MCODE = "M0131", DESCA="belts", RATE=573.123, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI4", QUANTITY = 4, BCODE = "1234", MCODE = "M0123", DESCA="boots", RATE=123.123, UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI4", QUANTITY = 6, BCODE = "12333", MCODE = "M0124", DESCA="Bagss", RATE=12.123 , UNIT = "PC" },
+        //    new StockTakeMax{ pickNo="PI4", QUANTITY = 3, BCODE = "OSM60108", MCODE = "M0125", DESCA="TEstd", RATE=1232.4 , UNIT = "PC" },
+
+        //};
+    }
 }

@@ -61,14 +61,14 @@ namespace DataCollector.ViewModels.GRN
             }
         }
 
-        private GrnEntry _GrnMainData;
-        public GrnEntry GrnMainData
+        private GrnEntry _GrnEntry;
+        public GrnEntry GrnEntry
         {
-            get { return _GrnMainData; }
+            get { return _GrnEntry; }
             set
             {
-                _GrnMainData = value;
-                OnPropertyChanged("GrnMainData");
+                _GrnEntry = value;
+                OnPropertyChanged("GrnEntry");
             }
         }        
 
@@ -82,10 +82,11 @@ namespace DataCollector.ViewModels.GRN
                 BarCodeList = Helpers.JsonData.BarCodeList;
                 AddCommand = new Command(ExecuteAddCommand);
                 IsButtonVisible = !Helpers.Data.AutoModeEnabled;
-                GrnMainData = new GrnEntry();
-                GrnMainData.SetInitialGrnData(Helpers.Data.GrnMain);
+                GrnEntry = new GrnEntry();
+                StockTake = new StockTake();
+                GrnEntry.SetInitialGrnData(Helpers.Data.GrnMain);
                 
-                LoadFromDB.LoadGrnDataList(App.DatabaseLocation,Helpers.Data.GrnMain);
+                LoadFromDB.LoadGrnEntryList(App.DatabaseLocation,Helpers.Data.GrnMain);
             }
             catch { }
 
@@ -149,9 +150,10 @@ namespace DataCollector.ViewModels.GRN
                             DESCA = BarCode.DESCA,
                             QUANTITY = 1
                         };
-                        StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-                        StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                        StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+
+                        //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
+                        //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
+                        //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
 
                         SavingGrnToSqlite();
                     }
@@ -176,23 +178,23 @@ namespace DataCollector.ViewModels.GRN
                     DependencyService.Get<IMessage>().ShortAlert(response.Message);
                 else if(response.status == "ok")
                 {
-                    GrnMainData.barcode = SelectedBarCode.BCODE;
-                    GrnMainData.mcode = StockTake.MCODE;
-                    GrnMainData.desca = StockTake.DESCA;
-                    GrnMainData.quantity = StockTake.QUANTITY.ToString();
+                    GrnEntry.barcode = SelectedBarCode.BCODE;
+                    GrnEntry.mcode = StockTake.MCODE;
+                    GrnEntry.desca = StockTake.DESCA;
+                    GrnEntry.quantity = StockTake.QUANTITY.ToString();
 
-                    GrnMainData.batchNo = Helpers.Data.SelectedBatch.BATCHNO;
-                    GrnMainData.locationName = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                    GrnMainData.sessionId = Helpers.Data.Session.SESSIONID;
+                    //GrnEntry.batchNo = Helpers.Data.SelectedBatch.BATCHNO;
+                    //GrnEntry.locationName = Helpers.Data.SelectedBatch.LOCATIONNAME;
+                    //GrnEntry.sessionId = Helpers.Data.Session.SESSIONID;
 
-                    bool res = InsertIntoDB.InsertGrnData(App.DatabaseLocation, GrnMainData);
+                    bool res = InsertIntoDB.InsertGrnEntry(App.DatabaseLocation, GrnEntry);
                     if (res == true)
                     {
                         DependencyService.Get<IMessage>().LongAlert("Successfully saved StockTake ");
 
-                        GrnMainData.mcode = "";
-                        GrnMainData.barcode = "";
-                        GrnMainData.quantity = "0";
+                        GrnEntry.mcode = "";
+                        GrnEntry.barcode = "";
+                        GrnEntry.quantity = "0";
 
                         SelectedBarCode = new BarCode();
                     }

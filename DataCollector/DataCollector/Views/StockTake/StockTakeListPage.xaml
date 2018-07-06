@@ -16,54 +16,54 @@
                     <DataTemplate>
                         <ViewCell>
                             <Frame OutlineColor="Black">
-                                <StackLayout Margin="10">
+                                <StackLayout Margin="5">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
+                                            <!--<RowDefinition/>-->
+                                            <!--<RowDefinition/>
+                                            <RowDefinition/>-->
                                             <!--<RowDefinition/>
                                             <RowDefinition/>-->
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
-                                            <!--<ColumnDefinition/>
-                                            <ColumnDefinition/>-->
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         
                                         <Label Grid.Row="0" 
                                                Grid.Column="0"
-                                               Text="BarCode:"
+                                               Text="BarCode:"                                               
                                                FontAttributes="Bold"/>
                                         <Label Grid.Row="0" 
                                                Grid.Column="1"
                                                Text="{Binding BCODE}"/>
                                         
-                                        <Label Grid.Row="1" 
+                                        <!--<Label Grid.Row="1" 
                                                Grid.Column="0"
-                                               Text="Description:"
+                                               Text="Dscptn:"
                                                FontAttributes="Bold"/>
                                         <Label Grid.Row="1" 
                                                Grid.Column="1"
-                                               Text="{Binding DESCA}"/>
+                                               Text="{Binding DESCA}"/>-->
                                         
-                                        <Label Grid.Row="2" 
-                                               Grid.Column="0"
-                                               Text="Quantity:"
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="2"
+                                               Text="Qnty:"
                                                FontAttributes="Bold"/>
-                                        <Label Grid.Row="2" 
-                                               Grid.Column="1"
+                                        <Label Grid.Row="0" 
+                                               Grid.Column="3"
                                                Text="{Binding QUANTITY}"/>
 
-                                        <Label Grid.Row="3" 
+                                        <!--<Label Grid.Row="3" 
                                                Grid.Column="0"
                                                Text="Index:"
                                                FontAttributes="Bold"/>
                                         <Label Grid.Row="3" 
                                                Grid.Column="1"
-                                               Text="{Binding ind}"/>
+                                               Text="{Binding ind}"/>-->
 
                                         <!--<Label Grid.Row="0" 
                                                Grid.Column="2"
@@ -90,6 +90,16 @@
                                                Text="{Binding SESSIONID}"/>-->
 
                                     </Grid>
+
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="0"
+                                               Text="Desc:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" 
+                                               Grid.Column="1"
+                                               Text="{Binding DESCA}"/>
+                                    </StackLayout>
                                 </StackLayout>
                             </Frame>
                         </ViewCell>

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DataCollector.Views.GRN.GRNEntryPage"
+             x:Class="DataCollector.Views.BranchOut.BranchOutItemPage"
              xmlns:control="clr-namespace:DataCollector.Controls"
-             Title="GRN Entry">
+             Title="Branch Out">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -37,28 +37,27 @@
                         Grid.Column="0"
                        TextColor="Black"   
                        FontAttributes="Bold"/>
-                <Label Text="{Binding GrnEntry.vchrNo}"
+                <Label Text="{Binding BranchOutItem.vchrNo}"
                        Grid.Row="0"
                        Grid.Column="1"/>
 
-
-                <Label Text="Po No"
+                <Label Text="From Div:"
                        Grid.Row="1"
                        Grid.Column="0"
                        HorizontalOptions="Start"
                        TextColor="Black"
                        FontAttributes="Bold"/>
-                <Label Text="{Binding GrnEntry.refOrdBill}"
+                <Label Text="{Binding BranchOutItem.division}"
                        Grid.Row="1"
                        Grid.Column="1"/>
 
 
-                <Label Text="Supplier"
+                <Label Text="To Div:"
                        TextColor="Black"
                        Grid.Row="2"
                        Grid.Column="0"
                        FontAttributes="Bold"/>
-                <Label Text="{Binding GrnEntry.supplierName}"
+                <Label Text="{Binding BranchOutItem.divisionTo}"
                        Grid.Row="2"
                        Grid.Column="1"/>
             </Grid>

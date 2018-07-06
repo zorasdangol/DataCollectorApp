@@ -6,12 +6,12 @@ using System.Text;
 
 namespace DataCollectorStandardLibrary.DataValidationLayer
 {
-    public class StockValidator
+    public class StockTakeValidator
     {
 
-        public static FunctionResponse CheckInputData(StockTake StockTake)
+        public static FunctionResponse CheckInputData(StockTake StockTake, BarCode SelectedBarCode)
         {
-            if (StockTake == null)
+            if (StockTake == null || string.IsNullOrEmpty(SelectedBarCode.BCODE))
                 return new FunctionResponse() { status = "error", Message = "Empty stockTake" };
             else if (string.IsNullOrEmpty(StockTake.MCODE))
                 return new FunctionResponse() { status = "error", Message = "Enter Correct BarCode First" };

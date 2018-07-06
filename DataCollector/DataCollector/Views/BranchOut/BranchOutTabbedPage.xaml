@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.BranchOut.BranchOutTabbedPage"
+                  xmlns:local="clr-namespace:DataCollector.Views.BranchOut">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <ContentPage.Content>
+                <StackLayout>
+                    <Image Source="DataCollection.jpg"
+                           Aspect="AspectFit"/>
+
+                    <ListView x:Name="listView"                               
+                              ItemsSource="{Binding GrnMenuList}"
+                              SeparatorColor="Black"
+                              HasUnevenRows="True"
+                              ItemSelected="MenuItemSelected"
+                              SelectedItem="{Binding SelectedMenuItem}"
+                              >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Padding="10,5">
+                                        <Label Text="{Binding Name}"
+                                               TextColor="Black"
+                                               Margin="5"
+                                               FontSize="Medium"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+
+    </MasterDetailPage.Master>
+
+
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <TabbedPage Padding="5"
+                            Title="Branch Out">
+                    <local:BranchOutItemPage/>
+                    <local:BranchOutItemListPage/>
+                    <local:BranchOutSummaryPage/>
+                </TabbedPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

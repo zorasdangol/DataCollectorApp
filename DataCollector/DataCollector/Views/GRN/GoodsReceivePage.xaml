@@ -113,8 +113,7 @@
                     <DatePicker Grid.Column="1"
                                 Grid.Row="4"
                                 HorizontalOptions="Start"
-                                MaximumDate="2050-12-12"
-                                MinimumDate="1990-1-1"/>
+                                Date="{Binding GrnMain.trnDate}"/>
 
                     <controls:CheckBox Grid.Column="1"
                                        HorizontalOptions="End"                                 

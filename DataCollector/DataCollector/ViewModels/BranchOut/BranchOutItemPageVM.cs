@@ -1,23 +1,20 @@
 ﻿using DataCollector.DatabaseAccess;
 using DataCollector.Interfaces;
+using DataCollectorStandardLibrary.DataValidationLayer;
 using DataCollectorStandardLibrary.Models;
-using DataCollector.Views;
-using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using DataCollectorStandardLibrary;
-using DataCollectorStandardLibrary.DataValidationLayer;
 
-namespace DataCollector.ViewModels.Stock
+namespace DataCollector.ViewModels.BranchOut
 {
-    public class StockTakePageVM:BaseViewModel
+    public class BranchOutItemPageVM:BaseViewModel
     {
         private List<BarCode> _BarCodeList;
-       
+
         public List<BarCode> BarCodeList
         {
             get { return _BarCodeList; }
@@ -27,7 +24,7 @@ namespace DataCollector.ViewModels.Stock
                 OnPropertyChanged("BarCodeList");
             }
         }
-                   
+
         private StockTake _StockTake;
         public StockTake StockTake
         {
@@ -39,6 +36,7 @@ namespace DataCollector.ViewModels.Stock
             }
         }
 
+
         private BarCode _SelectedBarCode;
         public BarCode SelectedBarCode
         {
@@ -48,7 +46,7 @@ namespace DataCollector.ViewModels.Stock
                 if (value == null)
                     return;
                 _SelectedBarCode = value;
-                OnPropertyChanged("SelectedBarCode");                               
+                OnPropertyChanged("SelectedBarCode");
             }
         }
 
@@ -63,31 +61,41 @@ namespace DataCollector.ViewModels.Stock
             }
         }
 
-        private object _MainData;
+        private BranchOutItem _BranchOutItem;
+        public BranchOutItem BranchOutItem
+        {
+            get { return _BranchOutItem; }
+            set
+            {
+                _BranchOutItem = value;
+                OnPropertyChanged("BranchOutItem");
+            }
+        }
 
         public Command AddCommand { get; set; }
 
-        public StockTakePageVM()
-        {           
-            StockTake = new StockTake();
-            SelectedBarCode = new BarCode();
-            BarCodeList = Helpers.JsonData.BarCodeList;
-            AddCommand = new Command(ExecuteAddCommand);
-            IsButtonVisible = !Helpers.Data.AutoModeEnabled;
-            _MainData = new LoadDataCollect();
+        public BranchOutItemPageVM()
+        {
+            try
+            {
+                SelectedBarCode = new BarCode();
+                BarCodeList = Helpers.JsonData.BarCodeList;
+                AddCommand = new Command(ExecuteAddCommand);
+                IsButtonVisible = !Helpers.Data.AutoModeEnabled;
+                BranchOutItem = new BranchOutItem();
+                StockTake = new StockTake();
+                BranchOutItem.SetInitialBranchOutItem(Helpers.Data.BranchOutDetail);
 
-            LoadFromDB.LoadBatch(App.DatabaseLocation);
-            LoadFromDB.LoadSession(App.DatabaseLocation);
-            var StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
-            var list = LoadFromDB.LoadStockTake(App.DatabaseLocation);
-
+                LoadFromDB.LoadBranchOutItemList(App.DatabaseLocation, Helpers.Data.BranchOutDetail);
+            }
+            catch { }
         }
 
         public void ExecuteAddCommand()
         {
-            SaveToSqlite();           
+            SavingGrnToSqlite();
         }
-        
+
         public void OnEnterPressed()
         {
             try
@@ -104,23 +112,20 @@ namespace DataCollector.ViewModels.Stock
                         DESCA = BarCode.DESCA,
                         QUANTITY = 1
                     };
-                    StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-                    StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                    StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().LongAlert("InCorrect BarCode");
-
+                    DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
                     StockTake = new StockTake();
                     SelectedBarCode = new BarCode();
-                    //SelectedBarCode.BCODE = EnteredBCODE;
+                    //SelectedBarCode.BCODE = EnteredBCODE;                   
 
                 }
 
                 if (Helpers.Data.AutoModeEnabled)
                 {
-                    SaveToSqlite();
+                    SavingGrnToSqlite();
                 }
             }
             catch (Exception e) { }
@@ -143,49 +148,62 @@ namespace DataCollector.ViewModels.Stock
                             DESCA = BarCode.DESCA,
                             QUANTITY = 1
                         };
-                        StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-                        StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                        StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
 
+                        //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
+                        //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
+                        //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+
+                        SavingGrnToSqlite();
                     }
                     else
                     {
                         StockTake = new StockTake();
                         SelectedBarCode = new BarCode();
-                        SelectedBarCode.BCODE = newText;
+                        //SelectedBarCode.BCODE = newText;
                     }
                 }
             }
             catch (Exception e) { }
         }
 
-        public void SaveToSqlite()
+        public void SavingGrnToSqlite()
         {
             try
             {
-                var response = StockTakeValidator.CheckInputData(StockTake,SelectedBarCode);
+                var response = StockTakeValidator.CheckInputData(StockTake, SelectedBarCode);
                 if (response.status == "error")
-                {
                     DependencyService.Get<IMessage>().ShortAlert(response.Message);
-                }
                 else if (response.status == "ok")
                 {
+                    BranchOutItem.barcode = SelectedBarCode.BCODE;
+                    BranchOutItem.mcode = StockTake.MCODE;
+                    BranchOutItem.desca = StockTake.DESCA;
+                    BranchOutItem.quantity = StockTake.QUANTITY.ToString();
+                    
+                    //BranchOutItem.batchNo = Helpers.Data.SelectedBatch.BATCHNO;
+                    //BranchOutItem.locationName = Helpers.Data.SelectedBatch.LOCATIONNAME;
+                    //BranchOutItem.sessionId = Helpers.Data.Session.SESSIONID;
+
+                    bool res = InsertIntoDB.InsertBranchOutItem(App.DatabaseLocation, BranchOutItem);
+                    if (res == true)
                     {
-                        bool res = InsertIntoDB.InsertStockTake(App.DatabaseLocation, StockTake);
-                        if (res == true)
-                        {
-                            DependencyService.Get<IMessage>().LongAlert("Successfully saved StockTake ");
-                            StockTake = new StockTake();
-                            SelectedBarCode = new BarCode();
-                        }
-                        else
-                            DependencyService.Get<IMessage>().ShortAlert("Couldnot save StockTake in Sqlite database");
+                        DependencyService.Get<IMessage>().LongAlert("Successfully saved StockTake ");
+
+                        BranchOutItem.mcode = "";
+                        BranchOutItem.barcode = "";
+                        BranchOutItem.quantity = "0";
+
+                        SelectedBarCode = new BarCode();
                     }
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Couldnot save StockTake in Sqlite database");
                 }
             }
-            catch
-            { }
+            catch { }
         }
+
+
+
 
     }
 }

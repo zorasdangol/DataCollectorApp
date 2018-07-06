@@ -45,6 +45,8 @@ namespace DataCollector.ViewModels.Stock
 
         public StockTakeListPageVM()
         {
+            LoadFromDB.LoadBatch(App.DatabaseLocation);
+            LoadFromDB.LoadSession(App.DatabaseLocation);
             //StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
             StockTakeList = Helpers.Data.StockTakeList;
         }
@@ -67,10 +69,9 @@ namespace DataCollector.ViewModels.Stock
                     {
                         DependencyService.Get<IMessage>().ShortAlert("Item Deleted Successfully");
                         Helpers.Data.StockTakeList.Remove(Selected);
-                        StockTakeList = Helpers.Data.StockTakeList;
-                        OnPropertyChanged("StockTakeList");
+                        StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
+                        //StockTakeList = Helpers.Data.StockTakeList;
                         SelectedStockTake = new StockTake();
-
                     }
                     else
                     {

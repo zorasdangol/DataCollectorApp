@@ -18,7 +18,9 @@
 
                 <Label Text="Session ID:"
                        Grid.Row="0"
-                       Grid.Column="0"/>
+                       Grid.Column="0"
+                       TextColor="Black"
+                       FontSize="Medium"/>
                 <Entry Text="{Binding Session.SESSIONID}"
                        Placeholder="Session ID"
                        Grid.Row="0"
@@ -26,7 +28,9 @@
                 
                 <Label Text="User Name:"
                        Grid.Row="1"
-                       Grid.Column="0"/>
+                       Grid.Column="0"
+                       TextColor="Black"
+                       FontSize="Medium"/>
                 <Entry Text="{Binding Session.USERNAME}"
                        Placeholder="UserName"
                        Grid.Row="1"
@@ -34,7 +38,9 @@
 
                 <Label Text="Date:"
                        Grid.Row="2"
-                       Grid.Column="0"/>
+                       Grid.Column="0"
+                       TextColor="Black"
+                       FontSize="Medium"/>
                 <DatePicker Date="{Binding Session.DATE}"
                        Grid.Row="2"
                        Grid.Column="1"/>
@@ -42,6 +48,8 @@
 
             <Button Text="End"
                     HorizontalOptions="Start"
+                    BackgroundColor="Black"
+                    TextColor="White"
                     Command="{Binding EndCommand}"/>
 
         </StackLayout>

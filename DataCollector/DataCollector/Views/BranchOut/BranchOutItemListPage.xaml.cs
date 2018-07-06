@@ -1,5 +1,4 @@
-﻿using DataCollector.ViewModels;
-using DataCollector.ViewModels.Stock;
+﻿using DataCollector.ViewModels.BranchOut;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +8,16 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DataCollector.Views.Stock
+namespace DataCollector.Views.BranchOut
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StockTakeListPage : ContentPage
+    public partial class BranchOutItemListPage : ContentPage
     {
-        public StockTakeListPageVM viewModel { get; set; }
-        public StockTakeListPage()
+        public BranchOutItemListPageVM viewModel { get; set; }
+        public BranchOutItemListPage()
         {
             InitializeComponent();
-            BindingContext = viewModel = new StockTakeListPageVM();
+            BindingContext = viewModel = new BranchOutItemListPageVM();
         }
 
         protected override void OnAppearing()
@@ -31,8 +30,9 @@ namespace DataCollector.Views.Stock
 
         public void MenuItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
-            var listview = sender as ListView;
+            var listView = sender as ListView;
             listView.SelectedItem = null;
         }
+
     }
 }

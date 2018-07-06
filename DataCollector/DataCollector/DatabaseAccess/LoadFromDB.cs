@@ -27,7 +27,6 @@ namespace DataCollector.DatabaseAccess
                             {
                                 Helpers.Data.SelectedBatch = new Batch(batch);
                                 return batch;
-
                             }
                         }
                     }
@@ -59,36 +58,9 @@ namespace DataCollector.DatabaseAccess
                 }
             }
             catch { return new List<Session>(); }
-        }
+        }     
 
-
-        //public static List<LoadGrnCollect> LoadGrnDataList(string DatabaseLocation, GrnMain GrnMain)
-        //{
-        //    try
-        //    {
-        //        var list = new List<LoadGrnCollect>();
-        //        using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
-        //        {
-        //            conn.CreateTable<LoadGrnCollect>();
-        //            var rows = conn.Table<LoadGrnCollect>().ToList();
-        //            if (rows.Count > 0)
-        //            {
-        //                list = Helpers.Data.GrnDataList = rows.Where(x => ((x.division == GrnMain.division) && (x.vchrNo == GrnMain.vchrNo))).ToList();
-        //                return list;
-        //            }
-        //        }
-        //        Helpers.Data.GrnDataList = null;
-        //        return null;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Helpers.Data.GrnDataList = null;
-        //        return null;
-        //    }
-        //}
-
-
-        public static List<GrnEntry> LoadGrnDataList(string DatabaseLocation, GrnMain GrnMain)
+        public static List<GrnEntry> LoadGrnEntryList(string DatabaseLocation, GrnMain GrnMain)
         {
             try
             {
@@ -103,25 +75,58 @@ namespace DataCollector.DatabaseAccess
                         
                         if(list == null)
                         {
-                            Helpers.Data.GrnDataList = new List<GrnEntry>();
+                            Helpers.Data.GrnEntryList = new List<GrnEntry>();
                         }
                         else
                         {
-                            Helpers.Data.GrnDataList = list.OrderByDescending(x => x.ind).ToList(); ;
+                            Helpers.Data.GrnEntryList = list.OrderByDescending(x => x.ind).ToList(); ;
                         }
                         return list;
                     }
                 }
-                Helpers.Data.GrnDataList = new List<GrnEntry>(); ;
+                Helpers.Data.GrnEntryList = new List<GrnEntry>(); 
                 return null;
             }
             catch (Exception e)
             {
-                Helpers.Data.GrnDataList = new List<GrnEntry>(); ;
+                Helpers.Data.GrnEntryList = new List<GrnEntry>(); 
                 return null;
             }
         }
 
+        public static List<BranchOutItem> LoadBranchOutItemList(string DatabaseLocation, BranchOutDetail BranchOutDetail)
+        {
+            try
+            {
+                var list = new List<BranchOutItem>();
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchOutItem>();
+                    var rows = conn.Table<BranchOutItem>().ToList();
+                    if (rows.Count > 0)
+                    {
+                        list = rows.Where(x => ((x.division == BranchOutDetail.division) && (x.vchrNo == BranchOutDetail.vchrNo))).ToList();
+
+                        if (list == null)
+                        {
+                            Helpers.Data.BranchOutItemList = new List<BranchOutItem>();
+                        }
+                        else
+                        {
+                            Helpers.Data.BranchOutItemList = list.OrderByDescending(x => x.ind).ToList(); ;
+                        }
+                        return list;
+                    }
+                }
+                Helpers.Data.BranchOutItemList = new List<BranchOutItem>();
+                return null;
+            }
+            catch (Exception e)
+            {
+                Helpers.Data.BranchOutItemList = new List<BranchOutItem>();
+                return null;
+            }
+        }
 
 
         public static List<StockTake> LoadStockTake(string DatabaseLocation)
@@ -133,6 +138,8 @@ namespace DataCollector.DatabaseAccess
                 {
                     conn.CreateTable<StockTake>();
                     var rows = conn.Table<StockTake>().ToList();
+                    var batch = Helpers.Data.SelectedBatch;
+                    var session = Helpers.Data.Session;
                     if (rows.Count > 0)
                     {
                         list = rows.Where(x => ((x.BATCHNO == Helpers.Data.SelectedBatch.BATCHNO) && (x.SESSIONID == Helpers.Data.Session.SESSIONID))).ToList();
@@ -181,7 +188,7 @@ namespace DataCollector.DatabaseAccess
                         {
                             if (session.STATUS == 0)
                             {
-                                Helpers.Data.Session = session;
+                                Helpers.Data.Session = new Session(session);
                                 return session;
                             }
                         }
@@ -197,25 +204,25 @@ namespace DataCollector.DatabaseAccess
             }
         }
 
-        public static List<GrnMain> LoadGrnMainList(string DatabaseLocation)
+        public static List<BranchOutDetail> LoadBranchOutDetailList(string DatabaseLocation)
         {
             try
             {
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
-                    conn.CreateTable<GrnMain>();
-                    var rows = conn.Table<GrnMain>().ToList();
+                    conn.CreateTable<BranchOutDetail>();
+                    var rows = conn.Table<BranchOutDetail>().ToList();
 
                     if (rows.Count > 0)
                     {
-                        Helpers.Data.GrnMainList = rows;
+                        Helpers.Data.BranchOutDetailList = rows;
                         return rows;
                     }
-                    Helpers.Data.GrnMainList = new List<GrnMain>();
-                    return null;
+                    Helpers.Data.BranchOutDetailList = new List<BranchOutDetail>();
+                    return Helpers.Data.BranchOutDetailList;
                 }
             }
-            catch (Exception e) { Helpers.Data.GrnMainList = new List<GrnMain>(); return null; }
+            catch (Exception e) { Helpers.Data.BranchOutDetailList = new List<BranchOutDetail>(); return Helpers.Data.BranchOutDetailList; }
         }
 
 

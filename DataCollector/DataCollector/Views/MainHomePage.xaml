@@ -9,7 +9,9 @@
             <Image Source="dataCollectorImage.png"
                    HorizontalOptions="CenterAndExpand"
                    HeightRequest="50"/>
-            <Label Text="This is Home Page"
+            <Label Text="Data Collector"
+                   FontSize="Large"
+                   TextColor="Black"
                    HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
     </ContentPage.Content>

@@ -18,7 +18,7 @@
     <ContentPage.Content>
         <StackLayout HorizontalOptions="FillAndExpand"
                      VerticalOptions="FillAndExpand"
-                     Margin="10">
+                     Margin="20">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -44,7 +44,8 @@
                 <Label Grid.Row="1" 
                        Grid.Column="0" 
                        Text="Batch No:"
-                       TextColor="Black"/>
+                       TextColor="Black"
+                       FontSize="Medium"/>
                 <Entry Grid.Row="1" 
                        Grid.Column="1"
                        Text="{Binding SelectedBatch.BATCHNO}"
@@ -53,7 +54,8 @@
                 <Label Grid.Row="2" 
                        Grid.Column="0"
                        Text="UserName"
-                       TextColor="Black"/>
+                       TextColor="Black"
+                       FontSize="Medium"/>
                 <Entry Grid.Row="2" 
                        Grid.Column="1"
                        Text="{Binding SelectedBatch.USERNAME}"

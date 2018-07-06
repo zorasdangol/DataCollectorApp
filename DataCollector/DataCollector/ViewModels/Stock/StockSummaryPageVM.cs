@@ -41,7 +41,7 @@ namespace DataCollector.ViewModels.Stock
             {
                 StockSummaryList = new List<StockSummary>();
                 StockTakeList = Helpers.Data.StockTakeList;
-                StockSummaryList = StockValidator.StockTakeToStockSummary(StockTakeList);
+                StockSummaryList = StockTakeValidator.StockTakeToStockSummary(StockTakeList);
 
 
                 //StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);

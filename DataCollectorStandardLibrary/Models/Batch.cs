@@ -37,4 +37,34 @@ namespace DataCollectorStandardLibrary.Models
             STAMP = batch.STAMP;
         }
     }
+
+    public class Session
+    {
+        [PrimaryKey]
+        public int SESSIONID { get; set; }
+        public DateTime DATE { get; set; }
+        public string USERNAME { get; set; }
+        public int STATUS { get; set; }
+
+        public Session()
+        {
+            DATE = DateTime.Today;
+            USERNAME = "";
+            STATUS = 0;
+        }
+
+        public Session(Session Session)
+        {
+            SESSIONID = Session.SESSIONID;
+            DATE = Session.DATE;
+            USERNAME = Session.USERNAME;
+            STATUS = Session.STATUS;
+        }
+    }
+
+    public class Location
+    {
+        public string LOCATIONNAME { get; set; }
+        public int LOCATIONID { get; set; }
+    }
 }

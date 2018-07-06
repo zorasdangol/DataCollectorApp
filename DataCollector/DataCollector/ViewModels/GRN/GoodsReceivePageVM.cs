@@ -10,6 +10,7 @@ using DataCollector.Views;
 using DataCollector.Views.GRN;
 using DataCollectorStandardLibrary;
 using DataCollector.Interfaces;
+using DataCollectorStandardLibrary.DataValidationLayer;
 
 namespace DataCollector.ViewModels.GRN
 {
@@ -244,6 +245,7 @@ namespace DataCollector.ViewModels.GRN
             SelectedStore = new Division();
             SelectedAcList = new AcList();
             SelectedGrn = new GrnMain();
+            GrnMain = new GrnMain();
             DivisionList = Helpers.JsonData.DivisionList;
             WarehouseList = Helpers.JsonData.WarehouseList;
             OrderProdList = Helpers.JsonData.OrderProdList;
@@ -257,7 +259,7 @@ namespace DataCollector.ViewModels.GRN
         {
             try
             {
-                LoadFromDB.LoadGrnMainList(App.DatabaseLocation);
+                LoadFromDB.LoadBranchOutDetailList(App.DatabaseLocation);
 
                 GrnMainList = Helpers.Data.GrnMainList.Where(x => x.division == store).ToList().OrderBy(x => x.curNo).ToList();
                 
@@ -295,27 +297,10 @@ namespace DataCollector.ViewModels.GRN
         {
             try
             {
-                if (string.IsNullOrEmpty(GrnMain.division))
-                {
-                    DependencyService.Get<IMessage>().ShortAlert("Select Division");
-                }
-
-                else if (string.IsNullOrEmpty(GrnMain.vchrNo))
-                {
-                    DependencyService.Get<IMessage>().ShortAlert("Entry No. not selected");
-                }
-
-                else if (string.IsNullOrEmpty(GrnMain.trnAc))
-                {
-                    DependencyService.Get<IMessage>().ShortAlert("Select Supplier");
-                }
-
-                else if (string.IsNullOrEmpty(GrnMain.wareHouse))
-                {
-                    DependencyService.Get<IMessage>().ShortAlert("Select Warehouse");
-                }
-
-                else
+                var response = GrnMainValidator.CheckInputData(GrnMain);
+                if (response.status == "error")
+                    DependencyService.Get<IMessage>().ShortAlert(response.Message);
+                else if (response.status == "ok")
                 {
                     Helpers.Data.GrnMain = GrnMain;
                    // GrnMain.curNo = GrnCount;

@@ -136,5 +136,30 @@ namespace DataCollector.DatabaseAccess
             }
         }
 
+        public static bool DeleteBranchOutItem(string DatabaseLocation, BranchOutItem BranchOutItem)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchOutItem>();
+                    var rows = conn.Table<BranchOutItem>().ToList().Where(x => ((x.ind == BranchOutItem.ind) && (x.division == BranchOutItem.division) && (x.vchrNo == BranchOutItem.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from BranchOutItem  where division = '" + BranchOutItem.division + "' and vchrNo = '" + BranchOutItem.vchrNo + "' and ind = " + BranchOutItem.ind);
+
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
     }
 }

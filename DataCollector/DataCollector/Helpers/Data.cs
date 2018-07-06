@@ -17,8 +17,12 @@ namespace DataCollector.Helpers
         public static LoadBranchTransfer BranchMainData = new LoadBranchTransfer();
 
         public static List<LoadBranchTransfer> BranchDataList = new List<LoadBranchTransfer>();
-        public static List<GrnEntry> GrnDataList = new List<GrnEntry>();
+        public static List<GrnEntry> GrnEntryList = new List<GrnEntry>();
         public static List<GrnMain> GrnMainList = new List<GrnMain>();
+
+        public static List<BranchOutDetail> BranchOutDetailList = new List<BranchOutDetail>();
+        public static List<BranchOutItem> BranchOutItemList = new List<BranchOutItem>();
+        public static BranchOutDetail BranchOutDetail { get; set; }
 
         public static List<AcList> AcList = new List<AcList>();
 
@@ -28,6 +32,7 @@ namespace DataCollector.Helpers
             new MasterMenu(){Index = 1 , Name = "Main Settings", ImageSource = "MainSettings.png" },
             new MasterMenu(){Index = 2 , Name = "Stock Take", ImageSource = "StockTake.png"},
             new MasterMenu(){Index = 10 , Name = "Goods Receive", ImageSource = "StockTake.png"},
+            new MasterMenu(){Index = 13, Name = "Branch Out", ImageSource = "StockTake.png"},
             new MasterMenu(){Index = 3 , Name = "Batch",ImageSource = "Batch.png"},
             new MasterMenu(){Index = 4 , Name = "Change Location", ImageSource = "ChangeLocation.png"},
             new MasterMenu(){Index = 5 , Name = "Session Start",  ImageSource = "SessionStart.png"},
@@ -52,6 +57,8 @@ namespace DataCollector.Helpers
 
         public static List<StockTake> StockTakeList = new List<StockTake>();
 
-        public static List<Session> SessionList { get; internal set; }
-    }
+        public static List<Session> SessionList { get; set; }
+        public static PickingDetail SelectedPickingDetail { get; set; }
+        public static List<StockTakeMax> SelectedStockTakeMaxList { get; set; }
+         }
 }

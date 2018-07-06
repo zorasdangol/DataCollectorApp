@@ -45,4 +45,10 @@ namespace DataCollectorStandardLibrary.Models
 
         }
     }
+
+    public class StockSummary
+    {
+        public String DESCA { get; set; }
+        public int QUANTITY { get; set; }
+    }
 }
