@@ -49,7 +49,7 @@ namespace DataCollector.ViewModels.GRN
                         {
                             PickerValueChange(value);
                         }
-                        OnPropertyChanged("GrnMain");
+                        OnPropertyChanged("BranchOutDetail");
                     }
 
                 }catch{ }                
@@ -147,9 +147,8 @@ namespace DataCollector.ViewModels.GRN
             SelectedDivisionTo = new Division();
             SelectedWarehouse = new Warehouse();
             BranchOutDetail = new BranchOutDetail();
-            DivisionList = Helpers.JsonData.DivisionList;
-            WarehouseList = Helpers.JsonData.WarehouseList;
-
+            DivisionList = Helpers.Data.DivisionList;
+            WarehouseList = Helpers.Data.WarehouseList;
         }
 
         public void BOEntrySet(string store)
@@ -192,12 +191,12 @@ namespace DataCollector.ViewModels.GRN
                 if (response.status == "error")
                     DependencyService.Get<IMessage>().ShortAlert(response.Message);
                 else if (response.status == "ok")
-                {    
-                    Helpers.Data.BranchOutDetail = BranchOutDetail;
-
-                    InsertIntoDB.InsertBranchOutDetail(App.DatabaseLocation, BranchOutDetail);
-
-                    App.Current.MainPage = new BranchOutTabbedPage();
+                {     
+                    var res = InsertIntoDB.InsertBranchOutDetail(App.DatabaseLocation, BranchOutDetail);
+                    if(res)
+                        App.Current.MainPage = new BranchOutTabbedPage();
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Error while inserting data");
                 }
             }
             catch(Exception e)

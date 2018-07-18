@@ -64,8 +64,6 @@ namespace DataCollector.ViewModels.BranchOut
                     if (result)
                     {
                         DependencyService.Get<IMessage>().ShortAlert(" Item Deleted Successfully");
-                        //Helpers.Data.BranchOutItemList.Remove(Selected);
-                        //GrnDataList = Helpers.Data.GrnDataList;
                         BranchOutItemList = LoadFromDB.LoadBranchOutItemList(App.DatabaseLocation, Helpers.Data.BranchOutDetail);
                         SelectedBranchOutItem = new BranchOutItem();
                     }

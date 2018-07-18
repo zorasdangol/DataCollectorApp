@@ -1,6 +1,7 @@
 ﻿using DataCollectorStandardLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataCollectorStandardLibrary.DataValidationLayer
@@ -17,6 +18,37 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
                 return new FunctionResponse() { status = "error", Message = "Insert Quantity First" };
             else
                 return new FunctionResponse() { status = "ok", Message = "Correct input" };
+        }
+
+        public static List<StockSummary> StockTakeToStockSummary(List<GrnEntry> GrnDataList)
+        {
+            try
+            {
+                List<StockSummary> StockSummaryList = new List<StockSummary>();
+
+                if (GrnDataList != null)
+                {
+                    var filterStock = GrnDataList.GroupBy(x => x.desca).Select(y => y.FirstOrDefault()).ToList();
+
+                    foreach (var st in filterStock)
+                    {
+                        StockSummaryList.Add(new StockSummary() { DESCA = st.desca });
+                    }
+                    foreach (var stockSummary in StockSummaryList)
+                    {
+                        foreach (var stock in GrnDataList)
+                        {
+                            if (stock.desca == stockSummary.DESCA)
+                            {
+                                stockSummary.QUANTITY += Convert.ToInt16(stock.quantity);
+                            }
+                        }
+                    }
+                }
+                return StockSummaryList;
+
+            }
+            catch { return new List<StockSummary>(); }
         }
     }
 

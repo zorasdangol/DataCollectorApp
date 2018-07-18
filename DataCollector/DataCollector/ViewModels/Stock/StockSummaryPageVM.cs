@@ -42,29 +42,7 @@ namespace DataCollector.ViewModels.Stock
                 StockSummaryList = new List<StockSummary>();
                 StockTakeList = Helpers.Data.StockTakeList;
                 StockSummaryList = StockTakeValidator.StockTakeToStockSummary(StockTakeList);
-
-
-                //StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
-
-                //if (StockTakeList != null)
-                //{
-                //    var filterStock = StockTakeList.GroupBy(x => x.DESCA).Select(y => y.FirstOrDefault()).ToList();
-
-                //    foreach (var st in filterStock)
-                //    {
-                //        StockSummaryList.Add(new StockSummary() { DESCA = st.DESCA });
-                //    }
-                //    foreach (var stockSummary in StockSummaryList)
-                //    {
-                //        foreach (var stock in StockTakeList)
-                //        {
-                //            if (stock.DESCA == stockSummary.DESCA)
-                //            {
-                //                stockSummary.QUANTITY += stock.QUANTITY;
-                //            }
-                //        }
-                //    }
-                //}
+                
             }
             catch(Exception e) { }
             

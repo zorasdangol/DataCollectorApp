@@ -9,11 +9,10 @@ namespace DataCollectorStandardLibrary.Models
 { 
     public class OrderProd 
     {      
-
         public string VCHRNO { get; set; }
         public string MCODE { get; set; }
         public string BARCODE { get; set; }
-        public int QUANTITY { get; set; }
+        public float QUANTITY { get; set; }
         public double RATE { get; set; }
         public string SUPPLIERCODE { get; set; }
 

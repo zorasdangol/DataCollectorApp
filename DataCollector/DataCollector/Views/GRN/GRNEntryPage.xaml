@@ -8,11 +8,11 @@
         <ResourceDictionary>
             <Style TargetType="Label">
                 <Setter Property="VerticalTextAlignment"
-                    Value="Center" />
+                        Value="Center" />
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="VerticalOptions"
-                    Value="Center" />
+                        Value="Center" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -33,8 +33,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Text="Entry No"
-                        Grid.Row="0"
-                        Grid.Column="0"
+                       Grid.Row="0"
+                       Grid.Column="0"
                        TextColor="Black"   
                        FontAttributes="Bold"/>
                 <Label Text="{Binding GrnEntry.vchrNo}"
@@ -86,19 +86,16 @@
                              Orientation="Horizontal"
                              Padding="0,3,0,3">
                     <control:CustomEntry Grid.Row="0"
-                           Grid.Column="1"
-                           x:Name="BarCodeEntry"
-                           HorizontalOptions="FillAndExpand"
-                           Text="{Binding SelectedBarCode.BCODE}"
-                           Placeholder="Enter BarCode"   
-                           Completed="OnEnterPressed"                           
-                           />
+                                         Grid.Column="1"
+                                         x:Name="BarCodeEntry"
+                                         HorizontalOptions="FillAndExpand"
+                                         Text="{Binding SelectedBarCode.BCODE}"
+                                         Placeholder="Enter BarCode"   
+                                         Completed="OnEnterPressed"/>
 
                     <Button Text="Add" 
                             HeightRequest="15"
                             IsVisible="{Binding IsButtonVisible}"
-                            TextColor="White" 
-                            BackgroundColor="Black"
                             HorizontalOptions="EndAndExpand"
                             Command="{Binding AddCommand}"/>
 
@@ -131,11 +128,12 @@
                        Text="Quantity:"
                        TextColor="Black"/>
                 <control:CustomEntry Grid.Row="3" 
-                       Grid.Column="1"
-                       x:Name="QuantityEntry"
-                       Completed="Quantity_EnterPressed"
-                       Text="{Binding StockTake.QUANTITY}"
-                       Placeholder="Quantity"/>
+                                     Grid.Column="1"
+                                     x:Name="QuantityEntry"  
+                                     IsEnabled="{Binding IsButtonVisible}"
+                                     Completed="Quantity_EnterPressed"
+                                     Text="{Binding StockTake.QUANTITY}"
+                                     Placeholder="Quantity"/>
 
                 <Label Grid.Row="4" 
                        Grid.Column="0"

@@ -10,6 +10,7 @@ namespace DataCollector.DatabaseAccess
 {
     public class InsertIntoDB
     {
+        #region Batch
         public static bool InsertBatch(string DatabaseLocation, Batch SelectedBatch)
         {
             try
@@ -28,6 +29,10 @@ namespace DataCollector.DatabaseAccess
                 return false;
             }
         }
+        #endregion
+
+
+        #region StockTake
 
         public static bool InsertStockTake(string DatabaseLocation, StockTake StockTake)
         {
@@ -70,7 +75,11 @@ namespace DataCollector.DatabaseAccess
             }
             catch (Exception e) { return false; }
         }
-        
+
+        #endregion StocktakeEnd
+
+
+        #region Session
         public static bool InsertSession(string DatabaseLocation, Session Session)
         {
             try
@@ -90,7 +99,10 @@ namespace DataCollector.DatabaseAccess
                 return false;
             }
         }
+        #endregion Session
 
+
+        #region GrnFunctions
         public static void InsertGrnMain(string DatabaseLocation, GrnMain grnMain)
         {
             try
@@ -156,9 +168,11 @@ namespace DataCollector.DatabaseAccess
                 return false;
             }
         }
+        #endregion GrnFunctionsEnd
 
 
-        public static void InsertBranchOutDetail(string DatabaseLocation, BranchOutDetail BranchOutDetail)
+        #region BranchOutFunctions
+        public static bool InsertBranchOutDetail(string DatabaseLocation, BranchOutDetail BranchOutDetail)
         {
             try
             {
@@ -171,17 +185,21 @@ namespace DataCollector.DatabaseAccess
                         conn.Insert(BranchOutDetail);
                     }
                     else if (Helpers.Data.EntryMode == "Edit")
-                    {
-                        Helpers.Data.BranchOutItemList = conn.Query<BranchOutItem>("Select * from BranchOutItem where division = '" + BranchOutDetail.division + "' and vchrNo = '" + BranchOutDetail.vchrNo + "'");
-                        
+                    {                        
                         conn.Execute("Delete  from BranchOutDetail where division = '" + BranchOutDetail.division + "' and vchrNo = '" + BranchOutDetail.vchrNo + "'");
-                        conn.Insert(BranchOutDetail);
+                        conn.Insert(BranchOutDetail);                        
                     }
+                    Helpers.Data.BranchOutItemList = conn.Query<BranchOutItem>("Select * from BranchOutItem where division = '" + BranchOutDetail.division + "' and vchrNo = '" + BranchOutDetail.vchrNo + "'");
+
+                    Helpers.Data.BranchOutDetail = BranchOutDetail;
+                    return true;
                     //var rows = conn.Table<BranchOutDetail>().ToList();
                 }
             }
             catch (Exception e)
-            {
+            {                
+                Helpers.Data.BranchOutDetail = new BranchOutDetail();
+                return false;
             }
         }
 
@@ -191,7 +209,7 @@ namespace DataCollector.DatabaseAccess
             {
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
-                    conn.CreateTable<BranchOutItem>();
+                    conn.CreateTable<BranchItem>();
                     //var rows = conn.Table<GrnEntry>().ToList().Where(x => x.ind == GrnData.ind).FirstOrDefault();
                     if (Helpers.Data.BranchOutItemList == null)
                     {
@@ -211,7 +229,7 @@ namespace DataCollector.DatabaseAccess
                     if (inp == 1)
                     {
                         var newData = new BranchOutItem();
-                        newData.SetBranchOutItem(BranchOutItem);
+                        newData.SetBranchItem(BranchOutItem);
                         Helpers.Data.BranchOutItemList.Insert(0, newData);
                         return true;
                     }
@@ -223,5 +241,103 @@ namespace DataCollector.DatabaseAccess
                 return false;
             }
         }
+
+        #endregion BranchOutFunctionsEnd
+
+
+        #region BranchInFunctions
+        public static bool InsertBranchInDetail(string DatabaseLocation, BranchInDetail BranchInDetail)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchInDetail>();
+                    conn.CreateTable<BranchInItem>();
+                    if (Helpers.Data.EntryMode == "New")
+                    {
+                        conn.Insert(BranchInDetail);
+                    }
+                    else if (Helpers.Data.EntryMode == "Edit")
+                    {
+                        
+                        conn.Execute("Delete  from BranchInDetail where division = '" + BranchInDetail.division + "' and vchrNo = '" + BranchInDetail.vchrNo + "'");
+                        conn.Insert(BranchInDetail);
+                    }
+                    Helpers.Data.BranchInItemList = conn.Query<BranchInItem>("Select * from BranchInItem where division = '" + BranchInDetail.division + "' and vchrNo = '" + BranchInDetail.vchrNo + "'");
+
+                    Helpers.Data.BranchInDetail = BranchInDetail;
+                    return true;
+                    //var rows = conn.Table<BranchOutDetail>().ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                Helpers.Data.BranchInDetail = new BranchInDetail();
+                return false;
+            }
+        }
+
+        public static bool InsertBranchInItem(string DatabaseLocation, BranchInItem BranchInItem)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchInItem>();
+                    //var rows = conn.Table<GrnEntry>().ToList().Where(x => x.ind == GrnData.ind).FirstOrDefault();
+                    if (Helpers.Data.BranchInItemList == null)
+                    {
+                        BranchInItem.ind = 1;
+                    }
+                    else
+                    {
+                        var list = Helpers.Data.BranchInItemList;
+                        var maxCountData = Helpers.Data.BranchInItemList.OrderByDescending(item => item.ind).FirstOrDefault();
+
+                        if (maxCountData == null)
+                            BranchInItem.ind = 1;
+                        else
+                            BranchInItem.ind = maxCountData.ind + 1;
+                    }
+                    var inp = conn.Insert(BranchInItem);
+                    if (inp == 1)
+                    {
+                        var newData = new BranchInItem();
+                        newData.SetBranchItem(BranchInItem);
+                        Helpers.Data.BranchInItemList.Insert(0, newData);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        #endregion BranchInFunctionsEnd
+
+        
+        #region Listinsertion
+        public static bool InsertList<T>(string DatabaseLocation, List<T> List)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<T>();
+                    conn.DeleteAll<T>();
+                    conn.InsertAll(List);
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        #endregion 
+
     }
 }

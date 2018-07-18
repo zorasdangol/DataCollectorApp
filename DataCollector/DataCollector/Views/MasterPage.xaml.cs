@@ -16,10 +16,14 @@ namespace DataCollector.Views
         public MasterPageVM viewModel { get; set; }
         public MasterPage()
         {
-            InitializeComponent();
-            BindingContext = viewModel = new MasterPageVM();
-            this.Detail = new NavigationPage(new MainHomePage());
-            this.listView.SelectedItem = null;
+            try
+            {
+                InitializeComponent();
+                BindingContext = viewModel = new MasterPageVM();
+                this.Detail = new NavigationPage(new MainHomePage());
+                this.listView.SelectedItem = null;
+            }
+            catch { }
         }
 
         public void MenuItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)

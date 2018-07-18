@@ -32,14 +32,14 @@
 
                 <Label Grid.Row="0" 
                        Grid.Column="0"
-                       Text="LocationID:"
+                       Text="Location:"
                        TextColor="Black"/>
                 <Picker Grid.Row="0" 
                         Grid.Column="1"
-                        Title="Select LocationID"
+                        Title="Select Location"
                         ItemsSource="{Binding LocationList}"
                         SelectedItem="{Binding SelectedLocation}" 
-                        ItemDisplayBinding="{Binding LOCATIONNAME}"></Picker>
+                        ItemDisplayBinding="{Binding NAME}"></Picker>
 
                 <Label Grid.Row="1" 
                        Grid.Column="0" 

@@ -85,6 +85,44 @@ namespace DataCollector.DatabaseAccess
 
         }
 
+        public static void ClearBranchOutList(string DatabaseLocation)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchOutDetail>();
+                    var res = conn.DeleteAll<BranchOutDetail>();
+
+                    conn.CreateTable<BranchOutItem>();
+                    conn.DeleteAll<BranchOutItem>();
+                    
+                    if (res > 0) { }
+                }
+            }
+            catch (Exception e) { }
+
+        }
+
+        public static void ClearBranchInList(string DatabaseLocation)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchInDetail>();
+                    var res = conn.DeleteAll<BranchInDetail>();
+
+                    conn.CreateTable<BranchInItem>();
+                    conn.DeleteAll<BranchInItem>();
+
+                    if (res > 0) { }
+                }
+            }
+            catch (Exception e) { }
+
+        }
+
 
         public static bool DeleteGrnData(string DatabaseLocation, GrnEntry GrnData)
         {
@@ -160,6 +198,30 @@ namespace DataCollector.DatabaseAccess
             }
         }
 
+
+        public static bool DeleteBranchInItem(string DatabaseLocation, BranchInItem BranchInItem)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchInItem>();
+                    var rows = conn.Table<BranchInItem>().ToList().Where(x => ((x.ind == BranchInItem.ind) && (x.division == BranchInItem.division) && (x.vchrNo == BranchInItem.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from BranchInItem  where division = '" + BranchInItem.division + "' and vchrNo = '" + BranchInItem.vchrNo + "' and ind = " + BranchInItem.ind);
+
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
     }
 }

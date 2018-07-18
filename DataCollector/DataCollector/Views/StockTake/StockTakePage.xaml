@@ -8,7 +8,7 @@
         <ResourceDictionary>
             <Style TargetType="Label">
                 <Setter Property="VerticalTextAlignment"
-                    Value="Center" />
+                        Value="Center" />
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="VerticalOptions"
@@ -90,7 +90,8 @@
                        TextColor="Black"/>
                 <control:CustomEntry Grid.Row="3" 
                        Grid.Column="1"
-                       x:Name="QuantityEntry"
+                       x:Name="QuantityEntry"                                     
+                                     IsEnabled="{Binding IsButtonVisible}"
                        Completed="Quantity_EnterPressed"
                        Text="{Binding StockTake.QUANTITY}"
                        Placeholder="Quantity"/>

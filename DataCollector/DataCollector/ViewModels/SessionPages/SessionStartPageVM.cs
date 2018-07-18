@@ -35,7 +35,6 @@ namespace DataCollector.ViewModels.SessionPages
                 _IsButtonEnabled = value;
                 OnPropertyChanged("IsButtonEnabled");
             }
-
         }
 
         public Command StartCommand { get; set; }
@@ -44,12 +43,10 @@ namespace DataCollector.ViewModels.SessionPages
         {
             StartCommand = new Command(ExecuteStartCommand);
             Session = LoadFromDB.LoadSession(App.DatabaseLocation);
-            if (Session != null )
+            if (Session != null && !string.IsNullOrEmpty(Session.USERNAME) )
             {
                 IsButtonEnabled = false;
-                //DependencyService.Get<IMessage>().LongAlert("Session already started. First End the session");
                 App.Current.MainPage.DisplayAlert("Info", "Session already started. First End the session", "ok");
-                //(App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionEndPage());
             }
             else
             {

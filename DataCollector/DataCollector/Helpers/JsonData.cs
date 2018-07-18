@@ -18,26 +18,26 @@ namespace DataCollector.Helpers
             new MenuItem(){MCODE= "M1004", MENUCODE = "5.2169", DESCA = "GAIA GREEN TEA+GINGER 25BAGS", BASEUNIT = "PC", RATE_A = 440, PRATE_A = 353.98},
         };
 
-        public static List<Location> LocationList = new List<Location>()
-        {
-            new Location(){LOCATIONID = 1, LOCATIONNAME = "Kathmandu" },
-            new Location(){LOCATIONID = 2, LOCATIONNAME = "Bagmati" },
-            new Location(){LOCATIONID = 3, LOCATIONNAME = "Jumla" },
-            new Location(){LOCATIONID = 4, LOCATIONNAME = "Dolpa" },
-            new Location(){LOCATIONID = 5, LOCATIONNAME = "Dang" },
-            new Location(){LOCATIONID = 6, LOCATIONNAME = "Thankot" },
-            new Location(){LOCATIONID = 7, LOCATIONNAME = "Dhankutta" },
-            new Location(){LOCATIONID = 8, LOCATIONNAME = "Dharan" },
-            new Location(){LOCATIONID = 9, LOCATIONNAME = "Ilam" },
-            new Location(){LOCATIONID = 10, LOCATIONNAME = "Chitwan" },
-            new Location(){LOCATIONID = 11, LOCATIONNAME = "Bara" },
-            new Location(){LOCATIONID = 12, LOCATIONNAME = "Nawalparasi" },
-            new Location(){LOCATIONID = 13, LOCATIONNAME = "Butwal" },
-            new Location(){LOCATIONID = 14, LOCATIONNAME = "Birgunj" },
-            new Location(){LOCATIONID = 15, LOCATIONNAME = "Biratnagar" },
-            new Location(){LOCATIONID = 16, LOCATIONNAME = "Pachthar" },
-            new Location(){LOCATIONID = 17, LOCATIONNAME = "Jhapa" },
-        };
+        //public static List<Location> LocationList = new List<Location>()
+        //{
+        //    new Location(){LOCATIONID = 1, LOCATIONNAME = "Kathmandu" },
+        //    new Location(){LOCATIONID = 2, LOCATIONNAME = "Bagmati" },
+        //    new Location(){LOCATIONID = 3, LOCATIONNAME = "Jumla" },
+        //    new Location(){LOCATIONID = 4, LOCATIONNAME = "Dolpa" },
+        //    new Location(){LOCATIONID = 5, LOCATIONNAME = "Dang" },
+        //    new Location(){LOCATIONID = 6, LOCATIONNAME = "Thankot" },
+        //    new Location(){LOCATIONID = 7, LOCATIONNAME = "Dhankutta" },
+        //    new Location(){LOCATIONID = 8, LOCATIONNAME = "Dharan" },
+        //    new Location(){LOCATIONID = 9, LOCATIONNAME = "Ilam" },
+        //    new Location(){LOCATIONID = 10, LOCATIONNAME = "Chitwan" },
+        //    new Location(){LOCATIONID = 11, LOCATIONNAME = "Bara" },
+        //    new Location(){LOCATIONID = 12, LOCATIONNAME = "Nawalparasi" },
+        //    new Location(){LOCATIONID = 13, LOCATIONNAME = "Butwal" },
+        //    new Location(){LOCATIONID = 14, LOCATIONNAME = "Birgunj" },
+        //    new Location(){LOCATIONID = 15, LOCATIONNAME = "Biratnagar" },
+        //    new Location(){LOCATIONID = 16, LOCATIONNAME = "Pachthar" },
+        //    new Location(){LOCATIONID = 17, LOCATIONNAME = "Jhapa" },
+        //};
 
         public static List<BarCode> BarCodeList = new List<BarCode>()
         {
@@ -97,15 +97,29 @@ namespace DataCollector.Helpers
             new OrderProd(){ VCHRNO = "PO8" , SUPPLIERCODE = "LBG9142V" },
             new OrderProd(){ VCHRNO = "PO9" , SUPPLIERCODE = "LBG9144V" },
         };
-
-        public static List<PickingDetail> PickingDetailList = new List<PickingDetail>()
-        {
-            new PickingDetail(){ pickNo = "PI1", division = "Bhaisepati", wareHouse = "Bouddha" },
-            new PickingDetail(){ pickNo = "PI2", division = "LaganKhel", wareHouse = "Main Store" },
-            new PickingDetail(){ pickNo = "PI3", division = "New Baneshwor", wareHouse = "Baneswor" },
-            new PickingDetail(){ pickNo = "PI4", division = "Bhaisepati", wareHouse = "Kapan" },
-        };
         
+        public static List<BranchOutItem> ReceivedBranchOutList = new List<BranchOutItem>()
+        {
+            new BranchOutItem(){ind = 1, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 1 },
+            new BranchOutItem(){ind = 2, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 4 },
+            new BranchOutItem(){ind = 3, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 1 },
+            new BranchOutItem(){ind = 4, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
+            new BranchOutItem(){ind = 5, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
+            new BranchOutItem(){ind = 6, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
+            new BranchOutItem(){ind = 7, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
+            new BranchOutItem(){ind = 8, division = "Bouddha", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
+            new BranchOutItem(){ind = 9, division = "Lagankhel", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
+
+        };
+
+        //public static List<PickingDetail> PickingDetailList = new List<PickingDetail>()
+        //{
+        //    new PickingDetail(){ pickNo = "PI1", division = "Bhaisepati", wareHouse = "Bouddha" },
+        //    new PickingDetail(){ pickNo = "PI2", division = "LaganKhel", wareHouse = "Main Store" },
+        //    new PickingDetail(){ pickNo = "PI3", division = "New Baneshwor", wareHouse = "Baneswor" },
+        //    new PickingDetail(){ pickNo = "PI4", division = "Bhaisepati", wareHouse = "Kapan" },
+        //};
+
         //public static List<StockTakeMax> StockTakeMaxList = new List<StockTakeMax>()
         //{
         //    new StockTakeMax{ pickNo="PI1", QUANTITY = 4, BCODE = "1234", MCODE = "M0123", DESCA="boots", RATE=123.123, UNIT = "PC" },

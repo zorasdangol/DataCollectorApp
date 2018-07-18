@@ -12,7 +12,8 @@ namespace DataCollectorStandardLibrary.Models
         public string ACNAME { get; set; }
         public string PARENT { get; set; }
         public string ACCODE { get; set; }
-        public DateTime EDATE { get; set; }
+        
+        //public DateTime EDATE { get; set; }
         public string PTYPE { get; set; }
 
         public AcList()
@@ -21,7 +22,7 @@ namespace DataCollectorStandardLibrary.Models
             ACNAME = "";
             PARENT = "";
             ACCODE = "";
-            EDATE = new DateTime();
+            //EDATE = new DateTime();
             PTYPE = "";
         }
 
@@ -31,7 +32,7 @@ namespace DataCollectorStandardLibrary.Models
             ACNAME = ac.ACNAME;
             PARENT = ac.PARENT;
             ACCODE = ac.ACCODE;
-            EDATE = ac.EDATE;
+            //EDATE = ac.EDATE;
             PTYPE = ac.PTYPE;
         }
     }

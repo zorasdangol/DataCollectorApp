@@ -22,8 +22,8 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                             <RowDefinition/>
-                                            <!--<RowDefinition/>
                                             <RowDefinition/>
+                                            <!--<RowDefinition/>
                                             <RowDefinition/>-->
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
@@ -51,6 +51,14 @@
                                         <Label Grid.Row="2" 
                                                Grid.Column="1"
                                                Text="{Binding quantity}"/>
+                                        
+                                        <Label Grid.Row="3" 
+                                               Grid.Column="0"
+                                               Text="Index:"
+                                               FontAttributes="Bold"/>
+                                        <Label Grid.Row="3" 
+                                               Grid.Column="1"
+                                               Text="{Binding ind}"/>
                                         <!--<Label Grid.Row="3" 
                                                Grid.Column="0"
                                                Text="Batch NO:"

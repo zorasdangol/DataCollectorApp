@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DataCollector.App">
+             x:Class="DataCollector.App"
+             xmlns:buttonStyle="clr-namespace:DataCollector.Styles">
 	<Application.Resources>
 
-        <ResourceDictionary>
+        <ResourceDictionary >
             <Style TargetType="Label">
                 <Setter Property="VerticalTextAlignment"
                     Value="Center" />
@@ -13,6 +14,16 @@
                 <Setter Property="VerticalOptions"
                     Value="Center" />
             </Style>
+
+            <Style x:Name="normalButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Black"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+
+            <!--<ResourceDictionary.MergedWith>
+                <buttonStyle:ButtonStyles/>
+            </ResourceDictionary.MergedWith>-->
         </ResourceDictionary>
 
 

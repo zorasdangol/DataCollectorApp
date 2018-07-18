@@ -5,13 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="SQLite-net">
-      <HintPath>..\packages\sqlite-net-pcl.1.5.166-beta\lib\netstandard1.1\SQLite-net.dll</HintPath>
-    </Reference>
+    <Compile Remove="Models\PickingList.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApiConnections\" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SQLite-net">
+      <HintPath>..\packages\sqlite-net-pcl.1.5.166-beta\lib\netstandard1.1\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETPortable\v4.5\Profile\Profile111\System.Net.Http.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

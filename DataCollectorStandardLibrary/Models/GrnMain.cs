@@ -6,7 +6,8 @@ using System.Text;
 namespace DataCollectorStandardLibrary.Models
 {
     public class GrnMain
-    {        
+    {
+
         public string vchrNo { get; set; }
         public string division { get; set; }
         public string chalanNo { get; set; }
@@ -28,6 +29,33 @@ namespace DataCollectorStandardLibrary.Models
         public string batchNo { get; set; }
         public string locationName { get; set; }
         public int sessionId { get; set; }
+
+
+
+        public GrnMain()
+        {
+            vchrNo = "";
+            division = "";
+            chalanNo = "";
+            trnDate = DateTime.Today;
+            trnAc = "";
+            ParAc = "";
+            trnMode = "Cash";
+            refOrdBill = "";
+            remarks = "";
+            wareHouse = "";
+            isTaxInvoice = "";
+
+            curNo = 0;
+
+
+            supplierName = "";
+            desca = "";
+
+            batchNo = "";
+            locationName = "";
+            sessionId = 0;
+        }
 
         //public void SetGrnMain(GrnMain GrnMain)
         //{

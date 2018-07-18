@@ -240,16 +240,15 @@ namespace DataCollector.ViewModels.GRN
         public GoodsReceivePageVM()
         {            
             GrnSetCommand = new Command(ExecuteGrnSetCommand);
-            GrnMain = new GrnMain();
             Helpers.Data.GrnMainData = new LoadGrnCollect();
             SelectedStore = new Division();
             SelectedAcList = new AcList();
             SelectedGrn = new GrnMain();
             GrnMain = new GrnMain();
-            DivisionList = Helpers.JsonData.DivisionList;
-            WarehouseList = Helpers.JsonData.WarehouseList;
-            OrderProdList = Helpers.JsonData.OrderProdList;
-            AcList = Helpers.JsonData.AcList;
+            DivisionList = Helpers.Data.DivisionList;
+            WarehouseList = Helpers.Data.WarehouseList;
+            OrderProdList = Helpers.Data.OrderProdList;
+            AcList = Helpers.Data.AcList;
             IsCash = true;
             IsUsePoNo = false;
             IsTaxInvoice = false;
@@ -271,8 +270,7 @@ namespace DataCollector.ViewModels.GRN
                     {
                         GrnMain.vchrNo = "GRN" + 1;
                         GrnMain.curNo = 1;
-                        GrnCount = 1;
-                        
+                        GrnCount = 1;                        
                     }
                     else
                     {

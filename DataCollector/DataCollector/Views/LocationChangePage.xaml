@@ -18,7 +18,7 @@
                         ItemsSource="{Binding LocationList}"
                         SelectedItem="{Binding SelectedLocation}" 
                         HorizontalOptions="FillAndExpand"
-                        ItemDisplayBinding="{Binding LOCATIONNAME}"></Picker>
+                        ItemDisplayBinding="{Binding NAME}"></Picker>
             </StackLayout>
             
             <Button Text="Set"

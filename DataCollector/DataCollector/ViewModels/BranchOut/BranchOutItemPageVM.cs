@@ -14,7 +14,6 @@ namespace DataCollector.ViewModels.BranchOut
     public class BranchOutItemPageVM:BaseViewModel
     {
         private List<BarCode> _BarCodeList;
-
         public List<BarCode> BarCodeList
         {
             get { return _BarCodeList; }
@@ -79,12 +78,12 @@ namespace DataCollector.ViewModels.BranchOut
             try
             {
                 SelectedBarCode = new BarCode();
-                BarCodeList = Helpers.JsonData.BarCodeList;
+                BarCodeList = Helpers.Data.BarCodeList;
                 AddCommand = new Command(ExecuteAddCommand);
                 IsButtonVisible = !Helpers.Data.AutoModeEnabled;
                 BranchOutItem = new BranchOutItem();
                 StockTake = new StockTake();
-                BranchOutItem.SetInitialBranchOutItem(Helpers.Data.BranchOutDetail);
+                BranchOutItem.SetInitialBranchItem(Helpers.Data.BranchOutDetail);
 
                 LoadFromDB.LoadBranchOutItemList(App.DatabaseLocation, Helpers.Data.BranchOutDetail);
             }
@@ -113,58 +112,60 @@ namespace DataCollector.ViewModels.BranchOut
                         QUANTITY = 1
                     };
 
+                    if (Helpers.Data.AutoModeEnabled)
+                    {
+                        SavingGrnToSqlite();
+                    }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
+                    if(!string.IsNullOrEmpty(SelectedBarCode.BCODE))
+                        DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
                     StockTake = new StockTake();
                     SelectedBarCode = new BarCode();
                     //SelectedBarCode.BCODE = EnteredBCODE;                   
 
                 }
 
-                if (Helpers.Data.AutoModeEnabled)
-                {
-                    SavingGrnToSqlite();
-                }
+                
             }
             catch (Exception e) { }
         }
 
-        public void BarCode_Entry_TextChanged(string oldText, string newText)
-        {
-            try
-            {
-                if (oldText != newText)
-                {
-                    BarCode BarCode = null;
-                    BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
-                    if (BarCode != null && BarCode.BCODE == newText)
-                    {
-                        SelectedBarCode = new BarCode(BarCode);
-                        StockTake = new StockTake()
-                        {
-                            MCODE = BarCode.MCODE,
-                            DESCA = BarCode.DESCA,
-                            QUANTITY = 1
-                        };
+        //public void BarCode_Entry_TextChanged(string oldText, string newText)
+        //{
+        //    try
+        //    {
+        //        if (oldText != newText)
+        //        {
+        //            BarCode BarCode = null;
+        //            BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
+        //            if (BarCode != null && BarCode.BCODE == newText)
+        //            {
+        //                SelectedBarCode = new BarCode(BarCode);
+        //                StockTake = new StockTake()
+        //                {
+        //                    MCODE = BarCode.MCODE,
+        //                    DESCA = BarCode.DESCA,
+        //                    QUANTITY = 1
+        //                };
 
-                        //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-                        //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                        //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+        //                //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
+        //                //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
+        //                //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
 
-                        SavingGrnToSqlite();
-                    }
-                    else
-                    {
-                        StockTake = new StockTake();
-                        SelectedBarCode = new BarCode();
-                        //SelectedBarCode.BCODE = newText;
-                    }
-                }
-            }
-            catch (Exception e) { }
-        }
+        //                SavingGrnToSqlite();
+        //            }
+        //            else
+        //            {
+        //                StockTake = new StockTake();
+        //                SelectedBarCode = new BarCode();
+        //                //SelectedBarCode.BCODE = newText;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e) { }
+        //}
 
         public void SavingGrnToSqlite()
         {
@@ -178,7 +179,7 @@ namespace DataCollector.ViewModels.BranchOut
                     BranchOutItem.barcode = SelectedBarCode.BCODE;
                     BranchOutItem.mcode = StockTake.MCODE;
                     BranchOutItem.desca = StockTake.DESCA;
-                    BranchOutItem.quantity = StockTake.QUANTITY.ToString();
+                    BranchOutItem.quantity = StockTake.QUANTITY;
                     
                     //BranchOutItem.batchNo = Helpers.Data.SelectedBatch.BATCHNO;
                     //BranchOutItem.locationName = Helpers.Data.SelectedBatch.LOCATIONNAME;
@@ -187,11 +188,11 @@ namespace DataCollector.ViewModels.BranchOut
                     bool res = InsertIntoDB.InsertBranchOutItem(App.DatabaseLocation, BranchOutItem);
                     if (res == true)
                     {
-                        DependencyService.Get<IMessage>().LongAlert("Successfully saved StockTake ");
+                        DependencyService.Get<IMessage>().ShortAlert("Successfully saved StockTake ");
 
                         BranchOutItem.mcode = "";
                         BranchOutItem.barcode = "";
-                        BranchOutItem.quantity = "0";
+                        BranchOutItem.quantity = 0;
 
                         SelectedBarCode = new BarCode();
                     }

@@ -1,4 +1,5 @@
-﻿using DataCollector.Views;
+﻿using DataCollector.DatabaseAccess;
+using DataCollector.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace DataCollector
             MainPage = (new MasterPage());
 
             DatabaseLocation = databaseLocation;
+
+            new LoadInitialList(App.DatabaseLocation);
         }
 
         protected override void OnStart()

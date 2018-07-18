@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.BranchIn.BranchInSummaryPage"
+             Title="Branch In SummaryList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+            <Grid HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Desp."
+                       Grid.Column="0"/>
+                <Label Text="Quantity"
+                       Grid.Column="1"/>
+                <Label Text="Received"
+                       Grid.Column="2"/>
+                <Label Text="Left"
+                       Grid.Column="3"/>
+            </Grid>
+            <ListView ItemsSource="{Binding BranchInSummaryList}"
+                      HasUnevenRows="True"
+                      HorizontalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid  HorizontalOptions="FillAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding desca}"
+                                       HorizontalOptions="Center"
+                                       Grid.Column="0"
+                                       />
+                                <Label Text="{Binding quantity}"
+                                       HorizontalOptions="Center"
+                                       Grid.Column="1"/>
+                                <Label Text="{Binding enteredQuantity}"
+                                       HorizontalOptions="Center"
+                                       Grid.Column="2"/>
+                                <Label Text="{Binding difference}"
+                                       HorizontalOptions="Center"
+                                       Grid.Column="3"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

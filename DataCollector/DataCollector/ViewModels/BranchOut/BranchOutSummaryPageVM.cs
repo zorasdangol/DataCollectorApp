@@ -1,4 +1,5 @@
-﻿using DataCollectorStandardLibrary.Models;
+﻿using DataCollectorStandardLibrary.DataValidationLayer;
+using DataCollectorStandardLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,25 +35,7 @@ namespace DataCollector.ViewModels.BranchOut
                 StockSummaryList = new List<StockSummary>();
                 //GrnDataList = LoadFromDB.LoadGrnDataList(App.DatabaseLocation, Helpers.Data.GrnMain);
                 BranchOutItemList = Helpers.Data.BranchOutItemList;
-                if (BranchOutItemList != null)
-                {
-                    var filterStock = BranchOutItemList.GroupBy(x => x.desca).Select(y => y.FirstOrDefault()).ToList();
-
-                    foreach (var st in filterStock)
-                    {
-                        StockSummaryList.Add(new StockSummary() { DESCA = st.desca });
-                    }
-                    foreach (var stockSummary in StockSummaryList)
-                    {
-                        foreach (var stock in BranchOutItemList)
-                        {
-                            if (stock.desca == stockSummary.DESCA)
-                            {
-                                stockSummary.QUANTITY += Convert.ToInt16(stock.quantity);
-                            }
-                        }
-                    }
-                }
+                StockSummaryList = BranchOutDetailValidator.StockTakeToStockSummary(BranchOutItemList);
             }
             catch (Exception e) { }
 

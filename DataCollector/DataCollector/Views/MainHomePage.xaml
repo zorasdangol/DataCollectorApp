@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DataCollector.Views.MainHomePage"
              Title="Data Collector">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text=":"
+                     Icon="menuImage.png"
+                     Command="{Binding TBMenuCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand"
                      Margin="10">

@@ -79,7 +79,7 @@ namespace DataCollector.ViewModels.GRN
             try
             {
                 SelectedBarCode = new BarCode();
-                BarCodeList = Helpers.JsonData.BarCodeList;
+                BarCodeList = Helpers.Data.BarCodeList;
                 AddCommand = new Command(ExecuteAddCommand);
                 IsButtonVisible = !Helpers.Data.AutoModeEnabled;
                 GrnEntry = new GrnEntry();
@@ -114,59 +114,60 @@ namespace DataCollector.ViewModels.GRN
                         DESCA = BarCode.DESCA,
                         QUANTITY = 1
                     };
-
-                 }
+                    if (Helpers.Data.AutoModeEnabled)
+                    {
+                        SavingGrnToSqlite();
+                    }
+                }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
+                    if (!string.IsNullOrEmpty(SelectedBarCode.BCODE))
+                        DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
                     StockTake = new StockTake();
                     SelectedBarCode = new BarCode();
                     //SelectedBarCode.BCODE = EnteredBCODE;                   
 
                 }
 
-                if (Helpers.Data.AutoModeEnabled)
-                {
-                    SavingGrnToSqlite();
-                }
+               
             }
             catch (Exception e) { }
         }
 
-        public void BarCode_Entry_TextChanged(string oldText, string newText)
-        {
-            try
-            {
-                if (oldText != newText)
-                {
-                    BarCode BarCode = null;
-                    BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
-                    if (BarCode != null && BarCode.BCODE == newText)
-                    {
-                        SelectedBarCode = new BarCode(BarCode);
-                        StockTake = new StockTake()
-                        {
-                            MCODE = BarCode.MCODE,
-                            DESCA = BarCode.DESCA,
-                            QUANTITY = 1
-                        };
+        //public void BarCode_Entry_TextChanged(string oldText, string newText)
+        //{
+        //    try
+        //    {
+        //        if (oldText != newText)
+        //        {
+        //            BarCode BarCode = null;
+        //            BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
+        //            if (BarCode != null && BarCode.BCODE == newText)
+        //            {
+        //                SelectedBarCode = new BarCode(BarCode);
+        //                StockTake = new StockTake()
+        //                {
+        //                    MCODE = BarCode.MCODE,
+        //                    DESCA = BarCode.DESCA,
+        //                    QUANTITY = 1
+        //                };
 
-                        //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-                        //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                        //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+        //                //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
+        //                //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
+        //                //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
 
-                        SavingGrnToSqlite();
-                    }
-                    else
-                    {
-                        StockTake = new StockTake();
-                        SelectedBarCode = new BarCode();
-                        //SelectedBarCode.BCODE = newText;
-                    }
-                }
-            }
-            catch (Exception e) { }
-        }
+        //                SavingGrnToSqlite();
+        //            }
+        //            else
+        //            {
+        //                StockTake = new StockTake();
+        //                SelectedBarCode = new BarCode();
+        //                //SelectedBarCode.BCODE = newText;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e) { }
+        //}
 
 
         public void SavingGrnToSqlite()

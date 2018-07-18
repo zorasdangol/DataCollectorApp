@@ -130,11 +130,12 @@
                        Text="Quantity:"
                        TextColor="Black"/>
                 <control:CustomEntry Grid.Row="3" 
-                       Grid.Column="1"
-                       x:Name="QuantityEntry"
-                       Completed="Quantity_EnterPressed"
-                       Text="{Binding StockTake.QUANTITY}"
-                       Placeholder="Quantity"/>
+                                     Grid.Column="1"
+                                     x:Name="QuantityEntry"
+                                     IsEnabled="{Binding IsButtonVisible}"
+                                     Completed="Quantity_EnterPressed"
+                                     Text="{Binding StockTake.QUANTITY}"
+                                     Placeholder="Quantity"/>
 
                 <Label Grid.Row="4" 
                        Grid.Column="0"

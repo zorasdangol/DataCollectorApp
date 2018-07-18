@@ -56,7 +56,7 @@ namespace DataCollector.ViewModels
         {
             SetCommand = new Command(ExecuteSetCommand);
             SelectedLocation = new Location();
-            LocationList = Helpers.JsonData.LocationList;
+            LocationList = Helpers.Data.LocationList;
 
             SelectedBatch = LoadFromDB.LoadBatch(App.DatabaseLocation);
 
@@ -68,19 +68,19 @@ namespace DataCollector.ViewModels
             else
             {
                 Helpers.Data.SelectedBatch = new Batch(SelectedBatch);
-                SelectedLocation = LocationList.Find(x => x.LOCATIONNAME == SelectedBatch.LOCATIONNAME);
+                SelectedLocation = LocationList.Find(x => x.NAME == SelectedBatch.LOCATIONNAME);
             }           
         }
 
         private void ExecuteSetCommand()
         {
-            if (SelectedLocation == null || String.IsNullOrEmpty(SelectedLocation.LOCATIONNAME))
+            if (SelectedLocation == null || String.IsNullOrEmpty(SelectedLocation.NAME))
             {
                 App.Current.MainPage.DisplayAlert("Info", "Select Location First", "Ok");
             }
             else
             {
-                SelectedBatch.LOCATIONNAME = SelectedLocation.LOCATIONNAME;
+                SelectedBatch.LOCATIONNAME = SelectedLocation.NAME;
                 bool res = DBAccess.LocationChange(App.DatabaseLocation, SelectedBatch);
                 if (res == true)
                 {

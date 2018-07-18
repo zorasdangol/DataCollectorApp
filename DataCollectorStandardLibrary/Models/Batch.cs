@@ -64,7 +64,19 @@ namespace DataCollectorStandardLibrary.Models
 
     public class Location
     {
-        public string LOCATIONNAME { get; set; }
-        public int LOCATIONID { get; set; }
+        public string NAME { get; set; }
+        public int LOC_ID { get; set; }
+        public string WAREHOUSE { get; set; }
+        public int PARENT { get; set; }
+        public int LEVELS { get; set; }
+
+        public Location()
+        {
+            NAME = "";
+            LOC_ID = 0;
+            WAREHOUSE = "";
+            PARENT = 0;
+            LEVELS = 0;
+        }
     }
 }

@@ -28,26 +28,26 @@ namespace DataCollector.Views.BranchOut
         }
 
 
-        private void BarCode_Entry_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                if (Helpers.Data.AutoModeEnabled)
-                {
-                    if (!string.IsNullOrEmpty(e.NewTextValue))
-                    {
-                        var oldText = e.OldTextValue;
-                        var newText = e.NewTextValue;
+        //private void BarCode_Entry_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (Helpers.Data.AutoModeEnabled)
+        //        {
+        //            if (!string.IsNullOrEmpty(e.NewTextValue))
+        //            {
+        //                var oldText = e.OldTextValue;
+        //                var newText = e.NewTextValue;
 
-                        if (oldText == null) { oldText = ""; }
-                        if (newText == null) { newText = ""; }
+        //                if (oldText == null) { oldText = ""; }
+        //                if (newText == null) { newText = ""; }
 
-                        viewModel.BarCode_Entry_TextChanged(oldText, newText);
-                    }
-                }
-            }
-            catch { }
-        }
+        //                viewModel.BarCode_Entry_TextChanged(oldText, newText);
+        //            }
+        //        }
+        //    }
+        //    catch { }
+        //}
 
         public void OnEnterPressed(object sender, EventArgs e)
         {

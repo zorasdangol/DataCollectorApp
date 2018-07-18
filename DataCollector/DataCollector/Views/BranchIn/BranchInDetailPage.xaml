@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             xmlns:con="clr-namespace:DataCollector.Converters"             
+             x:Class="DataCollector.Views.BranchIn.BranchInDetailPage"
+             Title="Branch In Detail">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <con:BooleanConverter x:Key="bc"/>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Padding="15,5,15,30">
+            <StackLayout >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" 
+                           Grid.Column="0"                           
+                           Text="Store" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Row="0" 
+                            Grid.Column="1"
+                            Title="Store Name"
+                            x:Name="StorePicker"
+                            Unfocused="StorePicker_Unfocused"
+                            ItemsSource="{Binding DivisionList}"
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedStore}"
+                             />
+
+                    <Label Grid.Row="1" 
+                           Grid.Column="0"
+                           Text="Entry No"                            
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Column="1"                        
+                            Grid.Row="1"
+                            Title="Entry No"
+                            x:Name="EntryNoPicker"       
+                            ItemsSource="{Binding BranchInDetailList}"
+                            ItemDisplayBinding="{Binding vchrNo}"
+                            SelectedItem="{Binding SelectedBranchInDetail}"
+                            TextColor="Black"
+                            IsEnabled="False"                            
+                            HorizontalOptions="Start"/>
+
+                    <Label Grid.Row="2" 
+                           Grid.Column="0"                           
+                           Text="Division From:" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Row="2" 
+                            Grid.Column="1"
+                            Title="Division From"
+                            x:Name="DivisionToPicker"
+                            ItemsSource="{Binding DivisionList}"
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedDivisionFrom}"
+                             />
+
+                    <Label Grid.Row="3"
+                           Grid.Column="0"                           
+                           Text="Date" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <DatePicker Grid.Row="3"
+                                Grid.Column="1"   
+                                HorizontalOptions="StartAndExpand"
+                                Date="{Binding BranchInDetail.trnDate}"/>
+
+                    <Label Grid.Row="4" 
+                           Grid.Column="0"                          
+                           Text="Warehouse" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Row="4" 
+                            Grid.Column="1"                            
+                            ItemsSource="{Binding WarehouseList}"                            
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedWarehouse}"
+                            Title="Warehouse"/>
+
+                    <Label Grid.Row="5" 
+                           Grid.Column="0"                          
+                           Text="Remarks" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Entry Grid.Row="5"
+                           Grid.Column="1"                            
+                           Placeholder="Remarks"
+                           Text="{Binding BranchInDetail.remarks}"/>
+
+                    <Label Grid.Row="6" 
+                           Grid.Column="0"                          
+                           Text="Ref No." 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Entry Grid.Row="6"
+                           Grid.Column="1"                            
+                           Placeholder="Ref No."
+                           Text="{Binding BranchInDetail.billToAdd}"/>
+                </Grid>
+
+                <Button x:Name="btn" 
+                        Text="Next" 
+                        Command="{Binding BISetCommand}"
+                        HorizontalOptions="Start"
+                        BackgroundColor="Black"
+                        TextColor="White" />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

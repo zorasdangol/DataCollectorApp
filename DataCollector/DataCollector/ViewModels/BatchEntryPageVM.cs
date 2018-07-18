@@ -59,13 +59,13 @@ namespace DataCollector.ViewModels
             {
                 SetCommand = new Command(ExecuteSetCommand);
                 SelectedLocation = new Location();
-                LocationList = Helpers.JsonData.LocationList;
+                LocationList = Helpers.Data.LocationList;
 
                 SelectedBatch = LoadFromDB.LoadBatch(App.DatabaseLocation);
-                if (SelectedBatch != null)
+                if (SelectedBatch != null && !string.IsNullOrEmpty(SelectedBatch.BATCHNO))
                 {
                     //Helpers.Data.SelectedBatch = new Batch(SelectedBatch);
-                    SelectedLocation = LocationList.Find(x => x.LOCATIONNAME == SelectedBatch.LOCATIONNAME);                   
+                    SelectedLocation = LocationList.Find(x => x.NAME == SelectedBatch.LOCATIONNAME);                   
 
                 }
                 else
@@ -78,7 +78,7 @@ namespace DataCollector.ViewModels
 
         private void ExecuteSetCommand()
         {
-            if(SelectedLocation == null || SelectedLocation.LOCATIONNAME == "")
+            if(SelectedLocation == null || SelectedLocation.NAME == "")
             {
                 App.Current.MainPage.DisplayAlert("Info", "Select Location First", "Ok");
             }
@@ -92,7 +92,7 @@ namespace DataCollector.ViewModels
             }
             else
             {
-                SelectedBatch.LOCATIONNAME = SelectedLocation.LOCATIONNAME;
+                SelectedBatch.LOCATIONNAME = SelectedLocation.NAME;
                 SelectedBatch.DATE = DateTime.Today;
                 SelectedBatch.STAMP = new DateTime().TimeOfDay.ToString();
 

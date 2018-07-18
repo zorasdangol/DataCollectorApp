@@ -71,7 +71,7 @@ namespace DataCollector.ViewModels.Stock
         {           
             StockTake = new StockTake();
             SelectedBarCode = new BarCode();
-            BarCodeList = Helpers.JsonData.BarCodeList;
+            BarCodeList = Helpers.Data.BarCodeList;
             AddCommand = new Command(ExecuteAddCommand);
             IsButtonVisible = !Helpers.Data.AutoModeEnabled;
             _MainData = new LoadDataCollect();
@@ -80,7 +80,6 @@ namespace DataCollector.ViewModels.Stock
             LoadFromDB.LoadSession(App.DatabaseLocation);
             var StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
             var list = LoadFromDB.LoadStockTake(App.DatabaseLocation);
-
         }
 
         public void ExecuteAddCommand()
@@ -107,57 +106,59 @@ namespace DataCollector.ViewModels.Stock
                     StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
                     StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
                     StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+
+                    if (Helpers.Data.AutoModeEnabled)
+                    {
+                        SaveToSqlite();
+                    }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().LongAlert("InCorrect BarCode");
-
+                    if (!string.IsNullOrEmpty(SelectedBarCode.BCODE))
+                        DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
                     StockTake = new StockTake();
                     SelectedBarCode = new BarCode();
                     //SelectedBarCode.BCODE = EnteredBCODE;
 
                 }
 
-                if (Helpers.Data.AutoModeEnabled)
-                {
-                    SaveToSqlite();
-                }
+                
             }
             catch (Exception e) { }
         }
 
-        public void BarCode_Entry_TextChanged(string oldText, string newText)
-        {
-            try
-            {
-                if (oldText != newText)
-                {
-                    BarCode BarCode = null;
-                    BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
-                    if (BarCode != null && BarCode.BCODE == newText)
-                    {
-                        SelectedBarCode = new BarCode(BarCode);
-                        StockTake = new StockTake()
-                        {
-                            MCODE = BarCode.MCODE,
-                            DESCA = BarCode.DESCA,
-                            QUANTITY = 1
-                        };
-                        StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-                        StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-                        StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
+        //public void BarCode_Entry_TextChanged(string oldText, string newText)
+        //{
+        //    try
+        //    {
+        //        if (oldText != newText)
+        //        {
+        //            BarCode BarCode = null;
+        //            BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
+        //            if (BarCode != null && BarCode.BCODE == newText)
+        //            {
+        //                SelectedBarCode = new BarCode(BarCode);
+        //                StockTake = new StockTake()
+        //                {
+        //                    MCODE = BarCode.MCODE,
+        //                    DESCA = BarCode.DESCA,
+        //                    QUANTITY = 1
+        //                };
+        //                StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
+        //                StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
+        //                StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
 
-                    }
-                    else
-                    {
-                        StockTake = new StockTake();
-                        SelectedBarCode = new BarCode();
-                        SelectedBarCode.BCODE = newText;
-                    }
-                }
-            }
-            catch (Exception e) { }
-        }
+        //            }
+        //            else
+        //            {
+        //                StockTake = new StockTake();
+        //                SelectedBarCode = new BarCode();
+        //                SelectedBarCode.BCODE = newText;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception e) { }
+        //}
 
         public void SaveToSqlite()
         {
