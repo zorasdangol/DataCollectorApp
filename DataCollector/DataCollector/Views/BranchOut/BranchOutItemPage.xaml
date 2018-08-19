@@ -57,7 +57,7 @@
                        Grid.Row="2"
                        Grid.Column="0"
                        FontAttributes="Bold"/>
-                <Label Text="{Binding BranchOutItem.divisionTo}"
+                <Label Text="{Binding BranchOutItem.billToAdd}"
                        Grid.Row="2"
                        Grid.Column="1"/>
             </Grid>

@@ -12,10 +12,22 @@ namespace DataCollectorStandardLibrary.Models
     {
     }
 
+    public class BranchInMaster
+    {
+        public BranchInDetail BranchInMain { get; set; }
+        public List<BranchInItem> BranchInProdList { get; set; }
+
+        public BranchInMaster()
+        {
+            BranchInMain = new BranchInDetail();
+            BranchInProdList = new List<BranchInItem>();
+        }
+    }
+
     public class BranchInSummary: BranchItem
     {
-        public int enteredQuantity { get; set; }
-        public int difference { get; set; }
+        public decimal enteredQuantity { get; set; }
+        public decimal difference { get; set; }
     }
     
 }

@@ -14,7 +14,6 @@ namespace DataCollector.ViewModels.GRN
     public class GRNEntryPageVM : BaseViewModel
     {
         private List<BarCode> _BarCodeList;
-
         public List<BarCode> BarCodeList
         {
             get { return _BarCodeList; }
@@ -61,8 +60,8 @@ namespace DataCollector.ViewModels.GRN
             }
         }
 
-        private GrnEntry _GrnEntry;
-        public GrnEntry GrnEntry
+        private GrnProd _GrnEntry;
+        public GrnProd GrnEntry
         {
             get { return _GrnEntry; }
             set
@@ -82,7 +81,7 @@ namespace DataCollector.ViewModels.GRN
                 BarCodeList = Helpers.Data.BarCodeList;
                 AddCommand = new Command(ExecuteAddCommand);
                 IsButtonVisible = !Helpers.Data.AutoModeEnabled;
-                GrnEntry = new GrnEntry();
+                GrnEntry = new GrnProd();
                 StockTake = new StockTake();
                 GrnEntry.SetInitialGrnData(Helpers.Data.GrnMain);
                 
@@ -102,6 +101,11 @@ namespace DataCollector.ViewModels.GRN
         {
             try
             {
+                if (string.IsNullOrEmpty(SelectedBarCode.BCODE))
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
+                    return;
+                }
                 var EnteredBCODE = SelectedBarCode.BCODE;
                 var BarCode = BarCodeList.Where(op => op.BCODE == SelectedBarCode.BCODE).FirstOrDefault();
                 if (BarCode != null && BarCode.BCODE == SelectedBarCode.BCODE)
@@ -114,6 +118,13 @@ namespace DataCollector.ViewModels.GRN
                         DESCA = BarCode.DESCA,
                         QUANTITY = 1
                     };
+                    var menuitem = Helpers.Data.MenuItemsList.Where(x => x.MCODE == StockTake.MCODE).FirstOrDefault();
+                    if (menuitem != null)
+                    {
+                        StockTake.DESCA = menuitem.DESCA;
+                        StockTake.RATE = menuitem.RATE_A;
+                        StockTake.UNIT = menuitem.BASEUNIT;
+                    }
                     if (Helpers.Data.AutoModeEnabled)
                     {
                         SavingGrnToSqlite();
@@ -125,50 +136,12 @@ namespace DataCollector.ViewModels.GRN
                         DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
                     StockTake = new StockTake();
                     SelectedBarCode = new BarCode();
-                    //SelectedBarCode.BCODE = EnteredBCODE;                   
+                    //SelectedBarCode.BCODE = EnteredBCODE;                  
 
-                }
-
-               
+                }               
             }
             catch (Exception e) { }
         }
-
-        //public void BarCode_Entry_TextChanged(string oldText, string newText)
-        //{
-        //    try
-        //    {
-        //        if (oldText != newText)
-        //        {
-        //            BarCode BarCode = null;
-        //            BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
-        //            if (BarCode != null && BarCode.BCODE == newText)
-        //            {
-        //                SelectedBarCode = new BarCode(BarCode);
-        //                StockTake = new StockTake()
-        //                {
-        //                    MCODE = BarCode.MCODE,
-        //                    DESCA = BarCode.DESCA,
-        //                    QUANTITY = 1
-        //                };
-
-        //                //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-        //                //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-        //                //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
-
-        //                SavingGrnToSqlite();
-        //            }
-        //            else
-        //            {
-        //                StockTake = new StockTake();
-        //                SelectedBarCode = new BarCode();
-        //                //SelectedBarCode.BCODE = newText;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e) { }
-        //}
-
 
         public void SavingGrnToSqlite()
         {
@@ -182,6 +155,8 @@ namespace DataCollector.ViewModels.GRN
                     GrnEntry.barcode = SelectedBarCode.BCODE;
                     GrnEntry.mcode = StockTake.MCODE;
                     GrnEntry.desca = StockTake.DESCA;
+                    GrnEntry.unit = StockTake.UNIT;
+                    GrnEntry.rate = StockTake.RATE.ToString();
                     GrnEntry.quantity = StockTake.QUANTITY.ToString();
 
                     //GrnEntry.batchNo = Helpers.Data.SelectedBatch.BATCHNO;

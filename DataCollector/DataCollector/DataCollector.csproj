@@ -46,6 +46,7 @@
     <Compile Include="DatabaseAccess\InsertIntoDB.cs" />
     <Compile Include="DatabaseAccess\LoadFromDB.cs" />
     <Compile Include="DatabaseAccess\LoadInitialList.cs" />
+    <Compile Include="DatabaseAccess\LoadIPAddress.cs" />
     <Compile Include="Helpers\Data.cs" />
     <Compile Include="Helpers\DataDownload.cs" />
     <Compile Include="Helpers\JsonData.cs" />
@@ -66,6 +67,15 @@
     <Compile Include="ViewModels\BranchOut\BranchOutItemPageVM.cs" />
     <Compile Include="ViewModels\BranchOut\BranchOutSummaryPageVM.cs" />
     <Compile Include="ViewModels\BranchOut\BranchOutTabbedPageVM.cs" />
+    <Compile Include="ViewModels\DataList\BranchInDataListPageVM.cs" />
+    <Compile Include="ViewModels\DataList\BranchOutDataListPageVM.cs" />
+    <Compile Include="ViewModels\DataList\GRNDataListPageVM.cs" />
+    <Compile Include="ViewModels\DataList\StockDataListPageVM.cs" />
+    <Compile Include="ViewModels\DataSync\BranchInSyncPageVM.cs" />
+    <Compile Include="ViewModels\DataSync\BranchOutSyncPageVM.cs" />
+    <Compile Include="ViewModels\DataSync\DataSyncTabbedPageVM.cs" />
+    <Compile Include="ViewModels\DataSync\GRNSyncPageVM.cs" />
+    <Compile Include="ViewModels\DataSync\StockSyncPageVM.cs" />
     <Compile Include="ViewModels\GRN\GoodsReceivePageVM.cs" />
     <Compile Include="ViewModels\GRN\GRNEntryPageVM.cs" />
     <Compile Include="ViewModels\GRN\GRNListPageVM.cs" />
@@ -75,11 +85,12 @@
     <Compile Include="ViewModels\MainHomePageVM.cs" />
     <Compile Include="ViewModels\MainSettingsPageVM.cs" />
     <Compile Include="ViewModels\MasterPageVM.cs" />
-    <Compile Include="ViewModels\MenuPagesVM\TBMenuPopupPageVM.cs" />
+    <Compile Include="ViewModels\MenuPages\IPSettingsPageVM.cs" />
     <Compile Include="ViewModels\SessionPages\SessionEndPageVM.cs" />
     <Compile Include="ViewModels\SessionPages\SessionSelectionPageVM.cs" />
     <Compile Include="ViewModels\SessionPages\SessionStartPageVM.cs" />
     <Compile Include="ViewModels\Stock\StockSummaryPageVM.cs" />
+    <Compile Include="ViewModels\Stock\StockTakeDetailPageVM.cs" />
     <Compile Include="ViewModels\Stock\StockTakeListPageVM.cs" />
     <Compile Include="ViewModels\Stock\StockTakePageVM.cs" />
     <Compile Include="ViewModels\Stock\TabbedStockPageVM.cs" />
@@ -119,6 +130,36 @@
     <Compile Include="Views\BranchOut\BranchOutTabbedPage.xaml.cs">
       <DependentUpon>BranchOutTabbedPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DataList\BranchInDataListPage.xaml.cs">
+      <DependentUpon>BranchInDataListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataList\BranchOutDataListPage.xaml.cs">
+      <DependentUpon>BranchOutDataListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataList\DataListTabbedPage.xaml.cs">
+      <DependentUpon>DataListTabbedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataList\GRNDataListPage.xaml.cs">
+      <DependentUpon>GRNDataListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataList\StockDataListPage.xaml.cs">
+      <DependentUpon>StockDataListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataSync\BranchInSyncPage.xaml.cs">
+      <DependentUpon>BranchInSyncPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataSync\BranchOutSyncPage.xaml.cs">
+      <DependentUpon>BranchOutSyncPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataSync\DataSyncTabbedPage.xaml.cs">
+      <DependentUpon>DataSyncTabbedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataSync\GRNSyncPage.xaml.cs">
+      <DependentUpon>GRNSyncPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataSync\StockSyncPage.xaml.cs">
+      <DependentUpon>StockSyncPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GRN\GoodsReceivePage.xaml.cs">
       <DependentUpon>GoodsReceivePage.xaml</DependentUpon>
     </Compile>
@@ -146,11 +187,8 @@
     <Compile Include="Views\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MenuPages\IPSettingPopupPage.xaml.cs">
-      <DependentUpon>IPSettingPopupPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MenuPages\TBMenuPopupPage.xaml.cs">
-      <DependentUpon>TBMenuPopupPage.xaml</DependentUpon>
+    <Compile Include="Views\MenuPages\IPSettingsPage.xaml.cs">
+      <DependentUpon>IPSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SessionPages\SessionEndPage.xaml.cs">
       <DependentUpon>SessionEndPage.xaml</DependentUpon>
@@ -161,16 +199,19 @@
     <Compile Include="Views\SessionPages\SessionSelectionPage.xaml.cs">
       <DependentUpon>SessionSelectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StockTake\StockSummaryPage.xaml.cs">
+    <Compile Include="Views\Stock\StockSummaryPage.xaml.cs">
       <DependentUpon>StockSummaryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StockTake\StockTakeListPage.xaml.cs">
+    <Compile Include="Views\Stock\StockTakeDetailPage.xaml.cs">
+      <DependentUpon>StockTakeDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Stock\StockTakeListPage.xaml.cs">
       <DependentUpon>StockTakeListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StockTake\StockTakePage.xaml.cs">
+    <Compile Include="Views\Stock\StockTakePage.xaml.cs">
       <DependentUpon>StockTakePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StockTake\TabbedStockPage.xaml.cs">
+    <Compile Include="Views\Stock\TabbedStockPage.xaml.cs">
       <DependentUpon>TabbedStockPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -327,19 +368,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\StockTake\StockSummaryPage.xaml">
+    <EmbeddedResource Include="Views\Stock\StockSummaryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\StockTake\StockTakeListPage.xaml">
+    <EmbeddedResource Include="Views\Stock\StockTakeListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\StockTake\StockTakePage.xaml">
+    <EmbeddedResource Include="Views\Stock\StockTakePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\StockTake\TabbedStockPage.xaml">
+    <EmbeddedResource Include="Views\Stock\TabbedStockPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -393,19 +434,79 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MenuPages\IPSettingPopupPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\MenuPages\TBMenuPopupPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Views\ActivityIndicatorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataSync\DataSyncTabbedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataSync\GRNSyncPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataSync\BranchInSyncPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataSync\BranchOutSyncPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataSync\StockSyncPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataList\DataListTabbedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataList\GRNDataListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataList\BranchOutDataListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataList\StockDataListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\DataList\BranchInDataListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MenuPages\IPSettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Stock\StockTakeDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -45,16 +45,16 @@ namespace DataCollector.ViewModels.Stock
 
         public StockTakeListPageVM()
         {
-            LoadFromDB.LoadBatch(App.DatabaseLocation);
-            LoadFromDB.LoadSession(App.DatabaseLocation);
-            //StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
-            StockTakeList = Helpers.Data.StockTakeList;
+            RefreshItem();
         }
 
         public void RefreshItem()
         {
-            StockTakeList = Helpers.Data.StockTakeList;
-            //StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
+            LoadFromDB.LoadBatch(App.DatabaseLocation);
+            LoadFromDB.LoadSession(App.DatabaseLocation);
+            var list = Helpers.Data.StockTakeList;
+            StockTakeList = Helpers.Data.StockTakeList.Where(x => ((x.division == Helpers.Data.StockTake.division) && (x.sid == Helpers.Data.StockTake.sid))).ToList().OrderBy(x => x.ind).ToList();
+            
         }
 
         public async void DataDeletion(StockTake Selected)
@@ -69,7 +69,7 @@ namespace DataCollector.ViewModels.Stock
                     {
                         DependencyService.Get<IMessage>().ShortAlert("Item Deleted Successfully");
                         Helpers.Data.StockTakeList.Remove(Selected);
-                        StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
+                        StockTakeList = LoadFromDB.LoadStockTakeList(App.DatabaseLocation);
                         //StockTakeList = Helpers.Data.StockTakeList;
                         SelectedStockTake = new StockTake();
                     }

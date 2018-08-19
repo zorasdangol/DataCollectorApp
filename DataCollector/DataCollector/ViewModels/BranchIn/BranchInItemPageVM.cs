@@ -111,7 +111,13 @@ namespace DataCollector.ViewModels.BranchIn
                         DESCA = BarCode.DESCA,
                         QUANTITY = 1
                     };
-
+                    var menuitem = Helpers.Data.MenuItemsList.Where(x => x.MCODE == StockTake.MCODE).FirstOrDefault();
+                    if (menuitem != null)
+                    {
+                        StockTake.DESCA = menuitem.DESCA;
+                        StockTake.RATE = menuitem.RATE_A;
+                        StockTake.UNIT = menuitem.BASEUNIT;
+                    }
                     if (Helpers.Data.AutoModeEnabled)
                     {
                         SavingGrnToSqlite();
@@ -144,8 +150,11 @@ namespace DataCollector.ViewModels.BranchIn
                     BranchInItem.barcode = SelectedBarCode.BCODE;
                     BranchInItem.mcode = StockTake.MCODE;
                     BranchInItem.desca = StockTake.DESCA;
-                    BranchInItem.quantity = StockTake.QUANTITY;
+                    BranchInItem.unit = StockTake.UNIT;
+                    BranchInItem.rate = StockTake.RATE.ToString();
+                    BranchInItem.quantity = StockTake.QUANTITY.ToString();
 
+                    
                     //BranchOutItem.batchNo = Helpers.Data.SelectedBatch.BATCHNO;
                     //BranchOutItem.locationName = Helpers.Data.SelectedBatch.LOCATIONNAME;
                     //BranchOutItem.sessionId = Helpers.Data.Session.SESSIONID;
@@ -159,7 +168,7 @@ namespace DataCollector.ViewModels.BranchIn
 
                             BranchInItem.mcode = "";
                             BranchInItem.barcode = "";
-                            BranchInItem.quantity = 0;
+                            BranchInItem.quantity = "0";
 
                             SelectedBarCode = new BarCode();
                         }
@@ -178,10 +187,13 @@ namespace DataCollector.ViewModels.BranchIn
                 var receiveItemSummary = Helpers.Data.SendBranchOutSummaryList.Find(x => x.mcode == BranchInItem.mcode);
                 if (receiveItemSummary == null)
                 {
+                    receiveItemSummary = new BranchInSummary() { mcode = BranchInItem.mcode, desca = BranchInItem.desca, barcode = BranchInItem.barcode, quantity = "0", difference = 0 };
+                    Helpers.Data.SendBranchOutSummaryList.Add(receiveItemSummary);
                     DependencyService.Get<IMessage>().ShortAlert("This item is not sent");
-                    return false;
+                    
+                    //return false;
                 }
-                var maxQuantity = receiveItemSummary.quantity;
+                var maxQuantity = Convert.ToDecimal(receiveItemSummary.quantity);
                 var BranchInItemList = new List<BranchInItem>(Helpers.Data.BranchInItemList);
                 BranchInItemList.Add(BranchInItem);
 
@@ -191,19 +203,22 @@ namespace DataCollector.ViewModels.BranchIn
                  
                 if (maxQuantity < EnteredQuantity)
                 {
-                    DependencyService.Get<IMessage>().ShortAlert("Item exceeded the quantity. Couldnot insert");
-                    SelectedBarCode = new BarCode();
-                    return false;
+                    DependencyService.Get<IMessage>().ShortAlert("Item exceeded the quantity.");
+                    //SelectedBarCode = new BarCode();
+                    //return false;
+                    return true;
                 }
                 else
                 {
-
                     return true;
                 }
                 // var stocksummary = BranchOutDetailValidator.StockTakeToStockSummary(Helpers.Data.ReceiveItemList);
             }
             catch (Exception e )
-            { return false; }
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Error: "+ e.Message);
+                return false;
+            }
             
         }
     }

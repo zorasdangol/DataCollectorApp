@@ -17,11 +17,21 @@ namespace DataCollector.ViewModels.GRN
     public class GoodsReceivePageVM:BaseViewModel
     {
         public List<Division> DivisionList { get; set; }
-        public List<Warehouse> WarehouseList { get; set; }
         public List<OrderProd> OrderProdList { get; set; }
         public List<AcList> AcList { get; set; }
 
-
+        private List<Warehouse> _WarehouseList;
+        public List<Warehouse> WarehouseList
+        {
+            get { return _WarehouseList; }
+            set
+            {
+                if(value == null)                
+                    return;                
+                _WarehouseList = value;
+                OnPropertyChanged("WarehouseList");
+            }
+        }
         //used for recent count of GRN
         public int GrnCount { get; set; }
 
@@ -94,8 +104,9 @@ namespace DataCollector.ViewModels.GRN
                     if (value != null && !string.IsNullOrEmpty(value.NAME))
                     {
                         GrnMain = new GrnMain();
-                        GrnMain.division = value.NAME;
-                        GrnEntrySet(value.NAME);
+                        GrnMain.division = value.INITIAL;
+                        WarehouseList = Helpers.Data.WarehouseList.Where(x => x.DIVISION == value.INITIAL).ToList();
+                        GrnEntrySet(value.INITIAL);
                     }
                     OnPropertyChanged("SelectedStore");
                 }catch(Exception e)
@@ -142,11 +153,9 @@ namespace DataCollector.ViewModels.GRN
                         OnPropertyChanged("SelectedOrderProd");
                     }
                 }
-                catch { }
-                
+                catch { }                
             }
         }
-
 
         private AcList _SelectedAcList;
         public AcList SelectedAcList
@@ -164,8 +173,7 @@ namespace DataCollector.ViewModels.GRN
                         OnPropertyChanged("SelectedAcList");
                     }
                 }catch(Exception e)
-                { }
-                
+                { }                
             }
         }
 
@@ -228,10 +236,8 @@ namespace DataCollector.ViewModels.GRN
                     else
                         GrnMain.isTaxInvoice = "0";
                     OnPropertyChanged("IsTaxInvoice");
-
                 }
-                catch { }
-                         
+                catch { }                         
             }
         }
 
@@ -258,9 +264,9 @@ namespace DataCollector.ViewModels.GRN
         {
             try
             {
-                LoadFromDB.LoadBranchOutDetailList(App.DatabaseLocation);
-
-                GrnMainList = Helpers.Data.GrnMainList.Where(x => x.division == store).ToList().OrderBy(x => x.curNo).ToList();
+                LoadFromDB.LoadGrnMainList(App.DatabaseLocation);
+                
+                GrnMainList = Helpers.Data.GrnMainList.Where(x => (x.division == store) && (x.IsSaved == false)).ToList().OrderBy(x => x.curNo).ToList();
                 
                 var maxObject = Helpers.Data.GrnMainList.Where(x => x.division == store).OrderByDescending(item => item.curNo).FirstOrDefault();
                                 
@@ -310,28 +316,7 @@ namespace DataCollector.ViewModels.GRN
             }catch(Exception e)
             { }           
         }
-
-        //private void SetGrnMainData(GrnMain GrnMain)
-        //{
-        //    try
-        //    {
-        //        //GrnMainData.vchrNo = GrnMain.vchrNo;
-        //        //GrnMainData.division = GrnMain.division;
-        //        //GrnMainData.chalanNo = GrnMain.chalanNo;
-        //        //GrnMainData.trnDate = GrnMain.trnDate;
-        //        //GrnMainData.trnAc = GrnMain.trnAc;
-        //        //GrnMainData.ParAc = GrnMain.ParAc;
-        //        //GrnMainData.trnMode = GrnMain.trnMode;
-        //        //GrnMainData.refOrdBill = GrnMain.refOrdBill;
-        //        //GrnMainData.remarks = GrnMain.remarks;
-        //        //GrnMainData.wareHouse = GrnMain.wareHouse;
-        //        //GrnMainData.isTaxInvoice = GrnMain.isTaxInvoice;
-                
                
-                
-        //    }
-        //    catch { }
-        //}
 
         public void PickerValueChange(GrnMain GrnMain)
         {

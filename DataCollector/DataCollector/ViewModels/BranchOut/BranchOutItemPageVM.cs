@@ -99,6 +99,11 @@ namespace DataCollector.ViewModels.BranchOut
         {
             try
             {
+                if (string.IsNullOrEmpty(SelectedBarCode.BCODE))
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
+                    return;
+                }
                 var EnteredBCODE = SelectedBarCode.BCODE;
                 var BarCode = BarCodeList.Where(op => op.BCODE == SelectedBarCode.BCODE).FirstOrDefault();
                 if (BarCode != null && BarCode.BCODE == SelectedBarCode.BCODE)
@@ -111,7 +116,13 @@ namespace DataCollector.ViewModels.BranchOut
                         DESCA = BarCode.DESCA,
                         QUANTITY = 1
                     };
-
+                    var menuitem = Helpers.Data.MenuItemsList.Where(x => x.MCODE == StockTake.MCODE).FirstOrDefault();
+                    if (menuitem != null)
+                    {
+                        StockTake.DESCA = menuitem.DESCA;
+                        StockTake.RATE = menuitem.RATE_A;
+                        StockTake.UNIT = menuitem.BASEUNIT;
+                    }
                     if (Helpers.Data.AutoModeEnabled)
                     {
                         SavingGrnToSqlite();
@@ -130,42 +141,7 @@ namespace DataCollector.ViewModels.BranchOut
                 
             }
             catch (Exception e) { }
-        }
-
-        //public void BarCode_Entry_TextChanged(string oldText, string newText)
-        //{
-        //    try
-        //    {
-        //        if (oldText != newText)
-        //        {
-        //            BarCode BarCode = null;
-        //            BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
-        //            if (BarCode != null && BarCode.BCODE == newText)
-        //            {
-        //                SelectedBarCode = new BarCode(BarCode);
-        //                StockTake = new StockTake()
-        //                {
-        //                    MCODE = BarCode.MCODE,
-        //                    DESCA = BarCode.DESCA,
-        //                    QUANTITY = 1
-        //                };
-
-        //                //StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-        //                //StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-        //                //StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
-
-        //                SavingGrnToSqlite();
-        //            }
-        //            else
-        //            {
-        //                StockTake = new StockTake();
-        //                SelectedBarCode = new BarCode();
-        //                //SelectedBarCode.BCODE = newText;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e) { }
-        //}
+        }        
 
         public void SavingGrnToSqlite()
         {
@@ -179,7 +155,9 @@ namespace DataCollector.ViewModels.BranchOut
                     BranchOutItem.barcode = SelectedBarCode.BCODE;
                     BranchOutItem.mcode = StockTake.MCODE;
                     BranchOutItem.desca = StockTake.DESCA;
-                    BranchOutItem.quantity = StockTake.QUANTITY;
+                    BranchOutItem.unit = StockTake.UNIT;
+                    BranchOutItem.rate = StockTake.RATE.ToString();
+                    BranchOutItem.quantity = StockTake.QUANTITY.ToString();
                     
                     //BranchOutItem.batchNo = Helpers.Data.SelectedBatch.BATCHNO;
                     //BranchOutItem.locationName = Helpers.Data.SelectedBatch.LOCATIONNAME;
@@ -192,7 +170,7 @@ namespace DataCollector.ViewModels.BranchOut
 
                         BranchOutItem.mcode = "";
                         BranchOutItem.barcode = "";
-                        BranchOutItem.quantity = 0;
+                        BranchOutItem.quantity = "0";
 
                         SelectedBarCode = new BarCode();
                     }

@@ -1,6 +1,7 @@
 ﻿using DataCollector.DatabaseAccess;
 using DataCollector.Interfaces;
 using DataCollector.Views.BranchIn;
+using DataCollectorStandardLibrary.DataAccessLayer;
 using DataCollectorStandardLibrary.DataValidationLayer;
 using DataCollectorStandardLibrary.Models;
 using System;
@@ -15,7 +16,19 @@ namespace DataCollector.ViewModels.BranchIn
     public class BranchInDetailPageVM:BaseViewModel
     {
         public List<Division> DivisionList { get; set; }
-        public List<Warehouse> WarehouseList { get; set; }
+
+        private List<Warehouse> _WarehouseList;
+        public List<Warehouse> WarehouseList
+        {
+            get { return _WarehouseList; }
+            set
+            {
+                if (value == null)
+                    return;
+                _WarehouseList = value;
+                OnPropertyChanged("WarehouseList");
+            }
+        }
 
         //used for recent count of GRN
         public int GrnCount { get; set; }
@@ -98,8 +111,10 @@ namespace DataCollector.ViewModels.BranchIn
                     if (value != null && !string.IsNullOrEmpty(value.NAME))
                     {
                         BranchInDetail = new BranchInDetail();
-                        BranchInDetail.division = value.NAME;
-                        BIEntrySet(value.NAME);
+                        BranchInDetail.division = value.INITIAL;
+                        BranchInDetail.billTo = value.INITIAL;
+                        WarehouseList = Helpers.Data.WarehouseList.Where(x => x.DIVISION == value.INITIAL).ToList();
+                        BIEntrySet(value.INITIAL);
                     }
                     OnPropertyChanged("SelectedStore");
                 }
@@ -120,7 +135,7 @@ namespace DataCollector.ViewModels.BranchIn
                     _SelectedDivisionFrom = value;
                     if (value != null && !string.IsNullOrEmpty(value.NAME))
                     {
-                        BranchInDetail.divisionFrom = value.NAME;
+                        BranchInDetail.billToAdd = value.INITIAL;
                     }
                     OnPropertyChanged("SelectedDivisionFrom");
                 }
@@ -149,7 +164,17 @@ namespace DataCollector.ViewModels.BranchIn
             }
         }
 
-       
+        private bool _ActivityIndicatorEnabled;
+        public bool ActivityIndicatorEnabled
+        {
+            get { return _ActivityIndicatorEnabled; }
+            set
+            {
+                _ActivityIndicatorEnabled = value;
+                OnPropertyChanged("ActivityIndicatorEnabled");
+            }
+        }
+
 
         public Command BISetCommand { get; set; }
 
@@ -163,6 +188,8 @@ namespace DataCollector.ViewModels.BranchIn
             BranchInDetail = new BranchInDetail();
             DivisionList = Helpers.Data.DivisionList;
             WarehouseList = Helpers.Data.WarehouseList;
+            ActivityIndicatorEnabled = false;
+
         }
 
         public void BIEntrySet(string store)
@@ -170,7 +197,7 @@ namespace DataCollector.ViewModels.BranchIn
             try
             {
                 LoadFromDB.LoadBranchInDetailList(App.DatabaseLocation);
-                BranchInDetailList = Helpers.Data.BranchInDetailList.Where(x => x.division == store).ToList().OrderBy(x => x.curNo).ToList();
+                BranchInDetailList = Helpers.Data.BranchInDetailList.Where(x => (x.division == store) && (x.IsSaved == false)).ToList().OrderBy(x => x.curNo).ToList();
 
                 var maxObject = Helpers.Data.BranchInDetailList.Where(x => x.division == store).OrderByDescending(item => item.curNo).FirstOrDefault();
 
@@ -178,13 +205,13 @@ namespace DataCollector.ViewModels.BranchIn
                 {
                     if (maxObject == null)
                     {
-                        BranchInDetail.vchrNo = "BI" + 1;
+                        BranchInDetail.vchrNo = "TR" + 1;
                         BranchInDetail.curNo = 1;
                         GrnCount = 1;
                     }
                     else
                     {
-                        BranchInDetail.vchrNo = "BI" + (Convert.ToInt32(maxObject.curNo) + 1);
+                        BranchInDetail.vchrNo = "TR" + (Convert.ToInt32(maxObject.curNo) + 1);
                         GrnCount = maxObject.curNo + 1;
                         BranchInDetail.curNo = GrnCount;
                     }
@@ -197,7 +224,7 @@ namespace DataCollector.ViewModels.BranchIn
             { }
         }
 
-        public void ExecuteBISetCommand()
+        public async void ExecuteBISetCommand()
         {
             try
             {
@@ -208,28 +235,51 @@ namespace DataCollector.ViewModels.BranchIn
                 {
                     Helpers.Data.BranchInDetail = BranchInDetail;
                     var branchin = BranchInDetail;
-                    var list = LoadFromDB.LoadSendBranchOutList(App.DatabaseLocation,BranchInDetail);
-                    
-                    Helpers.Data.SendBranchOutSummaryList = BranchInDetailValidator.ConvertToReceiveItemSummary(list);
-                    
-                    //var list = Helpers.JsonData.ReceivedBranchOutList;
-
-                    if (list.Count == 0)
+                    var list = new List<BranchInItem>();
+                    ActivityIndicatorEnabled = true;
+                    DependencyService.Get<IMessage>().LongAlert("Checking BranchOut Data in Server. Please wait for a while.....");
+                    var functionresponse = await UploadBranchInData.GetSendItemList(BranchInDetail);
+                    if (functionresponse.status == "error")
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("Ref No. is invalid");
+                        DependencyService.Get<IMessage>().ShortAlert("Error:" + functionresponse.Message);
                     }
-                    else
+                    else if (functionresponse.status == "ok")
                     {
-                        var res = InsertIntoDB.InsertBranchInDetail(App.DatabaseLocation, BranchInDetail);
-                        if(res)
-                            App.Current.MainPage = new BranchInTabbedPage();
+                        list = functionresponse.result;
+                        if (list.Count == 0)
+                        {
+                            DependencyService.Get<IMessage>().ShortAlert("Ref No. is invalid");
+                        }
                         else
-                            DependencyService.Get<IMessage>().ShortAlert("Error occured while Inserting Data");
+                        {
+                            foreach (var item in list)
+                            {
+                                var menuitem = Helpers.Data.MenuItemsList.Where(x => x.MCODE == item.mcode).FirstOrDefault();
+                                if (menuitem != null)
+                                {
+                                    item.desca = menuitem.DESCA;
+                                    item.rate = menuitem.RATE_A.ToString();
+                                    item.unit = menuitem.BASEUNIT;
+                                }
+                            }
+
+                            Helpers.Data.SendBranchOutSummaryList = BranchInDetailValidator.ConvertToReceiveItemSummary(list);
+
+                            var res = InsertIntoDB.InsertBranchInDetail(App.DatabaseLocation, BranchInDetail);
+                            if (res)
+                                App.Current.MainPage = new BranchInTabbedPage();
+                            else
+                                DependencyService.Get<IMessage>().ShortAlert("Error occured while Inserting Data");
+                        }
                     }
+                    ActivityIndicatorEnabled = false;
                 }
             }
             catch (Exception e)
-            { }
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Error:" + e.Message);
+                ActivityIndicatorEnabled = false;
+            }
         }
 
         public void PickerValueChange(BranchInDetail BranchInDetail)
@@ -237,7 +287,7 @@ namespace DataCollector.ViewModels.BranchIn
             try
             {
                 SelectedWarehouse = WarehouseList.Find(x => x.NAME == BranchInDetail.wareHouse);
-                SelectedDivisionFrom = DivisionList.Find(x => x.NAME == BranchInDetail.divisionFrom);
+                SelectedDivisionFrom = DivisionList.Find(x => x.INITIAL == BranchInDetail.billToAdd);
             }
             catch { }
 

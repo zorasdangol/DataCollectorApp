@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.DataSync.StockSyncPage"
+             Title="Stock"
+             >
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout>
+                <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="All"
+                       FontAttributes="Bold"
+                       FontSize="Medium"
+                       Grid.Column="0"/>
+                <Switch IsToggled="{Binding IsAll}"
+                        HorizontalOptions="End"
+                        Grid.Column="1"
+                        />
+            </Grid>
+
+                <ListView ItemsSource="{Binding DataList}"
+                          ItemTapped="MenuItemSelected"
+                          HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding sid}"
+                                       Grid.Column="0"
+                                       HorizontalOptions="Start"/>
+                                <Label Text="{Binding division}"
+                                       Grid.Column="0"
+                                       HorizontalOptions="Center"/>
+                                <Switch IsToggled="{Binding IsUpload}" 
+                                        Grid.Column="1"
+                                        HorizontalOptions="End"/>
+                            </Grid>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+                <Grid Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" 
+                        FontSize="Medium"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"/>
+                <Button Grid.Column="1" 
+                        FontSize="Medium"
+                        Text="Sync"
+                        Command="{Binding SyncCommand}"/>
+            </Grid>
+            </StackLayout>
+
+            <Grid x:Name="loadingOverlay" IsVisible="{Binding ActivityIndicatorEnabled}">
+                <ActivityIndicator IsRunning="{Binding ActivityIndicatorEnabled}" 
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+            </Grid>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

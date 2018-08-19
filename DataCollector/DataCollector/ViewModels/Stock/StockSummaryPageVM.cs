@@ -28,11 +28,10 @@ namespace DataCollector.ViewModels.Stock
         {
             try
             {
-                StockTakeList = Helpers.Data.StockTakeList;
+                StockTakeList = Helpers.Data.StockTakeList.Where(x => ((x.division == Helpers.Data.StockTake.division) && (x.sid == Helpers.Data.StockTake.sid))).ToList().OrderBy(x => x.ind).ToList();
             }
-            catch(Exception e)
-            { }           
-            
+            catch (Exception e)
+            { }     
         }
 
         public void RefreshStockSummaryList()
@@ -40,12 +39,12 @@ namespace DataCollector.ViewModels.Stock
             try
             {
                 StockSummaryList = new List<StockSummary>();
-                StockTakeList = Helpers.Data.StockTakeList;
+                StockTakeList = Helpers.Data.StockTakeList.Where(x => ((x.division == Helpers.Data.StockTake.division) && (x.sid == Helpers.Data.StockTake.sid))).ToList().OrderBy(x => x.ind).ToList();
+
                 StockSummaryList = StockTakeValidator.StockTakeToStockSummary(StockTakeList);
                 
             }
-            catch(Exception e) { }
-            
+            catch(Exception e) { }            
         }
 
     }

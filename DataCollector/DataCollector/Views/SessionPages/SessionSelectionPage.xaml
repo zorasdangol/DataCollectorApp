@@ -47,6 +47,11 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Button Text="Delete All" 
+                    VerticalOptions="End"
+                    HorizontalOptions="FillAndExpand"
+                    Command="{Binding DeleteCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

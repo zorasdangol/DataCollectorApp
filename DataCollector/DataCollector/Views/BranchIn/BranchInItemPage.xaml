@@ -58,7 +58,7 @@
                        Grid.Row="2"
                        Grid.Column="0"
                        FontAttributes="Bold"/>
-                <Label Text="{Binding BranchInItem.divisionFrom}"
+                <Label Text="{Binding BranchInItem.billToAdd}"
                        Grid.Row="2"
                        Grid.Column="1"/>
 
@@ -68,7 +68,7 @@
                            Grid.Row="3"
                            Grid.Column="0"
                            FontAttributes="Bold"/>
-                <Label Text="{Binding BranchInItem.billToAdd}"
+                <Label Text="{Binding BranchInItem.chalanNo}"
                            Grid.Row="3"
                            Grid.Column="1"/>
             </Grid>

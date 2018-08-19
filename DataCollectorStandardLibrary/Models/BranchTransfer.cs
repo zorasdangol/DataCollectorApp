@@ -4,30 +4,63 @@ using System.Text;
 
 namespace DataCollectorStandardLibrary.Models
 {
-    public class BranchTransferDetail
+    public class BranchTransferDetail:BaseModel
     {
         public int curNo { get; set; }
         public string vchrNo { get; set; }
         public string division { get; set; }
-        public string divisionTo { get; set; }
-        public string divisionFrom { get; set; }
+        public string billTo { get; set; }
+        //public string divisionFrom { get; set; }
         public string billToAdd { get; set; }
 
         public DateTime trnDate { get; set; }
         public string wareHouse { get; set; }
         public string remarks { get; set; }
 
+        private bool _IsUpload;
+        public bool IsUpload
+        {
+            get { return _IsUpload; }
+            set { _IsUpload = value; OnPropertyChanged("IsUpload"); }
+        }
+
+        public bool IsSaved { get; set; }
+        public string refNo { get; set; }
+
+        public string userName { get; set; }
+        public string chalanNo { get; set; }
+        public string trnAc { get; set; }
+        public string ParAc { get; set; }
+        public string trnMode { get; set; }
+        public string refOrdBill { get; set; }
+        public string isTaxInvoice { get; set; }
+
+
+
+
         public BranchTransferDetail()
         {
             curNo = 0;
             vchrNo = "";
             division = "";
-            divisionTo = "";
-            divisionFrom = "";
+            billTo = "";
+            //divisionFrom = "";
             billToAdd = "";
             trnDate = DateTime.Today;
             wareHouse = "";
             remarks = "";
+
+            IsUpload = false;
+            IsSaved = false;
+            userName = "";
+            refNo = "";
+
+            chalanNo = "";
+            trnAc = "";
+            ParAc = "";
+            trnMode = "Cash";
+            refOrdBill = "";
+            isTaxInvoice = "";
         }
     }
 
@@ -36,17 +69,41 @@ namespace DataCollectorStandardLibrary.Models
         public int ind { get; set; }
         public string vchrNo { get; set; }
         public string division { get; set; }
-        public string divisionTo { get; set; }
-        public string divisionFrom { get; set; }
+        public string billTo { get; set; }
+        //public string divisionFrom { get; set; }
         public string mcode { get; set; }
         public string barcode { get; set; }
-        public int quantity { get; set; }
+        public string quantity { get; set; }
         public string rate { get; set; }
         public string userName { get; set; }
         public string unit { get; set; }
         public string billToAdd { get; set; }
 
         public string desca { get; set; }
+        public string chalanNo { get; set; }
+
+        public DateTime expDate { get; set; }
+
+        public BranchItem()
+        {
+            ind = 0;
+            vchrNo = "";
+            division = "";
+            billTo = "";
+            //divisionFrom = "";
+            mcode = "";
+            barcode = "";
+            quantity = "0";
+            rate = "0.0";
+            userName = "";
+            unit = "";
+            billToAdd = "";
+            desca = "";
+            chalanNo = "";
+
+            expDate = DateTime.Today;
+
+        }
 
         public void SetBranchItem(BranchItem BranchItem)
         {
@@ -55,8 +112,8 @@ namespace DataCollectorStandardLibrary.Models
                 ind = BranchItem.ind;
                 vchrNo = BranchItem.vchrNo;
                 division = BranchItem.division;
-                divisionTo = BranchItem.divisionTo;
-                divisionFrom = BranchItem.divisionFrom;
+                billTo = BranchItem.billTo;
+               // divisionFrom = BranchItem.divisionFrom;
                 mcode = BranchItem.mcode;
                 barcode = BranchItem.barcode;
                 quantity = BranchItem.quantity;
@@ -65,6 +122,10 @@ namespace DataCollectorStandardLibrary.Models
                 unit = BranchItem.unit;
 
                 desca = BranchItem.desca;
+                chalanNo = BranchItem.chalanNo;
+
+                expDate = BranchItem.expDate;
+
             }
             catch { }
         }
@@ -75,9 +136,10 @@ namespace DataCollectorStandardLibrary.Models
             {
                 this.vchrNo = BranchTransferDetail.vchrNo;
                 this.division = BranchTransferDetail.division;
-                this.divisionTo = BranchTransferDetail.divisionTo;
-                this.divisionFrom = BranchTransferDetail.divisionFrom;
+                this.billTo = BranchTransferDetail.billTo;
+                //this.divisionFrom = BranchTransferDetail.divisionFrom;
                 this.billToAdd = BranchTransferDetail.billToAdd;
+                this.chalanNo = BranchTransferDetail.chalanNo;
             }
             catch { }
         }     

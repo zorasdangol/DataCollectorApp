@@ -7,31 +7,31 @@
     <MasterDetailPage.Master>
         <ContentPage Title="Menu">
             <ContentPage.Content>
-                <StackLayout>
-                    <Image Source="DataCollection.jpg"
+                    <StackLayout>
+                        <Image Source="DataCollection.jpg"
                            Aspect="AspectFit"/>
 
-                    <ListView x:Name="listView"                               
+                        <ListView x:Name="listView"                               
                               ItemsSource="{Binding GrnMenuList}"
                               SeparatorColor="Black"
                               HasUnevenRows="True"
                               ItemSelected="MenuItemSelected"
                               SelectedItem="{Binding SelectedMenuItem}"
                               >
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout Padding="10,5">
-                                        <Label Text="{Binding Name}"
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Padding="10,5">
+                                            <Label Text="{Binding Name}"
                                                TextColor="Black"
                                                Margin="5"
                                                FontSize="Medium"/>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackLayout>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
             </ContentPage.Content>
         </ContentPage>
                      
@@ -46,7 +46,8 @@
                     <local:GRNEntryPage/>
                     <local:GRNListPage/>
                     <local:GRNSummaryPage/>
-                </TabbedPage>
+                </TabbedPage>           
+                
             </x:Arguments>            
         </NavigationPage>
     </MasterDetailPage.Detail>

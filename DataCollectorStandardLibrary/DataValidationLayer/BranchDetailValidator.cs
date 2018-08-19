@@ -14,13 +14,13 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
         {
             if (string.IsNullOrEmpty(BranchOutDetail.division))
                 return new FunctionResponse() { status = "error", Message = "Select Store" };
-            else if (string.IsNullOrEmpty(BranchOutDetail.divisionTo))
+            else if (string.IsNullOrEmpty(BranchOutDetail.billToAdd))
                 return new FunctionResponse() { status = "error", Message = "Select Division To" };
             else if (string.IsNullOrEmpty(BranchOutDetail.vchrNo))
                 return new FunctionResponse() { status = "error", Message = "Entry No. not selected" };
             else if (string.IsNullOrEmpty(BranchOutDetail.wareHouse))
                 return new FunctionResponse() { status = "error", Message = "Select Warehouse" };
-            else if (BranchOutDetail.division == BranchOutDetail.divisionTo)
+            else if (BranchOutDetail.division == BranchOutDetail.billToAdd)
                 return new FunctionResponse() { status = "error", Message = "Store and Division to cannot be same" };
             else
                 return new FunctionResponse() { status = "ok", Message = "Correct" };
@@ -45,7 +45,7 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
                         {
                             if (stock.desca == stockSummary.DESCA)
                             {
-                                stockSummary.QUANTITY += stock.quantity;
+                                stockSummary.QUANTITY += Convert.ToDecimal(stock.quantity);
                             }
                         }
                     }
@@ -65,15 +65,15 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
         {
             if (string.IsNullOrEmpty(BranchInDetail.division))
                 return new FunctionResponse() { status = "error", Message = "Select Store" };
-            else if (string.IsNullOrEmpty(BranchInDetail.divisionFrom))
+            else if (string.IsNullOrEmpty(BranchInDetail.billToAdd))
                 return new FunctionResponse() { status = "error", Message = "Select Division From" };
             else if (string.IsNullOrEmpty(BranchInDetail.vchrNo))
                 return new FunctionResponse() { status = "error", Message = "Entry No. not selected" };
             else if (string.IsNullOrEmpty(BranchInDetail.wareHouse))
                 return new FunctionResponse() { status = "error", Message = "Select Warehouse" };
-            else if (string.IsNullOrEmpty(BranchInDetail.billToAdd))
+            else if (string.IsNullOrEmpty(BranchInDetail.chalanNo))
                 return new FunctionResponse() { status = "error", Message = "Enter Ref No." };
-            else if (BranchInDetail.division == BranchInDetail.divisionFrom)
+            else if (BranchInDetail.division == BranchInDetail.billToAdd)
                 return new FunctionResponse() { status = "error", Message = "Store and Division to cannot be same" };
             else
                 return new FunctionResponse() { status = "ok", Message = "Correct" };
@@ -98,7 +98,7 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
                         {
                             if (stock.desca == stockSummary.DESCA)
                             {
-                                stockSummary.QUANTITY += stock.quantity;
+                                stockSummary.QUANTITY += Convert.ToDecimal(stock.quantity);
                             }
                         }
                     }
@@ -108,31 +108,31 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
             catch { return new List<StockSummary>(); }
         }
 
-        public static List<BranchInSummary> ConvertToReceiveItemSummary(List<BranchOutItem> BranchOutItemList)
+        public static List<BranchInSummary> ConvertToReceiveItemSummary(List<BranchInItem> BranchInItemList)
         {
             try
             {
-                List<BranchInSummary> SendBranchOutSummaryList = new List<BranchInSummary>();
-                if (BranchOutItemList != null)
+                List<BranchInSummary> SendBranchInSummaryList = new List<BranchInSummary>();
+                if (BranchInItemList != null)
                 {
-                    var filterStock = BranchOutItemList.GroupBy(x => x.mcode).Select(y => y.FirstOrDefault()).ToList();
+                    var filterStock = BranchInItemList.GroupBy(x => x.mcode).Select(y => y.FirstOrDefault()).ToList();
 
                     foreach (var st in filterStock)
                     {
-                        SendBranchOutSummaryList.Add(new BranchInSummary() { mcode = st.mcode, desca = st.desca , quantity = 0 , enteredQuantity = 0, difference = 0});
+                        SendBranchInSummaryList.Add(new BranchInSummary() { mcode = st.mcode, desca = st.desca , quantity = "0" , enteredQuantity = 0, difference = 0});
                     }
-                    foreach (var stockSummary in SendBranchOutSummaryList)
+                    foreach (var stockSummary in SendBranchInSummaryList)
                     {
-                        foreach (var stock in BranchOutItemList)
+                        foreach (var stock in BranchInItemList)
                         {
                             if (stock.mcode == stockSummary.mcode)
                             {
-                                stockSummary.quantity +=   stock.quantity;
+                                stockSummary.quantity = (Convert.ToDecimal(stockSummary.quantity) + Convert.ToDecimal(stock.quantity)).ToString();
                             }
                         }
                     }
                 }
-                return SendBranchOutSummaryList;
+                return SendBranchInSummaryList;
             }
             catch { return new List<BranchInSummary>(); }
         }
@@ -144,7 +144,7 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
                 foreach(var item in ReceiveSummaryList)
                 {
                     item.enteredQuantity = 0;
-                    item.difference = item.quantity - item.enteredQuantity;
+                    item.difference = Convert.ToDecimal(item.quantity) - item.enteredQuantity;
                 }
 
                 //ReceiveSummaryList.Select(x => x.enteredQuantity = 0);
@@ -158,8 +158,8 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
                     {
                         if (receiveitem.mcode == branchinitem.mcode)
                         {
-                            receiveitem.enteredQuantity += branchinitem.quantity;
-                            receiveitem.difference = receiveitem.quantity - receiveitem.enteredQuantity;
+                            receiveitem.enteredQuantity = receiveitem.enteredQuantity + Convert.ToDecimal(branchinitem.quantity);
+                            receiveitem.difference = Convert.ToDecimal(receiveitem.quantity) - Convert.ToDecimal(receiveitem.enteredQuantity);
                         }
                     }
                 }

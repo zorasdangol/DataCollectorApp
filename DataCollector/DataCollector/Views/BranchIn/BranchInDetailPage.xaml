@@ -20,28 +20,29 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView Padding="15,5,15,30">
-            <StackLayout >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="3*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+            <Grid>
+                <StackLayout >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <Label Grid.Row="0" 
+                        <Label Grid.Row="0" 
                            Grid.Column="0"                           
                            Text="Store" 
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <Picker Grid.Row="0" 
+                        <Picker Grid.Row="0" 
                             Grid.Column="1"
                             Title="Store Name"
                             x:Name="StorePicker"
@@ -51,12 +52,12 @@
                             SelectedItem="{Binding SelectedStore}"
                              />
 
-                    <Label Grid.Row="1" 
+                        <Label Grid.Row="1" 
                            Grid.Column="0"
                            Text="Entry No"                            
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <Picker Grid.Column="1"                        
+                        <Picker Grid.Column="1"                        
                             Grid.Row="1"
                             Title="Entry No"
                             x:Name="EntryNoPicker"       
@@ -67,12 +68,12 @@
                             IsEnabled="False"                            
                             HorizontalOptions="Start"/>
 
-                    <Label Grid.Row="2" 
+                        <Label Grid.Row="2" 
                            Grid.Column="0"                           
                            Text="Division From:" 
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <Picker Grid.Row="2" 
+                        <Picker Grid.Row="2" 
                             Grid.Column="1"
                             Title="Division From"
                             x:Name="DivisionToPicker"
@@ -81,57 +82,64 @@
                             SelectedItem="{Binding SelectedDivisionFrom}"
                              />
 
-                    <Label Grid.Row="3"
+                        <Label Grid.Row="3"
                            Grid.Column="0"                           
                            Text="Date" 
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <DatePicker Grid.Row="3"
+                        <DatePicker Grid.Row="3"
                                 Grid.Column="1"   
                                 HorizontalOptions="StartAndExpand"
                                 Date="{Binding BranchInDetail.trnDate}"/>
 
-                    <Label Grid.Row="4" 
+                        <Label Grid.Row="4" 
                            Grid.Column="0"                          
                            Text="Warehouse" 
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <Picker Grid.Row="4" 
+                        <Picker Grid.Row="4" 
                             Grid.Column="1"                            
                             ItemsSource="{Binding WarehouseList}"                            
                             ItemDisplayBinding="{Binding NAME}"
                             SelectedItem="{Binding SelectedWarehouse}"
                             Title="Warehouse"/>
 
-                    <Label Grid.Row="5" 
+                        <Label Grid.Row="5" 
                            Grid.Column="0"                          
                            Text="Remarks" 
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <Entry Grid.Row="5"
+                        <Entry Grid.Row="5"
                            Grid.Column="1"                            
                            Placeholder="Remarks"
                            Text="{Binding BranchInDetail.remarks}"/>
 
-                    <Label Grid.Row="6" 
+                        <Label Grid.Row="6" 
                            Grid.Column="0"                          
                            Text="Ref No." 
                            TextColor="Black"
                            FontAttributes="Bold"/>
-                    <Entry Grid.Row="6"
+                        <Entry Grid.Row="6"
                            Grid.Column="1"                            
                            Placeholder="Ref No."
-                           Text="{Binding BranchInDetail.billToAdd}"/>
-                </Grid>
+                           Text="{Binding BranchInDetail.chalanNo}"
+                             />
+                    </Grid>
 
-                <Button x:Name="btn" 
+                    <Button x:Name="btn" 
                         Text="Next" 
                         Command="{Binding BISetCommand}"
                         HorizontalOptions="Start"
                         BackgroundColor="Black"
                         TextColor="White" />
 
-            </StackLayout>
+                </StackLayout>
+                <Grid x:Name="loadingOverlay" IsVisible="{Binding ActivityIndicatorEnabled}">                    
+                    <ActivityIndicator IsRunning="{Binding ActivityIndicatorEnabled}" 
+                                       HorizontalOptions="Center" 
+                                       VerticalOptions="Center"/>
+                </Grid>
+            </Grid>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

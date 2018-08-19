@@ -4,9 +4,20 @@
              x:Class="DataCollector.Views.MainHomePage"
              Title="Data Collector">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text=":"
+        <!--<ToolbarItem Text=":"
+                     Priority="Pri"
                      Icon="menuImage.png"
-                     Command="{Binding TBMenuCommand}"></ToolbarItem>
+                     Command="{Binding TBMenuCommand}"></ToolbarItem>-->
+        <ToolbarItem Priority="0"
+                     Order="Secondary"
+                     Text="IP Setting"                      
+                     Command="{Binding TBMenuCommand}"
+                     CommandParameter="1"/>
+        <ToolbarItem Priority="0"                      
+                     Order="Secondary"
+                     Text="Main Settings"
+                     Command="{Binding TBMenuCommand}"
+                     CommandParameter="2"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>

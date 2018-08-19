@@ -20,7 +20,7 @@ namespace DataCollectorStandardLibrary.DataValidationLayer
                 return new FunctionResponse() { status = "ok", Message = "Correct input" };
         }
 
-        public static List<StockSummary> StockTakeToStockSummary(List<GrnEntry> GrnDataList)
+        public static List<StockSummary> StockTakeToStockSummary(List<GrnProd> GrnDataList)
         {
             try
             {

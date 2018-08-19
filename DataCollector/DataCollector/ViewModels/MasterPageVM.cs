@@ -16,6 +16,8 @@ using DataCollector.Views.SessionPages;
 using DataCollector.Views.BranchOut;
 using DataCollector.Views.BranchIn;
 using DataCollector.Helpers;
+using DataCollector.Views.DataSync;
+using DataCollector.Views.DataList;
 
 namespace DataCollector.ViewModels
 {
@@ -71,17 +73,30 @@ namespace DataCollector.ViewModels
                     (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainSettingsPage());
                 }
                 else if (SelectedMenuItem.Index == 2)
-                {
-                    CheckBatchAndSession("2", new TabbedStockPage());
+                {                    
+                    CheckBatchAndSession("2", new StockTakeDetailPage());
                 }
                 else if (SelectedMenuItem.Index == 3)
                 {
-                    Helpers.Data.SelectedMenuType = "3";
-                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new BatchEntryPage());
+                    await CheckEditOrNew("3", new GoodsReceivePage());
                 }
+
                 else if (SelectedMenuItem.Index == 4)
                 {
-                    Helpers.Data.SelectedMenuType = "4";
+                    await CheckEditOrNew("4", new BranchOutDetailPage());
+                }
+                else if (SelectedMenuItem.Index == 5)
+                {
+                    await CheckEditOrNew("5", new BranchInDetailPage());
+                }
+                else if (SelectedMenuItem.Index == 6)
+                {
+                    Helpers.Data.SelectedMenuType = "6";
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new BatchEntryPage());
+                }
+                else if (SelectedMenuItem.Index == 7)
+                {
+                    Helpers.Data.SelectedMenuType = "7";
                     if (Helpers.Data.SelectedBatch != null && !string.IsNullOrEmpty(Helpers.Data.SelectedBatch.BATCHNO))
                     {
                         (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new LocationChangePage());
@@ -91,9 +106,9 @@ namespace DataCollector.ViewModels
                         DependencyService.Get<IMessage>().ShortAlert("First Set Batch ");
                     }
                 }
-                else if (SelectedMenuItem.Index == 5)
+                else if (SelectedMenuItem.Index == 8)
                 {
-                    Helpers.Data.SelectedMenuType = "5";
+                    Helpers.Data.SelectedMenuType = "8";
                     LoadFromDB.LoadBatch(App.DatabaseLocation);
                     if (Helpers.Data.SelectedBatch != null && !string.IsNullOrEmpty(Helpers.Data.SelectedBatch.BATCHNO))
                     {
@@ -104,14 +119,19 @@ namespace DataCollector.ViewModels
                         DependencyService.Get<IMessage>().ShortAlert("First Set Batch ");
                     }
                 }
-                else if (SelectedMenuItem.Index == 6)
+                else if (SelectedMenuItem.Index == 9)
                 {
-                    Helpers.Data.SelectedMenuType = "6";
+                    Helpers.Data.SelectedMenuType = "9";
                     (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionEndPage());
                 }
-                else if (SelectedMenuItem.Index == 7)
+                else if (SelectedMenuItem.Index == 10)
                 {
-                    Helpers.Data.SelectedMenuType = "7";
+                    Helpers.Data.SelectedMenuType = "10";
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionSelectionPage());
+                }
+                else if (SelectedMenuItem.Index == 11)
+                {
+                    Helpers.Data.SelectedMenuType = "11";
                     var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
                     if (result)
                     {
@@ -121,97 +141,96 @@ namespace DataCollector.ViewModels
                         (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
                     }
                 }
-                else if (SelectedMenuItem.Index == 8)
+                else if (SelectedMenuItem.Index == 12)
                 {
-                    Helpers.Data.SelectedMenuType = "8";
-                    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
-                    if (result)
-                    {
-                        Helpers.Data.Session = null;
-                        ClearFromDB.ClearSessionAll(App.DatabaseLocation);
-                        DependencyService.Get<IMessage>().LongAlert("Session Cleared Successfully");
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
-                    }
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new DataSyncTabbedPage());
                 }
-                else if (SelectedMenuItem.Index == 9)
-                {
-                    Helpers.Data.SelectedMenuType = "9";
-                    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
-                    if (result)
-                    {
-                        Helpers.Data.Session = null;
-                        ClearFromDB.ClearStockTakeAll(App.DatabaseLocation);
-                        DependencyService.Get<IMessage>().LongAlert("All StockTake Cleared Successfully");
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
-                    }
-                }
-                else if (SelectedMenuItem.Index == 10)
-                {
-                    await CheckEditOrNew("10", new GoodsReceivePage());
-                }
-
                 else if (SelectedMenuItem.Index == 13)
                 {
-                    await CheckEditOrNew("13", new BranchOutDetailPage());
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new DataListTabbedPage());
                 }
                 else if (SelectedMenuItem.Index == 14)
                 {
-                    await CheckEditOrNew("14", new BranchInDetailPage());
-                }
-                else if (SelectedMenuItem.Index == 11)
-                {
-                    Helpers.Data.SelectedMenuType = "11";
+                    Helpers.Data.SelectedMenuType = "14";
                     var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
                     if (result)
                     {
-                        Helpers.Data.GrnEntryList = null;
-                        ClearFromDB.ClearGrnDataList(App.DatabaseLocation);
-                        DependencyService.Get<IMessage>().LongAlert("All GrnData Cleared Successfully");
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
-                    }
-                }
-                else if (SelectedMenuItem.Index == 12)
-                {
-                    Helpers.Data.SelectedMenuType = "12";
-                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new SessionSelectionPage());
-                }
-                else if (SelectedMenuItem.Index == 15)
-                {
-                    Helpers.Data.SelectedMenuType = "15";
-                    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
-                    if (result)
-                    {
-                        Helpers.Data.GrnEntryList = null;
-                        ClearFromDB.ClearBranchInList(App.DatabaseLocation);
-                        DependencyService.Get<IMessage>().LongAlert("All BranchIn Cleared Successfully");
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
-                    }
-                }
-                else if (SelectedMenuItem.Index == 16)
-                {
-                    Helpers.Data.SelectedMenuType = "16";
-                    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
-                    if (result)
-                    {
-                        Helpers.Data.GrnEntryList = null;
-                        ClearFromDB.ClearBranchOutList(App.DatabaseLocation);
-                        DependencyService.Get<IMessage>().LongAlert("All BranchOut Cleared Successfully");
-                        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                        await App.Current.MainPage.Navigation.PushModalAsync(new ActivityIndicatorPage());
+                        new DataDownload().DownloadInitialData();
                     }
                 }
 
-                else if(SelectedMenuItem.Index == 17)
-                {                    
-                    await App.Current.MainPage.Navigation.PushModalAsync(new ActivityIndicatorPage());
-                    new DataDownload().DownloadInitialData();                  
-                }
+                #region comment
+                //else if (SelectedMenuItem.Index == 8)
+                //{
+                //    Helpers.Data.SelectedMenuType = "8";
+                //    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                //    if (result)
+                //    {
+                //        Helpers.Data.Session = null;
+                //        ClearFromDB.ClearSessionAll(App.DatabaseLocation);
+                //        DependencyService.Get<IMessage>().LongAlert("Session Cleared Successfully");
+                //        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                //    }
+                //}
+                //else if (SelectedMenuItem.Index == 9)
+                //{
+                //    Helpers.Data.SelectedMenuType = "9";
+                //    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                //    if (result)
+                //    {
+                //        Helpers.Data.Session = null;
+                //        ClearFromDB.ClearStockTakeAll(App.DatabaseLocation);
+                //        DependencyService.Get<IMessage>().LongAlert("All StockTake Cleared Successfully");
+                //        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                //    }
+                //}
+
+                //else if (SelectedMenuItem.Index == 11)
+                //{
+                //    Helpers.Data.SelectedMenuType = "11";
+                //    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                //    if (result)
+                //    {
+                //        Helpers.Data.GrnEntryList = null;
+                //        ClearFromDB.ClearGrnDataList(App.DatabaseLocation);
+                //        DependencyService.Get<IMessage>().LongAlert("All GrnData Cleared Successfully");
+                //        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                //    }
+                //}
+                //else if (SelectedMenuItem.Index == 15)
+                //{
+                //    Helpers.Data.SelectedMenuType = "15";
+                //    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                //    if (result)
+                //    {
+                //        Helpers.Data.GrnEntryList = null;
+                //        ClearFromDB.ClearBranchInList(App.DatabaseLocation);
+                //        DependencyService.Get<IMessage>().LongAlert("All BranchIn Cleared Successfully");
+                //        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                //    }
+                //}
+                //else if (SelectedMenuItem.Index == 16)
+                //{
+                //    Helpers.Data.SelectedMenuType = "16";
+                //    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                //    if (result)
+                //    {
+                //        Helpers.Data.GrnEntryList = null;
+                //        ClearFromDB.ClearBranchOutList(App.DatabaseLocation);
+                //        DependencyService.Get<IMessage>().LongAlert("All BranchOut Cleared Successfully");
+                //        (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+                //    }
+                //}
+                #endregion
+
             }
             catch (Exception e)
             { }
 
         }
 
-        public void CheckBatchAndSession(string selectedIndex, Page page)
+        public async void CheckBatchAndSession(string selectedIndex, Page page)
         {
             try
             {
@@ -231,7 +250,8 @@ namespace DataCollector.ViewModels
                 else
                 {
                     Helpers.Data.EntryMode = "";
-                    (App.Current.MainPage) = (page);
+                    //(App.Current.MainPage) = (page);
+                    await CheckEditOrNew("3", page);
                 }
             }
             catch (Exception e)

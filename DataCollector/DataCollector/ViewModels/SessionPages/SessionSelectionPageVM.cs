@@ -50,11 +50,31 @@ namespace DataCollector.ViewModels.SessionPages
                 catch { }               
             }
         }
+        public Command DeleteCommand { get; set; }
 
         public SessionSelectionPageVM()
         {
             LoadFromDB.LoadSession(App.DatabaseLocation);
             SessionList = LoadFromDB.LoadSessionList(App.DatabaseLocation);
+            DeleteCommand = new Command(ExecuteDeleteCommand);
+        }
+
+        public void RefreshItem()
+        {
+            SessionList = LoadFromDB.LoadSessionList(App.DatabaseLocation);
+        }
+
+        public async void ExecuteDeleteCommand()
+        {
+            var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+            if (result)
+            {
+                Helpers.Data.Session = null;
+                ClearFromDB.ClearSessionAll(App.DatabaseLocation);
+                DependencyService.Get<IMessage>().LongAlert("All Session Cleared Successfully");
+                this.RefreshItem();
+                //(App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new MainHomePage());
+            }
         }
 
         public async void ChangeSession(Session value)

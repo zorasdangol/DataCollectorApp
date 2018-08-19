@@ -18,6 +18,7 @@ namespace DataCollector.Views.GRN
 		{
 			InitializeComponent ();
             BindingContext = viewModel = new GRNSummaryPageVM();
+            this.listView.SelectedItem = null;
 		}
 
         protected override void OnAppearing()

@@ -18,7 +18,19 @@ namespace DataCollector.ViewModels.GRN
     public class BranchOutDetailPageVM:BaseViewModel
     {
         public List<Division> DivisionList { get; set; }
-        public List<Warehouse> WarehouseList { get; set; }
+
+        private List<Warehouse> _WarehouseList;
+        public List<Warehouse> WarehouseList
+        {
+            get { return _WarehouseList; }
+            set
+            {
+                if (value == null)
+                    return;
+                _WarehouseList = value;
+                OnPropertyChanged("WarehouseList");
+            }
+        }
 
         //used for recent count of GRN
         public int GrnCount { get; set; }
@@ -89,8 +101,10 @@ namespace DataCollector.ViewModels.GRN
                     if (value != null && !string.IsNullOrEmpty(value.NAME))
                     {
                         BranchOutDetail = new BranchOutDetail();
-                        BranchOutDetail.division = value.NAME;
-                        BOEntrySet(value.NAME);
+                        BranchOutDetail.division = value.INITIAL;
+                        BranchOutDetail.billTo = value.INITIAL;
+                        WarehouseList = Helpers.Data.WarehouseList.Where(x => x.DIVISION == value.INITIAL).ToList();
+                        BOEntrySet(value.INITIAL);
                     }
                     OnPropertyChanged("SelectedStore");
                 }catch(Exception e)
@@ -110,7 +124,7 @@ namespace DataCollector.ViewModels.GRN
                     _SelectedDivisionTo = value;
                     if (value != null && !string.IsNullOrEmpty(value.NAME))
                     {
-                        BranchOutDetail.divisionTo = value.NAME;
+                        BranchOutDetail.billToAdd = value.INITIAL;
                     }
                     OnPropertyChanged("SelectedDivisionTo");
                 }
@@ -156,7 +170,7 @@ namespace DataCollector.ViewModels.GRN
             try
             {
                 LoadFromDB.LoadBranchOutDetailList(App.DatabaseLocation);
-                BranchOutDetailList = Helpers.Data.BranchOutDetailList.Where(x => x.division == store).ToList().OrderBy(x => x.curNo).ToList();
+                BranchOutDetailList = Helpers.Data.BranchOutDetailList.Where(x => (x.division == store) && (x.IsSaved == false)).ToList().OrderBy(x => x.curNo).ToList();
                 
                 var maxObject = Helpers.Data.BranchOutDetailList.Where(x => x.division == store).OrderByDescending(item => item.curNo).FirstOrDefault();
                                 
@@ -164,13 +178,13 @@ namespace DataCollector.ViewModels.GRN
                 {
                     if (maxObject == null)
                     {
-                        BranchOutDetail.vchrNo = "BO" + 1;
+                        BranchOutDetail.vchrNo = "TO" + 1;
                         BranchOutDetail.curNo = 1;
                         GrnCount = 1;                        
                     }
                     else
                     {
-                        BranchOutDetail.vchrNo = "BO" + (Convert.ToInt32(maxObject.curNo) + 1);
+                        BranchOutDetail.vchrNo = "TO" + (Convert.ToInt32(maxObject.curNo) + 1);
                         GrnCount = maxObject.curNo + 1;
                         BranchOutDetail.curNo = GrnCount;
                     }
@@ -208,7 +222,7 @@ namespace DataCollector.ViewModels.GRN
             try
             {
                 SelectedWarehouse = WarehouseList.Find(x => x.NAME == BranchOutDetail.wareHouse);
-                SelectedDivisionTo = DivisionList.Find(x => x.NAME == BranchOutDetail.divisionTo);               
+                SelectedDivisionTo = DivisionList.Find(x => x.INITIAL == BranchOutDetail.billToAdd);               
             }
             catch { }           
 

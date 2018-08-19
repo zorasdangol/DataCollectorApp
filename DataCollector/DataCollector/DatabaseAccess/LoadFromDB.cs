@@ -105,22 +105,48 @@ namespace DataCollector.DatabaseAccess
 
 
         #region Grn
-        public static List<GrnEntry> LoadGrnEntryList(string DatabaseLocation, GrnMain GrnMain)
+        public static List<GrnMain> LoadGrnMainList(string DatabaseLocation)
         {
             try
             {
-                var list = new List<GrnEntry>();
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
-                    conn.CreateTable<GrnEntry>();
-                    var rows = conn.Table<GrnEntry>().ToList();
+                    conn.CreateTable<GrnMain>();
+                    var rows = conn.Table<GrnMain>().ToList();
+
+                    if (rows.Count > 0)
+                    {
+                        Helpers.Data.GrnMainList = rows;
+                        return rows;
+                    }
+                    Helpers.Data.GrnMainList = new List<GrnMain>();
+                    return Helpers.Data.GrnMainList;
+                }
+            }
+            catch (Exception e)
+            {
+                Helpers.Data.GrnMainList = new List<GrnMain>();
+                return Helpers.Data.GrnMainList;
+            }
+        }
+
+
+        public static List<GrnProd> LoadGrnEntryList(string DatabaseLocation, GrnMain GrnMain)
+        {
+            try
+            {
+                var list = new List<GrnProd>();
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<GrnProd>();
+                    var rows = conn.Table<GrnProd>().ToList();
                     if (rows.Count > 0)
                     {
                         list  = rows.Where(x => ((x.division == GrnMain.division) && (x.vchrNo == GrnMain.vchrNo) )).ToList();
                         
                         if(list == null)
                         {
-                            Helpers.Data.GrnEntryList = new List<GrnEntry>();
+                            Helpers.Data.GrnEntryList = new List<GrnProd>();
                         }
                         else
                         {
@@ -129,12 +155,12 @@ namespace DataCollector.DatabaseAccess
                         return Helpers.Data.GrnEntryList;
                     }
                 }
-                Helpers.Data.GrnEntryList = new List<GrnEntry>(); 
+                Helpers.Data.GrnEntryList = new List<GrnProd>(); 
                 return Helpers.Data.GrnEntryList;
             }
             catch (Exception e)
             {
-                Helpers.Data.GrnEntryList = new List<GrnEntry>(); 
+                Helpers.Data.GrnEntryList = new List<GrnProd>(); 
                 return Helpers.Data.GrnEntryList;
             }
         }
@@ -203,6 +229,7 @@ namespace DataCollector.DatabaseAccess
         }
         #endregion
 
+
         #region BranchIn
 
         public static List<BranchInDetail> LoadBranchInDetailList(string DatabaseLocation)
@@ -235,30 +262,30 @@ namespace DataCollector.DatabaseAccess
         {
             try
             {
-                var list = new List<BranchOutItem>();
-                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
-                {
-                    //conn.CreateTable<BranchOutItem>();
-                    //var rows = conn.Table<BranchOutItem>().ToList();
+                //var list = new List<BranchOutItem>();
+                //using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                //{
+                //    //conn.CreateTable<BranchOutItem>();
+                //    //var rows = conn.Table<BranchOutItem>().ToList();
 
-                    var rows = Helpers.JsonData.ReceivedBranchOutList;
+                //    //var rows = Helpers.JsonData.ReceivedBranchOutList;
 
-                    if (rows.Count > 0)
-                    {
-                        list = rows.Where(x => ((x.division == BranchInDetail.divisionFrom) && (x.divisionTo == BranchInDetail.division) && (x.vchrNo == BranchInDetail.billToAdd.ToUpper()))).ToList();
+                //    if (rows.Count > 0)
+                //    {
+                //        list = rows.Where(x => ((x.division == BranchInDetail.divisionFrom) && (x.divisionTo == BranchInDetail.division) && (x.vchrNo == BranchInDetail.billToAdd.ToUpper()))).ToList();
 
-                        if (list == null)
-                        {
-                            Helpers.Data.SendBranchOutSummaryList = new List<BranchInSummary>();
-                        }
-                        else
-                        {
-                            //Helpers.Data.ReceiveItemSummaryList = BranchInDetailValidator.ConvertToReceiveItemSummary(list);
-                            var receivelist = Helpers.Data.SendBranchOutList = list;
-                        }
-                        return Helpers.Data.SendBranchOutList;
-                    }
-                }
+                //        if (list == null)
+                //        {
+                //            Helpers.Data.SendBranchOutSummaryList = new List<BranchInSummary>();
+                //        }
+                //        else
+                //        {
+                //            //Helpers.Data.ReceiveItemSummaryList = BranchInDetailValidator.ConvertToReceiveItemSummary(list);
+                //            var receivelist = Helpers.Data.SendBranchOutList = list;
+                //        }
+                //        return Helpers.Data.SendBranchOutList;
+                //    }
+                //}
                 Helpers.Data.SendBranchOutList = new List<BranchOutItem>();
                 return Helpers.Data.SendBranchOutList;
             }
@@ -306,7 +333,7 @@ namespace DataCollector.DatabaseAccess
         #endregion
 
         #region StockTake
-        public static List<StockTake> LoadStockTake(string DatabaseLocation)
+        public static List<StockTake> LoadStockTakeList(string DatabaseLocation)
         {
             try
             {
@@ -329,9 +356,9 @@ namespace DataCollector.DatabaseAccess
                         {
                             Helpers.Data.StockTakeList = list.OrderByDescending(x => x.ind).ToList(); ;
                         }
-                        return Helpers.Data.StockTakeList;                     
+                        return Helpers.Data.StockTakeList;
                     }
-                    else if(rows == null)
+                    else if (rows == null)
                     {
                         Helpers.Data.StockTakeList = new List<StockTake>();
                         return Helpers.Data.StockTakeList;
@@ -348,7 +375,12 @@ namespace DataCollector.DatabaseAccess
             }
         }
 
-        #endregion              
+        #endregion
+
+
+
+
+
 
     }
 }

@@ -12,6 +12,7 @@ namespace DataCollectorStandardLibrary.Models
         public string LOCATIONNAME { get; set; }
         [PrimaryKey]
         public string BATCHNO { get; set; }
+        public string BATCHID { get; set; }
         public DateTime DATE { get; set; }
         public string USERNAME { get; set; }
         public int STATUS { get; set; }
@@ -21,6 +22,7 @@ namespace DataCollectorStandardLibrary.Models
         {
             LOCATIONNAME = "";
             BATCHNO = "";
+            BATCHID = "";
             DATE = new DateTime();
             USERNAME = "";
             STATUS = 0;
@@ -31,6 +33,7 @@ namespace DataCollectorStandardLibrary.Models
         {
             LOCATIONNAME = batch.LOCATIONNAME;
             BATCHNO = batch.BATCHNO;
+            BATCHID = batch.BATCHID;
             DATE = batch.DATE;
             USERNAME = batch.USERNAME;
             STATUS = batch.STATUS;
@@ -42,12 +45,14 @@ namespace DataCollectorStandardLibrary.Models
     {
         [PrimaryKey]
         public int SESSIONID { get; set; }
+        public string SESSIONNAME { get; set; }
         public DateTime DATE { get; set; }
         public string USERNAME { get; set; }
         public int STATUS { get; set; }
 
         public Session()
         {
+            SESSIONNAME = "";
             DATE = DateTime.Today;
             USERNAME = "";
             STATUS = 0;
@@ -55,6 +60,7 @@ namespace DataCollectorStandardLibrary.Models
 
         public Session(Session Session)
         {
+            SESSIONNAME = Session.SESSIONNAME;
             SESSIONID = Session.SESSIONID;
             DATE = Session.DATE;
             USERNAME = Session.USERNAME;

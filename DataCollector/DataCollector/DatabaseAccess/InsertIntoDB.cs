@@ -31,7 +31,6 @@ namespace DataCollector.DatabaseAccess
         }
         #endregion
 
-
         #region StockTake
 
         public static bool InsertStockTake(string DatabaseLocation, StockTake StockTake)
@@ -41,22 +40,21 @@ namespace DataCollector.DatabaseAccess
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
                     conn.CreateTable<StockTake>();
-                    
-                    //var rows = conn.Table<GrnEntry>().ToList().Where(x => x.ind == StockTake.ind).FirstOrDefault();
 
-                    if (Helpers.Data.StockTakeList == null)
+                    var list = conn.Table<StockTake>().ToList().Where(x => (x.sid == StockTake.sid) && (x.division == StockTake.division)).ToList();
+
+                    if (list == null)
                     {
-                        StockTake.ind = 1;
+                        StockTake.curNo = 1;
                     }
                     else
-                    {
-                        var list = Helpers.Data.StockTakeList;
-                        var maxCountData = Helpers.Data.StockTakeList.OrderByDescending(item => item.ind).FirstOrDefault();
+                    {                        
+                        var maxCountData = list.OrderByDescending(item => item.curNo).FirstOrDefault();
 
                         if (maxCountData == null)
-                            StockTake.ind = 1;
+                            StockTake.curNo = 1;
                         else
-                            StockTake.ind = maxCountData.ind + 1;
+                            StockTake.curNo = maxCountData.curNo + 1;
                     }
 
                     var inp = conn.Insert(StockTake);
@@ -66,7 +64,7 @@ namespace DataCollector.DatabaseAccess
                         newData.SetStockTake(StockTake);
                         Helpers.Data.StockTakeList.Insert(0, newData);
 
-                        var list = Helpers.Data.StockTakeList;
+                        var testlist = Helpers.Data.StockTakeList;
                         return true;
                     }
                     return false;
@@ -110,14 +108,14 @@ namespace DataCollector.DatabaseAccess
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
                     conn.CreateTable<GrnMain>();
-                    conn.CreateTable<GrnEntry>();
+                    conn.CreateTable<GrnProd>();
                     if (Helpers.Data.EntryMode == "New")
                     {
                         conn.Insert(grnMain);
                     }
                     else if (Helpers.Data.EntryMode == "Edit")
                     {
-                        Helpers.Data.GrnEntryList = conn.Query<GrnEntry>("Select * from GrnEntry where division = '" + grnMain.division + "' and vchrNo = '" + grnMain.vchrNo + "'");
+                        Helpers.Data.GrnEntryList = conn.Query<GrnProd>("Select * from GrnEntry where division = '" + grnMain.division + "' and vchrNo = '" + grnMain.vchrNo + "'");
                         
                         conn.Execute("Delete  from grnMain where division = '" + grnMain.division + "' and vchrNo = '" + grnMain.vchrNo + "'");
                         conn.Insert(grnMain);
@@ -130,13 +128,13 @@ namespace DataCollector.DatabaseAccess
             }
         }
 
-        public static bool InsertGrnEntry(string DatabaseLocation, GrnEntry GrnEntry)
+        public static bool InsertGrnEntry(string DatabaseLocation, GrnProd GrnEntry)
         {
             try
             {
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
-                    conn.CreateTable<GrnEntry>();
+                    conn.CreateTable<GrnProd>();
                     //var rows = conn.Table<GrnEntry>().ToList().Where(x => x.ind == GrnData.ind).FirstOrDefault();
                     if(Helpers.Data.GrnEntryList == null)
                     {
@@ -155,7 +153,7 @@ namespace DataCollector.DatabaseAccess
                     var inp = conn.Insert(GrnEntry);
                     if (inp == 1)
                     {
-                        var newData = new GrnEntry();
+                        var newData = new GrnProd();
                         newData.SetGrnEntry(GrnEntry);
                         Helpers.Data.GrnEntryList.Insert(0,newData);
                         return true;

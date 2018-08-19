@@ -12,6 +12,19 @@ namespace DataCollectorStandardLibrary.Models
     public class BranchOutItem : BranchItem { 
     }
 
+
+    public class BranchOutMaster
+    {
+        public BranchOutDetail BranchOutMain { get; set; }
+        public List<BranchOutItem> BranchOutProdList { get; set; }
+
+        public BranchOutMaster()
+        {
+            BranchOutMain = new BranchOutDetail();
+            BranchOutProdList = new List<BranchOutItem>();
+        }
+    }
+
     //public class BranchOutDetail
     //{
     //    public int curNo { get; set; }
@@ -65,7 +78,7 @@ namespace DataCollectorStandardLibrary.Models
     //            rate = BranchOutItem.rate;
     //            userName = BranchOutItem.userName;
     //            unit = BranchOutItem.unit;
-                
+
     //            desca = BranchOutItem.desca;
     //        }
     //        catch { }
@@ -87,5 +100,5 @@ namespace DataCollectorStandardLibrary.Models
 
 
 
-    
+
 }

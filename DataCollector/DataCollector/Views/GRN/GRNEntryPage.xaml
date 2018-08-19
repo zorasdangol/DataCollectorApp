@@ -26,40 +26,49 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Text="Entry No"
+                <Label Text="Store:"
                        Grid.Row="0"
                        Grid.Column="0"
                        TextColor="Black"   
                        FontAttributes="Bold"/>
-                <Label Text="{Binding GrnEntry.vchrNo}"
+                <Label Text="{Binding GrnEntry.division}"
                        Grid.Row="0"
+                       Grid.Column="1"/>
+                
+                <Label Text="Entry No"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       TextColor="Black"   
+                       FontAttributes="Bold"/>
+                <Label Text="{Binding GrnEntry.vchrNo}"
+                       Grid.Row="1"
                        Grid.Column="1"/>
 
 
                 <Label Text="Po No"
-                       Grid.Row="1"
+                       Grid.Row="2"
                        Grid.Column="0"
                        HorizontalOptions="Start"
                        TextColor="Black"
                        FontAttributes="Bold"/>
                 <Label Text="{Binding GrnEntry.refOrdBill}"
-                       Grid.Row="1"
+                       Grid.Row="2"
                        Grid.Column="1"/>
-
 
                 <Label Text="Supplier"
                        TextColor="Black"
-                       Grid.Row="2"
+                       Grid.Row="3"
                        Grid.Column="0"
                        FontAttributes="Bold"/>
                 <Label Text="{Binding GrnEntry.supplierName}"
-                       Grid.Row="2"
+                       Grid.Row="3"
                        Grid.Column="1"/>
             </Grid>
 
@@ -68,9 +77,6 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <!--<RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>-->
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

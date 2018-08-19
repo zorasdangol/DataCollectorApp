@@ -71,10 +71,19 @@
                    HorizontalOptions="StartAndExpand"
                    Keyboard="Numeric"
                    WidthRequest="50"/>
-            <Button Text="Save"
-                    TextColor="White"
-                    BackgroundColor="Black"
-                    HorizontalOptions="Start"/>
+          <StackLayout Orientation="Horizontal"
+                       HorizontalOptions="Fill">
+              <Button Text="Save"
+                      TextColor="White"
+                      BackgroundColor="Black"
+                      Command="{Binding ButtonCommand}"
+                      CommandParameter="1"/>
+              <Button Text="Cancel"
+                      TextColor="White"
+                      BackgroundColor="Black"
+                      Command="{Binding ButtonCommand}"
+                      CommandParameter="2"/>
+          </StackLayout>
         </StackLayout>
     </Frame>
 

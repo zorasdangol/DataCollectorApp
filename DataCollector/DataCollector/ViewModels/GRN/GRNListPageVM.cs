@@ -12,8 +12,8 @@ namespace DataCollector.ViewModels.GRN
 {
     public class GRNListPageVM:BaseViewModel
     {
-        private List<GrnEntry> _GrnDataList;
-        public List<GrnEntry> GrnDataList
+        private List<GrnProd> _GrnDataList;
+        public List<GrnProd> GrnDataList
         {
             get { return _GrnDataList; }
             set
@@ -34,8 +34,8 @@ namespace DataCollector.ViewModels.GRN
         //    }
         //}
 
-        private GrnEntry _SelectedGrnData;
-        public GrnEntry SelectedGrnData
+        private GrnProd _SelectedGrnData;
+        public GrnProd SelectedGrnData
         {
             get { return _SelectedGrnData; }
             set
@@ -51,8 +51,8 @@ namespace DataCollector.ViewModels.GRN
 
         public GRNListPageVM()
         {
-            GrnDataList = new List<GrnEntry>();
-            SelectedGrnData = new GrnEntry();
+            GrnDataList = new List<GrnProd>();
+            SelectedGrnData = new GrnProd();
             //SelectedGrnDataList = new GrnEntry();
             RefreshItem();
         }
@@ -65,7 +65,7 @@ namespace DataCollector.ViewModels.GRN
            
         }
 
-        public async void DataDeletion(GrnEntry Selected)
+        public async void DataDeletion(GrnProd Selected)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace DataCollector.ViewModels.GRN
                         //Helpers.Data.GrnEntryList.Remove(Selected);
                         //GrnDataList = Helpers.Data.GrnDataList;
                         GrnDataList = LoadFromDB.LoadGrnEntryList(App.DatabaseLocation,Helpers.Data.GrnMain);
-                        SelectedGrnData = new GrnEntry();
+                        SelectedGrnData = new GrnProd();
                     }
                     else
                     {

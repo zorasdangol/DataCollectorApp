@@ -98,19 +98,19 @@ namespace DataCollector.Helpers
             new OrderProd(){ VCHRNO = "PO9" , SUPPLIERCODE = "LBG9144V" },
         };
         
-        public static List<BranchOutItem> ReceivedBranchOutList = new List<BranchOutItem>()
-        {
-            new BranchOutItem(){ind = 1, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 1 },
-            new BranchOutItem(){ind = 2, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 4 },
-            new BranchOutItem(){ind = 3, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 1 },
-            new BranchOutItem(){ind = 4, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
-            new BranchOutItem(){ind = 5, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
-            new BranchOutItem(){ind = 6, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
-            new BranchOutItem(){ind = 7, division = "KK SuperMart", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
-            new BranchOutItem(){ind = 8, division = "Bouddha", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
-            new BranchOutItem(){ind = 9, division = "Lagankhel", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
+        //public static List<BranchOutItem> ReceivedBranchOutList = new List<BranchOutItem>()
+        //{
+        //    new BranchOutItem(){ind = 1, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 1 },
+        //    new BranchOutItem(){ind = 2, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 4 },
+        //    new BranchOutItem(){ind = 3, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "1234", mcode = "M0123", desca="boots", quantity = 1 },
+        //    new BranchOutItem(){ind = 4, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
+        //    new BranchOutItem(){ind = 5, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
+        //    new BranchOutItem(){ind = 6, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "25123", mcode = "M0128", desca="pants", quantity = 1 },
+        //    new BranchOutItem(){ind = 7, division = "KK SuperMart", vchrNo = "BO1" ,bill = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
+        //    new BranchOutItem(){ind = 8, division = "Bouddha", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
+        //    new BranchOutItem(){ind = 9, division = "Lagankhel", vchrNo = "BO1" ,divisionTo = "Mangal Bazar" , barcode = "12333", mcode = "M0124", desca="Bagss", quantity = 1 },
 
-        };
+        //};
 
         //public static List<PickingDetail> PickingDetailList = new List<PickingDetail>()
         //{

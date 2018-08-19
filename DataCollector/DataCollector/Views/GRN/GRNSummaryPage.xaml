@@ -5,7 +5,8 @@
              Title="GRN Summary">
     <ContentPage.Content>
         <StackLayout Margin="10">
-            <ListView ItemsSource="{Binding StockSummaryList}"
+            <ListView x:Name="listView" 
+                      ItemsSource="{Binding StockSummaryList}"
                       HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>

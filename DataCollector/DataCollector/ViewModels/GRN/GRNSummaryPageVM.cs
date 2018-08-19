@@ -22,7 +22,7 @@ namespace DataCollector.ViewModels.GRN
             }
         }
 
-        public List<GrnEntry> GrnDataList { get; set; }
+        public List<GrnProd> GrnDataList { get; set; }
 
         public GRNSummaryPageVM()
         {

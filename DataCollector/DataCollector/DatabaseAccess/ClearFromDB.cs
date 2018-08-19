@@ -10,7 +10,6 @@ namespace DataCollector.DatabaseAccess
 {
     public class ClearFromDB
     {
-
         public static void ClearBatchAll(string DatabaseLocation)
         {
             try
@@ -75,8 +74,8 @@ namespace DataCollector.DatabaseAccess
                     conn.CreateTable<GrnMain>();
                     conn.DeleteAll<GrnMain>();
 
-                    conn.CreateTable<GrnEntry>();
-                    conn.DeleteAll<GrnEntry>();
+                    conn.CreateTable<GrnProd>();
+                    conn.DeleteAll<GrnProd>();
 
                     if (res > 0) { }
                 }
@@ -123,15 +122,136 @@ namespace DataCollector.DatabaseAccess
 
         }
 
-
-        public static bool DeleteGrnData(string DatabaseLocation, GrnEntry GrnData)
+        public static bool UpdateSavedGrnMain(string DatabaseLocation, GrnMain GrnMain)
         {
             try
             {
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
-                    conn.CreateTable<GrnEntry>();
-                    var rows = conn.Table<GrnEntry>().ToList().Where(x => ((x.ind == GrnData.ind) && (x.division == GrnData.division) && (x.vchrNo == GrnData.vchrNo) )).FirstOrDefault();
+                    conn.CreateTable<GrnMain>();
+                    var rows = conn.Table<GrnMain>().ToList().Where(x => ( (x.division == GrnMain.division) && (x.vchrNo == GrnMain.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from GrnMain where division = '" + GrnMain.division + "' and vchrNo = '" + GrnMain.vchrNo + "'");
+                        conn.Insert(GrnMain);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public static bool UpdateSavedStockTake(string DatabaseLocation, StockTake LoadDataCollect)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<StockTake>();
+                    var rows = conn.Table<StockTake>().ToList().Where(x => ((x.division == LoadDataCollect.division) && (x.sid == LoadDataCollect.sid))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from StockTake where division = '" + LoadDataCollect.division + "' and sid = '" + LoadDataCollect.sid + "' and curNo = '" + LoadDataCollect.curNo + "'" );
+                        conn.Insert(LoadDataCollect);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public static bool UpdateSavedBranchOutMain(string DatabaseLocation, BranchOutDetail BranchOutMain)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchOutDetail>();
+                    var rows = conn.Table<BranchOutDetail>().ToList().Where(x => ((x.division == BranchOutMain.division) && (x.vchrNo == BranchOutMain.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from BranchOutDetail where division = '" + BranchOutMain.division + "' and vchrNo = '" + BranchOutMain.vchrNo + "'");
+                        conn.Insert(BranchOutMain);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        public static bool UpdateSavedBranchInMain(string DatabaseLocation, BranchInDetail BranchInMain)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchInDetail>();
+                    var rows = conn.Table<BranchInDetail>().ToList().Where(x => ((x.division == BranchInMain.division) && (x.vchrNo == BranchInMain.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from BranchInDetail where division = '" + BranchInMain.division + "' and vchrNo = '" + BranchInMain.vchrNo + "'");
+                        conn.Insert(BranchInMain);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public static bool DeleteGrnMain(string DatabaseLocation, GrnMain GrnMain)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<GrnMain>();
+                    conn.CreateTable<GrnProd>();
+                    var rows = conn.Table<GrnMain>().ToList().Where(x => ((x.division == GrnMain.division) && (x.vchrNo == GrnMain.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from GrnMain where division = '" + GrnMain.division + "' and vchrNo = '" + GrnMain.vchrNo + "'");
+                        conn.Execute("Delete from GrnProd where division = '" + GrnMain.division + "' and vchrNo = '" + GrnMain.vchrNo + "'"); 
+                        //conn.Insert(GrnMain);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public static bool DeleteGrnData(string DatabaseLocation, GrnProd GrnData)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<GrnProd>();
+                    var rows = conn.Table<GrnProd>().ToList().Where(x => ((x.ind == GrnData.ind) && (x.division == GrnData.division) && (x.vchrNo == GrnData.vchrNo) )).FirstOrDefault();
 
                     if (rows != null)
                     {
@@ -156,13 +276,55 @@ namespace DataCollector.DatabaseAccess
                 using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
                 {
                     conn.CreateTable<StockTake>();
+                    if (string.IsNullOrEmpty(StockTake.MCODE))
+                    {
+                        var rows = conn.Table<StockTake>().ToList().Where(x => ((x.sid == StockTake.sid) && (x.division == StockTake.division))).FirstOrDefault();
 
-                    var rows = conn.Table<StockTake>().ToList().Where(x => ((x.ind == StockTake.ind) && (x.SESSIONID == StockTake.SESSIONID) && (x.BATCHNO == StockTake.BATCHNO))).FirstOrDefault();
+                        if (rows != null)
+                        {
+                            conn.Execute("Delete  from StockTake where sid = '" + StockTake.sid + "' and division = '" + StockTake.division + "'");
+
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        var rows = conn.Table<StockTake>().ToList().Where(x => ((x.sid == StockTake.sid) && (x.division == StockTake.division) && (x.curNo == StockTake.curNo))).FirstOrDefault();
+
+                        if (rows != null)
+                        {
+                            conn.Execute("Delete  from StockTake where sid = '" + StockTake.sid + "' and division = '" + StockTake.division + "' and curNo = " + StockTake.curNo);
+
+                            return true;
+                        }
+
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
+
+        public static bool DeleteBranchOutDetail(string DatabaseLocation, BranchOutDetail BranchOutDetail)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchOutDetail>();
+                    conn.CreateTable<BranchOutItem>();
+                    var rows = conn.Table<BranchOutDetail>().ToList().Where(x => ((x.division == BranchOutDetail.division) && (x.vchrNo == BranchOutDetail.vchrNo))).FirstOrDefault();
 
                     if (rows != null)
                     {
-                        conn.Execute("Delete  from StockTake where BATCHNO = '" + StockTake.BATCHNO + "' and SESSIONID = " + StockTake.SESSIONID + " and ind = " + StockTake.ind);
-
+                        conn.Execute("Delete  from BranchOutDetail where division = '" + BranchOutDetail.division + "' and vchrNo = '" + BranchOutDetail.vchrNo + "'");
+                        conn.Execute("Delete from BranchOutItem where division = '" + BranchOutDetail.division + "' and vchrNo = '" + BranchOutDetail.vchrNo + "'");
+                        //conn.Insert(GrnMain);
                         return true;
                     }
                     return false;
@@ -198,6 +360,31 @@ namespace DataCollector.DatabaseAccess
             }
         }
 
+        public static bool DeleteBranchInDetail(string DatabaseLocation, BranchInDetail BranchInDetail)
+        {
+            try
+            {
+                using (SQLiteConnection conn = new SQLiteConnection(DatabaseLocation))
+                {
+                    conn.CreateTable<BranchInDetail>();
+                    conn.CreateTable<BranchInItem>();
+                    var rows = conn.Table<BranchInDetail>().ToList().Where(x => ((x.division == BranchInDetail.division) && (x.vchrNo == BranchInDetail.vchrNo))).FirstOrDefault();
+
+                    if (rows != null)
+                    {
+                        conn.Execute("Delete  from BranchInDetail where division = '" + BranchInDetail.division + "' and vchrNo = '" + BranchInDetail.vchrNo + "'");
+                        conn.Execute("Delete from BranchInItem where division = '" + BranchInDetail.division + "' and vchrNo = '" + BranchInDetail.vchrNo + "'");
+                       
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
         public static bool DeleteBranchInItem(string DatabaseLocation, BranchInItem BranchInItem)
         {

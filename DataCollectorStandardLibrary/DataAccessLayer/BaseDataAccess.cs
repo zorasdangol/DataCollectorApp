@@ -14,7 +14,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.DivisionListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.DivisionListURL);
+                //String url = Helpers.Data.Constants.DivisionListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);
@@ -38,7 +39,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.WarehouseListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.WarehouseListURL);
+                //String url = Helpers.Data.Constants.WarehouseListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);
@@ -58,7 +60,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.BarcodeListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.BarcodeListURL);
+               // String url = Helpers.Data.Constants.BarcodeListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);
@@ -78,7 +81,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.LocationListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.LocationListURL);
+                //String url = Helpers.Data.Constants.LocationListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);
@@ -98,7 +102,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.AcListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.AcListURL);
+                //String url = Helpers.Data.Constants.AcListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);
@@ -119,7 +124,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.MenuItemsListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.MenuItemsListURL);
+                //String url = Helpers.Data.Constants.MenuItemsListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);
@@ -139,7 +145,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
         {
             try
             {
-                String url = Helpers.Data.Contants.OrderProdListURL;
+                String url = Helpers.Data.Constants.SetApiURL(Helpers.Data.Constants.OrderProdListURL);
+                //String url = Helpers.Data.Constants.OrderProdListURL;
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.GetAsync(url);

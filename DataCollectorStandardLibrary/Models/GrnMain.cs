@@ -5,9 +5,8 @@ using System.Text;
 
 namespace DataCollectorStandardLibrary.Models
 {
-    public class GrnMain
+    public class GrnMain:BaseModel
     {
-
         public string vchrNo { get; set; }
         public string division { get; set; }
         public string chalanNo { get; set; }
@@ -21,8 +20,7 @@ namespace DataCollectorStandardLibrary.Models
         public string isTaxInvoice { get; set; }
         
         public int curNo { get; set; }
-
-
+        
         public string supplierName { get; set; }
         public string desca { get; set; }
 
@@ -30,8 +28,18 @@ namespace DataCollectorStandardLibrary.Models
         public string locationName { get; set; }
         public int sessionId { get; set; }
 
+        private bool _IsUpload;
+        public bool IsUpload
+        {
+            get { return _IsUpload; }
+            set { _IsUpload = value; OnPropertyChanged("IsUpload"); }
+        }
 
+        public bool IsSaved { get; set; }
+        public string refNo { get; set; }
 
+        public string userName { get; set; }
+        
         public GrnMain()
         {
             vchrNo = "";
@@ -55,6 +63,10 @@ namespace DataCollectorStandardLibrary.Models
             batchNo = "";
             locationName = "";
             sessionId = 0;
+            IsUpload = false;
+            IsSaved = false;
+            userName = "";
+            refNo = "";
         }
 
         //public void SetGrnMain(GrnMain GrnMain)
@@ -68,7 +80,7 @@ namespace DataCollectorStandardLibrary.Models
     }
 
 
-    public class GrnEntry
+    public class GrnProd
     {
         public int ind { get; set; }
         public string vchrNo { get; set; }
@@ -84,13 +96,14 @@ namespace DataCollectorStandardLibrary.Models
         
         public string desca { get; set; }
         public string supplierName { get; set; }
+        public string refOrdBill { get; set; }
 
         public string batchNo { get; set; }
         public string locationName { get; set; }
         public int sessionId { get; set; }
 
 
-        public GrnEntry()
+        public GrnProd()
         {
             ind = 0;
             vchrNo = "";
@@ -98,7 +111,7 @@ namespace DataCollectorStandardLibrary.Models
             mcode = "";
             barcode = "";
             quantity = "";
-            rate = "";
+            rate = "0.0";
             expDate = DateTime.Today;
             userName = "";
             unit = "";
@@ -107,10 +120,11 @@ namespace DataCollectorStandardLibrary.Models
             sessionId = 0;
             desca = "";
             supplierName = "";
+            refOrdBill = "";
 
         }
 
-        public void SetGrnEntry(GrnEntry GrnMain)
+        public void SetGrnEntry(GrnProd GrnMain)
         {
             try
             {
@@ -129,6 +143,7 @@ namespace DataCollectorStandardLibrary.Models
                 sessionId = GrnMain.sessionId;
                 desca = GrnMain.desca;
                 supplierName = GrnMain.supplierName;
+                refOrdBill = GrnMain.refOrdBill;
             }
             catch { }
         }
@@ -141,9 +156,21 @@ namespace DataCollectorStandardLibrary.Models
                 this.division = GrnMain.division;
                 this.desca = GrnMain.desca;
                 this.supplierName = GrnMain.supplierName;
+                this.refOrdBill = GrnMain.refOrdBill;
             }
             catch { }
         }
     }
 
+    public class GrnMaster
+    {
+        public GrnMain GrnMain { get; set; }
+        public List<GrnProd> GrnProdList { get; set; }
+
+        public GrnMaster()
+        {
+            GrnMain = new GrnMain();
+            GrnProdList = new List<GrnProd>();
+        }
+    }
 }

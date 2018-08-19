@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.Stock.StockTakeDetailPage"
+             Title="Stock Take">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment"
+                    Value="Center" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView Padding="15,5,15,30">
+            <StackLayout >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"
+                           Grid.Column="0" 
+                           Text="Store" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Row="0"
+                            Grid.Column="1"
+                            Title="Store Name"
+                            x:Name="StorePicker"
+                            Unfocused="StorePicker_Unfocused"                            
+                            ItemsSource="{Binding DivisionList}"
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedStore}"
+                              />
+
+                    <Label Grid.Row="1" 
+                           Grid.Column="0"
+                           Text="Stock Id"                            
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <!--<Label Grid.Row="1" 
+                           Grid.Column="1"
+                           Text="{Binding sid}"                            
+                           TextColor="Black"
+                           FontAttributes="Bold"/>-->
+                    <Picker Grid.Row="1"
+                            Grid.Column="1"  
+                            Title="Stock ID"
+                            x:Name="EntryNoPicker"  
+                            ItemsSource="{Binding StockTakeList}"
+                            ItemDisplayBinding="{Binding sid}"
+                            SelectedItem="{Binding SelectedStockTake}"
+                            TextColor="Black"
+                            IsEnabled="False"                            
+                            HorizontalOptions="Start"/>
+
+                    <Label  Grid.Row="2" 
+                            Grid.Column="0"                          
+                           Text="Warehouse" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <Picker Grid.Row="2" 
+                            Grid.Column="1"
+                            ItemsSource="{Binding WarehouseList}"                            
+                            ItemDisplayBinding="{Binding NAME}"
+                            SelectedItem="{Binding SelectedWarehouse}"
+                            Title="Warehouse"/>
+
+                    <Label Grid.Row="3"
+                           Grid.Column="0"                           
+                           Text="Date" 
+                           TextColor="Black"
+                           FontAttributes="Bold"/>
+                    <DatePicker Grid.Row="3"
+                                Grid.Column="1"
+                                HorizontalOptions="Start"
+                                Date="{Binding StockTake.trnDate}"/>    
+                </Grid>
+                
+                <Button x:Name="btn" 
+                        Text="Next" 
+                        Command="{Binding SetCommand}"
+                        HorizontalOptions="Start"
+                        BackgroundColor="Black"
+                        TextColor="White" />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

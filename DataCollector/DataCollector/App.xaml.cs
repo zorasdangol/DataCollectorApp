@@ -28,6 +28,8 @@ namespace DataCollector
 
             DatabaseLocation = databaseLocation;
 
+            LoadIPAddress.InitialIPAddress(App.DatabaseLocation);
+
             new LoadInitialList(App.DatabaseLocation);
         }
 

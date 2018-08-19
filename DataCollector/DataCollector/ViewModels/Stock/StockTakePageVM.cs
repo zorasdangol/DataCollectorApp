@@ -68,8 +68,8 @@ namespace DataCollector.ViewModels.Stock
         public Command AddCommand { get; set; }
 
         public StockTakePageVM()
-        {           
-            StockTake = new StockTake();
+        {
+            InitialStockTake();
             SelectedBarCode = new BarCode();
             BarCodeList = Helpers.Data.BarCodeList;
             AddCommand = new Command(ExecuteAddCommand);
@@ -78,8 +78,8 @@ namespace DataCollector.ViewModels.Stock
 
             LoadFromDB.LoadBatch(App.DatabaseLocation);
             LoadFromDB.LoadSession(App.DatabaseLocation);
-            var StockTakeList = LoadFromDB.LoadStockTake(App.DatabaseLocation);
-            var list = LoadFromDB.LoadStockTake(App.DatabaseLocation);
+            var StockTakeList = LoadFromDB.LoadStockTakeList(App.DatabaseLocation);
+           // var list = LoadFromDB.LoadStockTakeList(App.DatabaseLocation);
         }
 
         public void ExecuteAddCommand()
@@ -98,15 +98,35 @@ namespace DataCollector.ViewModels.Stock
                     SelectedBarCode = new BarCode(BarCode);
                     StockTake = new StockTake()
                     {
+                        sid = Helpers.Data.StockTake.sid,
+                        ind = Helpers.Data.StockTake.ind,
+                        division = Helpers.Data.StockTake.division,
+                        wareHouse = Helpers.Data.StockTake.wareHouse,
+                        trnDate = Helpers.Data.StockTake.trnDate,
+
                         BCODE = BarCode.BCODE,
                         MCODE = BarCode.MCODE,
                         DESCA = BarCode.DESCA,
                         QUANTITY = 1
                     };
+
+                    //StockTake.BCODE = BarCode.BCODE;
+                    //StockTake.MCODE = BarCode.MCODE;
+                    //StockTake.DESCA = BarCode.DESCA;
+                    //StockTake.QUANTITY = 1;
+
                     StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
                     StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
                     StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
 
+                    var menuitem = Helpers.Data.MenuItemsList.Where(x => x.MCODE == StockTake.MCODE).FirstOrDefault();
+                    if (menuitem != null)
+                    {
+                        StockTake.MENUCODE = menuitem.MENUCODE;
+                        StockTake.DESCA = menuitem.DESCA;
+                        StockTake.RATE = menuitem.RATE_A;
+                        StockTake.UNIT = menuitem.BASEUNIT;
+                    }
                     if (Helpers.Data.AutoModeEnabled)
                     {
                         SaveToSqlite();
@@ -116,50 +136,15 @@ namespace DataCollector.ViewModels.Stock
                 {
                     if (!string.IsNullOrEmpty(SelectedBarCode.BCODE))
                         DependencyService.Get<IMessage>().ShortAlert("InCorrect BarCode");
-                    StockTake = new StockTake();
+                    InitialStockTake();
                     SelectedBarCode = new BarCode();
                     //SelectedBarCode.BCODE = EnteredBCODE;
-
-                }
-
-                
+                }                
             }
             catch (Exception e) { }
         }
 
-        //public void BarCode_Entry_TextChanged(string oldText, string newText)
-        //{
-        //    try
-        //    {
-        //        if (oldText != newText)
-        //        {
-        //            BarCode BarCode = null;
-        //            BarCode = BarCodeList.Where(op => op.BCODE == newText).FirstOrDefault();
-        //            if (BarCode != null && BarCode.BCODE == newText)
-        //            {
-        //                SelectedBarCode = new BarCode(BarCode);
-        //                StockTake = new StockTake()
-        //                {
-        //                    MCODE = BarCode.MCODE,
-        //                    DESCA = BarCode.DESCA,
-        //                    QUANTITY = 1
-        //                };
-        //                StockTake.BATCHNO = Helpers.Data.SelectedBatch.BATCHNO;
-        //                StockTake.LOCATIONNAME = Helpers.Data.SelectedBatch.LOCATIONNAME;
-        //                StockTake.SESSIONID = Helpers.Data.Session.SESSIONID;
-
-        //            }
-        //            else
-        //            {
-        //                StockTake = new StockTake();
-        //                SelectedBarCode = new BarCode();
-        //                SelectedBarCode.BCODE = newText;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e) { }
-        //}
-
+       
         public void SaveToSqlite()
         {
             try
@@ -176,7 +161,8 @@ namespace DataCollector.ViewModels.Stock
                         if (res == true)
                         {
                             DependencyService.Get<IMessage>().LongAlert("Successfully saved StockTake ");
-                            StockTake = new StockTake();
+                            //StockTake = new StockTake();
+                            InitialStockTake();
                             SelectedBarCode = new BarCode();
                         }
                         else
@@ -186,6 +172,18 @@ namespace DataCollector.ViewModels.Stock
             }
             catch
             { }
+        }
+
+        public void InitialStockTake()
+        {
+            StockTake = new StockTake()
+            {
+                sid = Helpers.Data.StockTake.sid,
+                ind = Helpers.Data.StockTake.ind,
+                division = Helpers.Data.StockTake.division,
+                wareHouse = Helpers.Data.StockTake.wareHouse,
+                trnDate = Helpers.Data.StockTake.trnDate,
+            };
         }
 
     }

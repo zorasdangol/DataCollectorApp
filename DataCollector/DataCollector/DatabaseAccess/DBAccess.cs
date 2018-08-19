@@ -10,7 +10,6 @@ namespace DataCollector.DatabaseAccess
 {
     public class DBAccess
     {        
-
         //public static int GRNCount(string DatabaseLocation,string div)
         //{
         //    try
@@ -26,8 +25,7 @@ namespace DataCollector.DatabaseAccess
         //    }catch(Exception e)
         //    { return 0; }          
 
-        //}
-               
+        //}               
 
         public static bool LocationChange(string DatabaseLocation, Batch SelectedBatch)
         {
@@ -100,11 +98,6 @@ namespace DataCollector.DatabaseAccess
                 return false;
             }
         }
-
-
-
-
-
 
         //public static List<LoadGrnCollect> LoadGrnDataList(string DatabaseLocation)
         //{
