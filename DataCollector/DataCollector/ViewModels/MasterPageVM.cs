@@ -18,6 +18,7 @@ using DataCollector.Views.BranchIn;
 using DataCollector.Helpers;
 using DataCollector.Views.DataSync;
 using DataCollector.Views.DataList;
+using DataCollector.Views.ViewDownloads;
 
 namespace DataCollector.ViewModels
 {
@@ -152,12 +153,22 @@ namespace DataCollector.ViewModels
                 else if (SelectedMenuItem.Index == 14)
                 {
                     Helpers.Data.SelectedMenuType = "14";
-                    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to delete? ", "Yes", "No");
+                    var result = await App.Current.MainPage.DisplayAlert("Choose", "Are you sure to download? ", "Yes", "No");
                     if (result)
                     {
                         await App.Current.MainPage.Navigation.PushModalAsync(new ActivityIndicatorPage());
                         new DataDownload().DownloadInitialData();
                     }
+                }
+
+                else if (SelectedMenuItem.Index == 15)
+                {
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new PriceSheetPage());
+                }
+
+                else if (SelectedMenuItem.Index == 16)
+                {
+                    (App.Current.MainPage as MasterDetailPage).Detail = new NavigationPage(new ViewDownloadsTabbedPage());
                 }
 
                 #region comment

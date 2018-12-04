@@ -86,6 +86,7 @@
     <Compile Include="ViewModels\MainSettingsPageVM.cs" />
     <Compile Include="ViewModels\MasterPageVM.cs" />
     <Compile Include="ViewModels\MenuPages\IPSettingsPageVM.cs" />
+    <Compile Include="ViewModels\PriceSheetPageVM.cs" />
     <Compile Include="ViewModels\SessionPages\SessionEndPageVM.cs" />
     <Compile Include="ViewModels\SessionPages\SessionSelectionPageVM.cs" />
     <Compile Include="ViewModels\SessionPages\SessionStartPageVM.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="ViewModels\Stock\StockTakeListPageVM.cs" />
     <Compile Include="ViewModels\Stock\StockTakePageVM.cs" />
     <Compile Include="ViewModels\Stock\TabbedStockPageVM.cs" />
+    <Compile Include="ViewModels\ViewDownloads\ViewBarCodePageVM.cs" />
+    <Compile Include="ViewModels\ViewDownloads\ViewMenuItemsPageVM.cs" />
     <Compile Include="Views\ActivityIndicatorPage.xaml.cs">
       <DependentUpon>ActivityIndicatorPage.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,9 @@
     <Compile Include="Views\MenuPages\IPSettingsPage.xaml.cs">
       <DependentUpon>IPSettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PriceSheetPage.xaml.cs">
+      <DependentUpon>PriceSheetPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SessionPages\SessionEndPage.xaml.cs">
       <DependentUpon>SessionEndPage.xaml</DependentUpon>
     </Compile>
@@ -213,6 +219,15 @@
     </Compile>
     <Compile Include="Views\Stock\TabbedStockPage.xaml.cs">
       <DependentUpon>TabbedStockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDownloads\ViewBarCodePage.xaml.cs">
+      <DependentUpon>ViewBarCodePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDownloads\ViewDownloadsTabbedPage.xaml.cs">
+      <DependentUpon>ViewDownloadsTabbedPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDownloads\ViewMenuItemsPage.xaml.cs">
+      <DependentUpon>ViewMenuItemsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -507,6 +522,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\Stock\StockTakeDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PriceSheetPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ViewDownloads\ViewDownloadsTabbedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ViewDownloads\ViewMenuItemsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ViewDownloads\ViewBarCodePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

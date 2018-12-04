@@ -11,7 +11,7 @@ namespace DataCollectorStandardLibrary.Helpers.Data
 
         public static string WarehouseListURL = "getwarehouse?";
         public static string DivisionListURL =  "getdivision?";
-        public static string BarcodeListURL = "getbarcode?settingIndex=1";
+        public static string BarcodeListURL = "getbarcode?settingIndex=0";
         public static string AcListURL = "getAcList?";
         public static string LocationListURL = "getlocation?";
         public static string MenuItemsListURL = "getMenuItem?settingIndex=1";

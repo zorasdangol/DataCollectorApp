@@ -1,16 +1,12 @@
 ﻿using DataCollector.ViewModels.GRN;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace DataCollector.Views.GRN
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GRNEntryPage : ContentPage
 	{
         public GRNEntryPageVM viewModel { get; set; }
@@ -20,10 +16,11 @@ namespace DataCollector.Views.GRN
             BindingContext = viewModel = new GRNEntryPageVM();
 		}
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             viewModel.IsButtonVisible = !Helpers.Data.AutoModeEnabled;            
             base.OnAppearing();
+            await Task.Delay(500);
             BarCodeEntry.Focus();
         }
 

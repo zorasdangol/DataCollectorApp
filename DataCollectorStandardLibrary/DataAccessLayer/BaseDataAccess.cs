@@ -31,7 +31,7 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
             }
             catch(Exception ex) {
                // return new List<Division>();
-               return new FunctionResponse<List<Division>>(){ status = "error", Message = "Couldnot Connect to Server" };
+               return new FunctionResponse<List<Division>>(){ status = "error", Message = "Division Couldnot Connect to Server" };
             }
         }
 
@@ -53,7 +53,7 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
                     return new FunctionResponse<List<Warehouse>>() { status = "ok", result = warehouseList };
                 }
             }
-            catch { return new FunctionResponse<List<Warehouse>>() { status = "error", Message = "Couldnot Connect to Server" }; }
+            catch(Exception ex) { return new FunctionResponse<List<Warehouse>>() { status = "error", Message = "WareHouse Couldnot Connect to Server:" + ex.Message }; }
         }
 
         public static async Task<FunctionResponse<List<BarCode>>> getBarCodeList()
@@ -74,7 +74,7 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
                     return new FunctionResponse<List<BarCode>>() { status = "ok", result = barcodeList };
                 }
             }
-            catch { return new FunctionResponse<List<BarCode>>() { status = "error", Message = "Couldnot Connect to Server" }; }
+            catch (Exception ex){ return new FunctionResponse<List<BarCode>>() { status = "error", Message = "BarCode Couldnot Connect to Server:"+ ex.Message }; }
         }
 
         public static async Task<FunctionResponse<List<Location>>> getLocationList()
@@ -95,7 +95,7 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
                     return new FunctionResponse<List<Location>>() { status = "ok", result = LocationList };
                 }
             }
-            catch { return new FunctionResponse<List<Location>>() { status = "error", Message = "Couldnot Connect to Server" }; }
+            catch (Exception ex){ return new FunctionResponse<List<Location>>() { status = "error", Message = "Loaction Couldnot Connect to Server:"+ ex.Message }; }
         }
 
         public static async Task<FunctionResponse<List<AcList>>> getAcList()
@@ -117,7 +117,7 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
                 }
             }
             catch(Exception ex)
-            { return new FunctionResponse<List<AcList>>() { status = "error", Message = "Couldnot Connect to Server" }; }
+            { return new FunctionResponse<List<AcList>>() { status = "error", Message = "AcList Couldnot Connect to Server:" + ex.Message }; }
         }
 
         public static async Task<FunctionResponse<List<MenuItem>>> getMenuItemsList()
@@ -138,7 +138,8 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
                     return new FunctionResponse<List<MenuItem>>() { status = "ok", result = MenuItemsList };
                 }
             }
-            catch { return new FunctionResponse<List<MenuItem>>() { status = "error", Message = "Couldnot Connect to Server" }; }
+            catch(Exception ex)
+            { return new FunctionResponse<List<MenuItem>>() { status = "error", Message = "MenuItems Couldnot Connect to Server:" + ex.Message }; }
         }
 
         public static async Task<FunctionResponse<List<OrderProd>>> getOrderProdList()
@@ -159,7 +160,7 @@ namespace DataCollectorStandardLibrary.DataAccessLayer
                     return new FunctionResponse<List<OrderProd>>() { status = "ok", result = OrderProdList };
                 }
             }
-            catch (Exception ex){ return new FunctionResponse<List<OrderProd>>() { status = "error", Message = "Couldnot Connect to Server" }; }
+            catch (Exception ex){ return new FunctionResponse<List<OrderProd>>() { status = "error", Message = "OrderProd Couldnot Connect to Server:"+ ex.Message }; }
         }
 
     }

@@ -58,6 +58,7 @@ namespace DataCollector.Helpers
             new MasterMenu(){Index = 3 , Name = "Goods Receive", ImageSource = "StockTake.png"},
             new MasterMenu(){Index = 4, Name = "Branch Out", ImageSource = "StockTake.png"},
             new MasterMenu(){Index = 5, Name = "Branch In", ImageSource = "StockTake.png"},
+            new MasterMenu(){Index = 15, Name = "Price Sheet", ImageSource = "StockTake.png"},
             new MasterMenu(){Index = 6 , Name = "Batch",ImageSource = "Batch.png"},
             new MasterMenu(){Index = 7 , Name = "Change Location", ImageSource = "ChangeLocation.png"},
             new MasterMenu(){Index = 8 , Name = "Session Start",  ImageSource = "SessionStart.png"},
@@ -67,6 +68,8 @@ namespace DataCollector.Helpers
             new MasterMenu(){Index = 12, Name = "Data Sync", ImageSource = "SessionStart.png"},
             new MasterMenu(){Index = 13, Name = "View Data List", ImageSource = "SessionStart.png"},
             new MasterMenu(){Index = 14, Name = "Data Download", ImageSource = "SessionStart.png"},
+            new MasterMenu(){Index = 16, Name = "View Downloads", ImageSource = "SessionStart.png"},
+
 
             //new MasterMenu(){Index = 15, Name = "Clear Session", ImageSource = "ClearBatch.png"},
             

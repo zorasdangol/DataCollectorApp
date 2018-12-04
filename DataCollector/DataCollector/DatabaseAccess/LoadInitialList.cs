@@ -16,10 +16,10 @@ namespace DataCollector.DatabaseAccess
             {
                 LoadLocationList(DatabaseLocation);
                 LoadDivisionList(DatabaseLocation);
+                LoadAcList(DatabaseLocation);
+                LoadMenuItemsList(DatabaseLocation);
                 LoadBarCodeList(DatabaseLocation);
                 LoadWarehouseList(DatabaseLocation);
-                LoadMenuItemsList(DatabaseLocation);
-                LoadAcList(DatabaseLocation);
                 LoadOrderProdList(DatabaseLocation);
             }
             catch { }

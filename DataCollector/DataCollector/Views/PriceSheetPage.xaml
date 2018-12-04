@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DataCollector.Views.PriceSheetPage"
+             xmlns:control="clr-namespace:DataCollector.Controls" 
+             Title="Price Sheet">
+    <ContentPage.Content>
+        <ScrollView Padding="15,5,15,30">
+            <StackLayout Margin="20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" 
+                       Grid.Column="0"
+                       Text="BarCode:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Frame OutlineColor="Black"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           Padding="1"
+                           CornerRadius="5">
+                        <control:CustomEntry Grid.Row="0"
+                           Grid.Column="1"
+                           x:Name="BarCodeEntry"
+                           Focused="BarCodeEntry_Focused_1"
+                           HorizontalOptions="FillAndExpand"
+                           Text="{Binding SelectedBarCode.BCODE}"
+                           Placeholder="Enter BarCode"   
+                           Completed="OnEnterPressed"                           
+                           />
+                    </Frame>                  
+
+                    <Label Grid.Row="1" 
+                       Grid.Column="0"
+                       Text="MenuCode:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Label Grid.Row="1"
+                       Grid.Column="1"
+                       Text="{Binding StockTake.MENUCODE}"
+                       TextColor="Black"
+                       IsEnabled="False"/>
+
+                    <Label Grid.Row="2" 
+                       Grid.Column="0"
+                       Text="Description:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Label Grid.Row="2" 
+                       Grid.Column="1"
+                       IsEnabled="False"
+                       Text="{Binding StockTake.DESCA}"
+                       TextColor="Black"        />
+
+                    <Label Grid.Row="3" 
+                       Grid.Column="0"
+                       Text="Supplier:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Label Grid.Row="3" 
+                       Grid.Column="1"
+                       Text="{Binding StockTake.Supplier}"/>
+
+                    <Label Grid.Row="4" 
+                       Grid.Column="0"
+                       Text="Rate:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Label Grid.Row="4" 
+                            Grid.Column="1"
+                            Text="{Binding StockTake.RATE}"
+                            />
+
+                    <Label Grid.Row="5" 
+                       Grid.Column="0"
+                       Text="PRate:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Label Grid.Row="5" 
+                            Grid.Column="1"
+                            Text="{Binding StockTake.PRATE}"
+                            />
+
+                    <Label Grid.Row="6" 
+                       Grid.Column="0"
+                       Text="UNIT:"
+                           FontAttributes="Bold"
+                       TextColor="Black"/>
+                    <Label Grid.Row="6" 
+                            Grid.Column="1"
+                            Text="{Binding StockTake.UNIT}"
+                            />
+                </Grid>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

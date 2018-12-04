@@ -15,7 +15,7 @@
                                   ItemSelected="MenuItemSelected"
                                   ItemsSource="{Binding MasterMenuList}"
                                   SeparatorColor="Black"
-                                  SeparatorVisibility="Default"
+                                  SeparatorVisibility="Default"                              
                               HasUnevenRows="True"
                                   SelectedItem="{Binding SelectedMenuItem,Mode=TwoWay}"
                                   >

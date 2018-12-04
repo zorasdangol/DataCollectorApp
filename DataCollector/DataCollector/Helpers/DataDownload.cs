@@ -4,8 +4,6 @@ using DataCollectorStandardLibrary.DataAccessLayer;
 using DataCollectorStandardLibrary.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -58,15 +56,21 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("Location List could not be loaded");
+                        Helpers.Data.LocationList = new List<Location>();
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite Error: Location List could not be loaded");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(LocationRes.Message);
+                    Helpers.Data.LocationList = new List<Location>();
+                    DependencyService.Get<IMessage>().ShortAlert("Server Error:" + LocationRes.Message);
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Helpers.Data.LocationList = new List<Location>();
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
 
         public async Task DivisionDownload()
@@ -84,15 +88,21 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("Division List could not be loaded");
+                        Helpers.Data.DivisionList = new List<Division>();
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite errors: Division List could not be loaded.");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(DivisionRes.Message);
+                    Helpers.Data.DivisionList = new List<Division>();
+                    DependencyService.Get<IMessage>().ShortAlert("ServerError: " + DivisionRes.Message);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Helpers.Data.DivisionList = new List<Division>();
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
 
         public async Task BarCodeDownload()
@@ -110,16 +120,22 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("BarCode List could not be loaded");
+                        Helpers.Data.BarCodeList = new List<BarCode>();
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite Error: BarCode List could not be loaded");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(BarCodeRes.Message);
+                    Helpers.Data.BarCodeList = new List<BarCode>();
+                    DependencyService.Get<IMessage>().ShortAlert("Server Error: " + BarCodeRes.Message);
                 }
 
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Helpers.Data.BarCodeList = new List<BarCode>();
+                DependencyService.Get<IMessage>().ShortAlert( ex.Message);
+            }
         }
         
         public async Task WarehouseDownload()
@@ -137,15 +153,21 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("Warehouse List could not be loaded");
+                        Helpers.Data.WarehouseList = new List<Warehouse>();                        
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite Error: Warehouse List could not be loaded");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(WarehouseRes.Message);
+                    Helpers.Data.WarehouseList = new List<Warehouse>();
+                    DependencyService.Get<IMessage>().ShortAlert("Server Error: " + WarehouseRes.Message);
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Helpers.Data.WarehouseList = new List<Warehouse>();
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }                   
 
         public async Task AcListDownload()
@@ -163,15 +185,21 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("AcList List could not be  loaded");
+                        Helpers.Data.AcList = new List<AcList>();
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite Error : AcList List could not be  loaded");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(AcListRes.Message);
+                    Helpers.Data.AcList = new List<AcList>();
+                    DependencyService.Get<IMessage>().ShortAlert("Server Error: " + AcListRes.Message);
                 }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Helpers.Data.AcList = new List<AcList>();
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
 
         public async Task MenuItemsDownload()
@@ -189,16 +217,21 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("MenuItems List could not be loaded");
+                        Helpers.Data.MenuItemsList = new List<DataCollectorStandardLibrary.Models.MenuItem>();
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite Error: MenuItems List could not be loaded");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(MenuItemsRes.Message);
+                    Helpers.Data.MenuItemsList = new List<DataCollectorStandardLibrary.Models.MenuItem>();
+                    DependencyService.Get<IMessage>().ShortAlert("Server Error: " + MenuItemsRes.Message);
                 }
 
             }
-            catch { }
+            catch (Exception ex ){
+                Helpers.Data.MenuItemsList = new List<DataCollectorStandardLibrary.Models.MenuItem>();
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
 
         public async Task OrderProdDownload()
@@ -216,16 +249,22 @@ namespace DataCollector.Helpers
                     }
                     else
                     {
-                        DependencyService.Get<IMessage>().ShortAlert("OrderProd List could not be loaded");
+                        Helpers.Data.OrderProdList = new List<OrderProd>();
+                        DependencyService.Get<IMessage>().ShortAlert("SQLite Error: OrderProd List could not be loaded");
                     }
                 }
                 else
                 {
-                    DependencyService.Get<IMessage>().ShortAlert(OrderProdRes.Message);
+                    Helpers.Data.OrderProdList = new List<OrderProd>();
+                    DependencyService.Get<IMessage>().ShortAlert("Server Error: " + OrderProdRes.Message);
                 }
 
             }
-            catch { }
+            catch(Exception ex)
+            {
+                Helpers.Data.OrderProdList = new List<OrderProd>();
+                DependencyService.Get<IMessage>().ShortAlert(ex.Message);
+            }
         }
 
     }

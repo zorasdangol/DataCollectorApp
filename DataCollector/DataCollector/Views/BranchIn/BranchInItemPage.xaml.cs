@@ -18,13 +18,13 @@ namespace DataCollector.Views.BranchIn
 		{
 			InitializeComponent ();
             BindingContext = viewModel = new BranchInItemPageVM();
-
 		}
 
-        protected override void OnAppearing()
+        protected async override void OnAppearing()
         {
             viewModel.IsButtonVisible = !Helpers.Data.AutoModeEnabled;
             base.OnAppearing();
+            await Task.Delay(500);
             BarCodeEntry.Focus();
         }
 

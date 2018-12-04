@@ -22,6 +22,9 @@ namespace DataCollectorStandardLibrary.Models
         public string DESCA { get; set; }
         public decimal QUANTITY { get; set; }
 
+        public string Supplier { get; set; }
+        public double PRATE { get; set; }
+
         public string BATCHNO { get; set; }
         public string LOCATIONNAME { get; set; }
         public DateTime TIMESTAMP { get; set; }

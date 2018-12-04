@@ -16,8 +16,7 @@ namespace DataCollector.ViewModels.Stock
 {
     public class StockTakePageVM:BaseViewModel
     {
-        private List<BarCode> _BarCodeList;
-       
+        private List<BarCode> _BarCodeList;       
         public List<BarCode> BarCodeList
         {
             get { return _BarCodeList; }
